@@ -1,0 +1,121 @@
+#!/bin/bash
+
+##The number of components to compute
+M=$(ls /home/sdarmon/pbil/results/mus/processing/comp*.txt | wc -l)
+#N=$(ls /beegfs/data/sdarmon/results/mus/processing/comp*_TE.txt | wc -l)
+MAXI=$M #$((${M}-${N}))
+echo "Number of comps : ${MAXI}"
+
+##Path variables
+BASE_DIR="/home/sdarmon/pbil/results/mus/processing"
+WORK_DIR="/home/sdarmon/pbil_home/Documents/dbg/scr"
+STAR_BIN="STARlong"
+SAMTOOLS_BIN="samtools"
+BEDTOOLS_BIN="bedtools"
+GEN_GTF="/home/sdarmon/pbil/mus/ref.gtf"
+
+##Activation the virtual environment for python
+source ${WORK_DIR}/venv/bin/activate
+
+##Compute the analysis over every component
+for ((i=0; i<$MAXI; i++))
+do
+    echo $i
+#    mkdir -p ${BASE_DIR}/STAR_alignment_$i
+#    mkdir -p ${BASE_DIR}/STAR_alignment_cons_dfam_$i
+#    mkdir -p ${BASE_DIR}/STAR_alignment_cons_rb_$i
+#
+#    ##Convert the unitigs into reads for star
+#    python3 reads_to_align.py ${BASE_DIR}/comp$i.txt ${BASE_DIR}/comp$i.fq 0
+
+
+    ##Align the reads with starlong
+#    ${STAR_BIN} \
+#    --genomeDir ${BASE_DIR}/../ref \
+#    --runMode alignReads \
+#    --runThreadN 8 \
+#    --readFilesIn ${BASE_DIR}/comp$i.fq \
+#    --outFileNamePrefix ${BASE_DIR}/STAR_alignment_$i/ \
+#    --outSAMtype BAM SortedByCoordinate \
+#    --outSAMunmapped Within \
+#    --outSAMattributes Standard \
+#    --outFilterMultimapNmax 10000 \
+#    --seedMultimapNmax 10000000 \
+#    --outReadsUnmapped Fastx
+#
+#    ${STAR_BIN} \
+#    --genomeDir ${BASE_DIR}/../dfam_ref \
+#    --runMode alignReads \
+#    --runThreadN 8 \
+#    --readFilesIn ${BASE_DIR}/comp$i.fq \
+#    --outFileNamePrefix ${BASE_DIR}/STAR_alignment_cons_dfam_$i/ \
+#    --outSAMtype BAM SortedByCoordinate \
+#    --outSAMunmapped Within \
+#    --outSAMattributes Standard \
+#    --outFilterMultimapNmax 10000 \
+#    --seedMultimapNmax 10000000 \
+#    --outReadsUnmapped Fastx
+#
+#    ${STAR_BIN} \
+#        --genomeDir ${BASE_DIR}/../rb_ref \
+#        --runMode alignReads \
+#        --runThreadN 8 \
+#        --readFilesIn ${BASE_DIR}/comp$i.fq \
+#        --outFileNamePrefix ${BASE_DIR}/STAR_alignment_cons_rb_$i/ \
+#        --outSAMtype BAM SortedByCoordinate \
+#        --outSAMunmapped Within \
+#        --outSAMattributes Standard \
+#        --outFilterMultimapNmax 10000 \
+#        --seedMultimapNmax 10000000 \
+#        --outReadsUnmapped Fastx
+
+#    echo "Filter the reads to only keep the best mapped ones"
+#    ##Filter the reads to only keep the best mapped ones
+#    python3 ${WORK_DIR}/filter_bam.py -b ${BASE_DIR}/STAR_alignment_$i/Aligned.sortedByCoord.out.bam ${BASE_DIR}/STAR_alignment_$i/output_filtered.bam
+    ${SAMTOOLS_BIN} view ${BASE_DIR}/STAR_alignment_$i/output_filtered.bam | awk '{print $1"\t"$20}' FS=["\t:"] | sort -u -t '_' -k2 -n > ${BASE_DIR}/STAR_alignment_$i/AS.txt
+#
+#    python3 ${WORK_DIR}/filter_bam.py ${BASE_DIR}/STAR_alignment_cons_dfam_$i/Aligned.sortedByCoord.out.bam ${BASE_DIR}/seq_intersectionConsDfam$i.txt
+    awk '{print $1"\t"$20}' FS=["\t:"] ${BASE_DIR}/seq_intersectionConsDfam$i.txt | sort -u -t '_' -k2 -n > ${BASE_DIR}/STAR_alignment_cons_dfam_$i/AS.txt
+#
+#    python3 ${WORK_DIR}/filter_bam.py ${BASE_DIR}/STAR_alignment_cons_rb_$i/Aligned.sortedByCoord.out.bam ${BASE_DIR}/seq_intersectionConsRb$i.txt
+#    awk '{print $1"\t"$20}' FS=["\t:"] ${BASE_DIR}/seq_intersectionConsRb$i.txt| sort -u -t '_' -k2 -n > ${BASE_DIR}/STAR_alignment_cons_rb_$i/AS.txt
+#
+#    echo "Intersect the reads with the reference genes"
+#    ##Intersect the reads with the reference genes
+#    ${BEDTOOLS_BIN} intersect -wa -a ${GEN_GTF} -b ${BASE_DIR}/STAR_alignment_$i/output_filtered.bam -split  > ${BASE_DIR}/intersectionRef$i.txt
+#
+#    ${BEDTOOLS_BIN} intersect -wb -a ${GEN_GTF} -b ${BASE_DIR}/STAR_alignment_$i/output_filtered.bam -split  > ${BASE_DIR}/seq_intersectionRef$i.txt
+#
+#    echo "Analysis of the components"
+#    ##Combine the two intersection of TE files into one file for analysis_comp function
+#    cat ${BASE_DIR}/seq_intersectionConsDfam$i.txt ${BASE_DIR}/seq_intersectionConsRb$i.txt > ${BASE_DIR}/seq_intersectionCons$i.txt
+#
+#    python3 analysis_comp.py ${BASE_DIR}/comp$i.fq ${BASE_DIR}/intersectionRef$i.txt ${BASE_DIR}/seq_intersectionCons$i.txt ${BASE_DIR}/analysis$i.txt --custom-sep "split('\t')[8].split(';')[0][8:-1]"
+#
+#    python3 analysis_comp.py ${BASE_DIR}/comp$i.fq ${BASE_DIR}/intersectionRef$i.txt ${BASE_DIR}/seq_intersectionCons$i.txt ${BASE_DIR}/cr_analysis$i.txt --custom-sep "split('\t')[8].split(';')[0][8:-1]" --short
+
+    echo "Compute the intergenics unitigs as the difference between the unitigs and the genes"
+    ##Compute the intergenics unitigs as the difference between the unitigs and the genes
+    ${BEDTOOLS_BIN} intersect -v -a ${BASE_DIR}/STAR_alignment_$i/output_filtered.bam -b ${GEN_GTF} -split | samtools view  > ${BASE_DIR}/seq_intergenesRef$i.txt
+
+    echo "Annotate the components nodes with the TE and ref genes informations"
+    ##Annotate the components nodes with the TE and ref genes informations
+    python3 add_ref_TE.py \
+            ${BASE_DIR}/comp$i.txt \
+            ${BASE_DIR}/seq_intersectionRef$i.txt \
+            ${BASE_DIR}/seq_intersectionConsDfam$i.txt \
+            ${BASE_DIR}/seq_intersectionConsRb$i.txt \
+            ${BASE_DIR}/seq_intergenesRef$i.txt \
+            results/graph_hc_mus_1_hc_mus_2_k41.abundance
+
+    echo "Adding the AS information to the nodes"
+    ##Add the AS information to the nodes
+    paste ${BASE_DIR}/comp${i}_annotated.nodes <(cut -f2 ${BASE_DIR}/STAR_alignment_$i/AS.txt) <(cut -f2 ${BASE_DIR}/STAR_alignment_cons_dfam_$i/AS.txt) > ${BASE_DIR}/comp${i}_annotated_withAS.nodes
+
+    echo "Analysis of the genes and TE"
+    ##Analysis of the genes and TE
+    ${WORK_DIR}/analysis_gene_TE \
+            ${BASE_DIR}/comp${i}_annotated_withAS.nodes \
+            ${WORK_DIR}/results/graph_hc_mus_1_hc_mus_2_k41_C0.05.edges > \
+            ${BASE_DIR}/gene_TE_analysis$i.txt
+done

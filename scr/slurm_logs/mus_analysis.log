@@ -1,0 +1,21 @@
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/mus/processing/../ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/results/mus/processing/all_unitigs.fq --outFileNamePrefix /beegfs/data/sdarmon/results/mus/processing/STAR_alignment_all/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedPerReadNmax 10000000 --seedMultimapNmax 10000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Oct 25 15:38:50 ..... started STAR run
+Oct 25 15:38:50 ..... loading genome
+Oct 25 15:39:44 ..... started mapping
+Oct 25 16:06:17 ..... finished mapping
+Oct 25 16:06:18 ..... started sorting BAM
+Oct 25 16:06:25 ..... finished successfully
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/mus/processing/../dfam_ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/results/mus/processing/all_unitigs.fq --outFileNamePrefix /beegfs/data/sdarmon/results/mus/processing/STAR_alignment_cons_dfam_all/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedPerReadNmax 10000000 --seedMultimapNmax 10000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Oct 25 16:06:28 ..... started STAR run
+Oct 25 16:06:30 ..... loading genome
+Oct 25 16:06:30 ..... started mapping
+Oct 25 17:44:09 ..... finished mapping
+Oct 25 17:44:09 ..... started sorting BAM
+Oct 25 17:44:13 ..... finished successfully
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/mus/processing/../rb_ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/results/mus/processing/all_unitigs.fq --outFileNamePrefix /beegfs/data/sdarmon/results/mus/processing/STAR_alignment_cons_rb_all/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedPerReadNmax 10000000 --seedMultimapNmax 10000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Oct 25 17:44:16 ..... started STAR run
+Oct 25 17:44:18 ..... loading genome
+Oct 25 17:44:19 ..... started mapping

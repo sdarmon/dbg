@@ -24,8 +24,9 @@ if len(Arg) == 4:
         with open(Arg[2], 'w') as f_out:    
             for line in f:
                 cycle = (cycle + 1) % 4
-                if len(line) > 2:
+                if len(line) != "" :
                     if cycle != 2:
                         f_out.write(line)
                         continue
-                    f_out.write(homomorphic_compression(line,w))
+                    else:
+                        f_out.write(homomorphic_compression(line,w))

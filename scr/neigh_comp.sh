@@ -91,6 +91,7 @@ STARlong --genomeDir ${ref_ge} \
          --outSAMunmapped Within \
          --outSAMattributes Standard \
          --outFilterMultimapNmax 10000 \
+         --seedMultimapNmax 10000000 \
          --outReadsUnmapped Fastx
 
 STARlong --genomeDir ${ref_te} \
@@ -104,25 +105,22 @@ STARlong --genomeDir ${ref_te} \
          --outFilterMultimapNmax 10000 \
          --outReadsUnmapped Fastx
 
-samtools view -h -F 256 STAR_alignment_${base}/Aligned.sortedByCoord.out.bam | samtools view -b -o STAR_alignment_${base}/output_filtered.bam
+python3 filter_bam.py STAR_alignment_${base}/Aligned.sortedByCoord.out.bam STAR_alignment_${base}/output_filtered.bam
 
-samtools view -F 256 STAR_alignment_cons_${base}/Aligned.sortedByCoord.out.bam  > ${out}seq_intersectionCons.txt
+python3 filter_bam.py STAR_alignment_cons_${base}/Aligned.sortedByCoord.out.bam  ${out}seq_intersectionCons.txt
 
 #bedtools intersect -wb -a ${te} -b STAR_alignment_${base}/output_filtered.bam  -split >  ${out}seq_intersectionTE.txt
-echo "" >   ${out}seq_intersectionTE.txt
+echo "" >   ${out}seq_intersectionConsRb.txt
 
 bedtools intersect -wb -a ${ref} -b STAR_alignment_${base}/output_filtered.bam  -split > ${out}seq_intersectionRef.txt
 
 #Adding the informations to the file
 python3 add_ref_TE.py \
-	${out}_n.nodes \
-       	${out}seq_intersectionTE.txt \
+	      ${out}_n.nodes \
        	${out}seq_intersectionRef.txt \
-	${out}seq_intersectionCons.txt \
+	      ${out}seq_intersectionCons.txt \
+	      ${out}seq_intersectionConsRb.txt \
       	${ab}
-
-#Indexing the bam file
-samtools index STAR_alignment_${base}/Aligned.sortedByCoord.out.bam
 
 #Collecting the TEs found in the consensus
 awk 'BEGIN {FS="\t"} {print $8}' ${out}_n_annoted.nodes | sed 's/; /\n/g' | sort -u  > ${out}_n_list_TE.txt

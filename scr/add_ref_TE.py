@@ -7,56 +7,98 @@ import sys
 
 Arg = sys.argv[:]
 
-if len(Arg) not in [6]:
-    print("Use : " + Arg[0] + " comp%i.txt seq_intersectionTE%i.txt seq_intersectionRef%i.txt seq_intersectionConsensus%i.txt file.abundance")
+if len(Arg) not in [7]:
+    print("Use : " + Arg[0] + " comp%i.txt seq_intersectionRef%i.txt seq_intersectionConsensusDfam%i.txt seq_intersectionConsensusRb%i.txt seq_intergenes$i.txt file.abundance")
     exit()
-
-#Reading seq_intersectionTE%i.txt into a list
-dic_index2TE = {}
-
-with open(Arg[2], 'r') as f:
-    for line in f:
-        L = line.split('\t')
-        if len(L) < 12 :
-            continue
-        TE = L[8].split('"')[3]
-        index = int(L[12].split('_')[1])
-        if index not in dic_index2TE:
-            dic_index2TE[index] = [TE]
-        elif TE not in dic_index2TE[index]:
-            dic_index2TE[index].append(TE)
 
 #Reading intersectionRef%i.txt into a list to get the gene intersection with the comps
 dic_index2gene = {}
+potential_intron = {}
+with open(Arg[2], 'r') as f:
+    for line in f:
+        L = line.split('\t')
+        gene = L[14].split('"')[1]
+        gene_biotype = ""
+        for info in L[14].split(';'):
+            if info.startswith(" gene_biotype"):
+                gene_biotype = info.split('"')[1]
+                break
+        index = int(L[3].split('_')[1])
+        position = L[8]
+        overlap = int(L[15])
+        AS = int(L[16])
+        if position in ["CDS","start_codon","stop_codon"]:
+            typed="CDS"
+        elif position in ["five_prime_utr","three_prime_utr"]:
+            typed="UTR"
+        elif gene_biotype == "lncRNA" :
+            typed = "lncRNA"
+        elif position in ["gene","transcript"]:
+            if index not in potential_intron:
+                potential_intron[index] = [(gene,AS,overlap)]
+            elif gene not in potential_intron[index]:
+                potential_intron[index].append((gene,AS,overlap))
+            continue
+        else: #case exon; we skip
+            continue
+        if index not in dic_index2gene:
+            dic_index2gene[index] = [(gene,typed,AS,overlap)]
+        elif (gene,typed,AS) not in dic_index2gene[index]:
+            dic_index2gene[index].append((gene,typed,AS,overlap))
+    #Now loop over the potential intron to add the intron to the gene list if it is not already in the list
+    for index in potential_intron:
+        for (gene,AS,overlap) in potential_intron[index]:
+            if index not in dic_index2gene :
+                dic_index2gene[index] = [(gene,"intron",AS,overlap)]
+            elif gene not in [el[0] for el in dic_index2gene[index]] :
+                dic_index2gene[index].append((gene,"intron",AS,overlap))
+
+
+
+#Reading intersectionConsensus%i.txt into a list to get the TE consensus intersection with the comps
+dic_index2consDfam = {}
 
 with open(Arg[3], 'r') as f:
     for line in f:
         L = line.split('\t')
-        gene = L[8].split('"')[1]
-        index = int(L[12].split('_')[1])
-        if index not in dic_index2gene:
-            dic_index2gene[index] = [gene]
-        elif gene not in dic_index2gene[index]:
-            dic_index2gene[index].append(gene)
+        gene = L[2]
+        index = int(L[0].split('_')[1])
+        AS = int(L[13].split(':')[2])
+        if index not in dic_index2consDfam:
+            dic_index2consDfam[index] = [(gene,AS)]
+        elif gene not in dic_index2consDfam[index]:
+            dic_index2consDfam[index].append((gene,AS))
 
 
-#Reading intersectionConsensus%i.txt into a list to get the TE consensus intersection with the comps
-dic_index2cons = {}
+#Reading intersectionConsensusRB%i.txt into a list to get the TE consensus intersection with the comps
+dic_index2consRb = {}
 
 with open(Arg[4], 'r') as f:
     for line in f:
         L = line.split('\t')
         gene = L[2]
         index = int(L[0].split('_')[1])
-        if index not in dic_index2cons:
-            dic_index2cons[index] = [gene]
-        elif gene not in dic_index2cons[index]:
-            dic_index2cons[index].append(gene)
+        if index not in dic_index2consRb:
+            dic_index2consRb[index] = [gene]
+        elif gene not in dic_index2consRb[index]:
+            dic_index2consRb[index].append(gene)
 
+
+#Reading intersectionGenes%i.txt into a list to get the gene intersection with the comps$i
+dic_index2intergene = {}
+with open(Arg[5], 'r') as f:
+    for line in f:
+        L = line.split('\t')
+        index = int(L[0].split('_')[1])
+        chromosome = L[2]
+        if index not in dic_index2intergene:
+            dic_index2intergene[index] = [chromosome]
+        elif chromosome not in dic_index2intergene[index]:
+            dic_index2intergene[index].append(chromosome)
 
 #Reading the abundance file
 abundance = []
-with open(Arg[5], 'r') as f:
+with open(Arg[6], 'r') as f:
     for line in f:
         abundance.append(line.split('.')[0])
 
@@ -64,33 +106,32 @@ with open(Arg[5], 'r') as f:
 #Reading every line of comp%i.txt and adding the TE reference if the index of the line is in dic_index2TE
 #Writing the new line in a new file comp%i.txt
 i = 0
-all_representants = []
 with open(Arg[1], 'r') as f:
-    with open(Arg[1].split('.')[0] + "_annoted.nodes", 'w') as f_out:
+    with open(Arg[1].split('.')[0] + "_annotated.nodes", 'w') as f_out:
         for line in f:
             L = line.split('\t')
             node = int(L[0])
-            representant = "*"
-            representant_index = -1
+            AS=0
+            AS_dfam=0
             if i in dic_index2gene:
-                str_gene = "; ".join(dic_index2gene[i])
-                representant = dic_index2gene[i][0]
+                str_gene = "; ".join([el[0] + "@" + el[1] + "%" + str(el[3]) for el in dic_index2gene[i]])
+                AS = max(el[2] for el in dic_index2gene[i])
             else:
                 str_gene = "*"
-            if i in dic_index2TE:
-                str_TE = "; ".join(dic_index2TE[i])
-                representant = dic_index2TE[i][0].split("$")[0] 
-            else :
-                str_TE = "*"
-            if representant not in all_representants:
-                all_representants.append(representant)
-            elif representant != "*":
-                representant_index = all_representants.index(representant)
 
-            if i  in dic_index2cons:
-                str_cons = "; ".join(dic_index2cons[i])
+            if i  in dic_index2consDfam:
+                str_consDfam = "; ".join([el[0] for el in dic_index2consDfam[i]])
+                AS_dfam = max(el[1] for el in dic_index2consDfam[i])
             else:
-                str_cons = "*"
+                str_consDfam = "*"
+            if i  in dic_index2consRb:
+                str_consRb = "; ".join(dic_index2consRb[i])
+            else:
+                str_consRb = "*"
+            if i in dic_index2intergene:
+                str_intergene = "; ".join(dic_index2intergene[i])
+            else:
+                str_intergene = "*"
             L=line[:-1].split("\t")
             ind=L[0]
             seq=L[1]
@@ -100,6 +141,6 @@ with open(Arg[1], 'r') as f:
             else:
                 d = L[2]
                 weight = L[3]
-            f_out.write(ind +"\t" + seq + "\t" + d + "\t" + weight + "\t" + str_TE + "\t" + str_gene +  "\t" + str(representant_index) + "\t" + str_cons + "\t" +  abundance[int(L[0])] + "\n")
+            f_out.write(ind +"\t" + seq + "\t" + d + "\t" + weight + "\t" + str_gene + "\t" + str_consDfam  + "\t" + str_consRb  + "\t" + str_intergene  + "\t" +  abundance[int(L[0])] + "\t" + str(AS) + "\t" + str(AS_dfam) + "\n")
 
             i += 1

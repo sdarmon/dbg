@@ -17,7 +17,6 @@
 #define MAX 1024
 
 // Permet de déterminer s'il existe un chemin de la composante i à la composante j, et s'il existe, renvoie la distance.
-
 void chemin_local(int i, vector<int> &endings, Graph &G, vector<vector<int>> &components, int profondeurMax){
     vector<int> comp1;
     vector<Neighbor*> voisin1;
@@ -39,7 +38,7 @@ void chemin_local(int i, vector<int> &endings, Graph &G, vector<vector<int>> &co
         }
     }
     //On regarde si la j-eme composante s'intersecte avec la comp1 (possible en fonction du critère de la composante
-    //choisi
+    //choisi.
     for (int j = 0; j<components.size(); j++){
         for(int k= 0; k< components[j].size(); k++){
             if (find(comp1.begin(),comp1.end(),components[j][k]) != comp1.end()){ 

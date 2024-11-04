@@ -1,0 +1,149 @@
+.TH KISSPLICE "1" "2024-06-06" "kissplice 2.6.7" "User Commands"
+.SH NAME
+kisSplice \- local assembly of SNPs, indels and AS events
+.SH SYNOPSIS
+kissplice \-h
+.br
+kissplice [OPTION] [\-r READFILES]
+.SH DESCRIPTION
+Detects alternative splicing events and other kinds of polymorphisms from
+READFILES (in FASTA or FASTQ format).
+.SH OPTIONS
+.TP
+.B
+\-h, \-\-help
+Show this help message and exit.
+.TP
+\fB\-r\fR READFILES
+Input fasta/q read files or compressed (.gz) fasta/q files (mutiple, such as "-r file1 -r file2...")
+.TP
+\fB\-k\fR KVAL
+k\-mer size (default=41).
+.TP
+\fB\-b\fR BVAL
+Maximum number of branching nodes (default: 5)
+.TP
+\fB\-l\fR LLMAX
+Maximal length of the shorter path (default: 2k\+1).
+.TP
+\fB\-m\fR LL_MIN
+Minimum length of the shorter path (default 2k\-8).
+.TP
+\fB\-M\fR UL_MAX
+Maximum length of the longest path (default: 1000000),
+skipped exons longer than UL_MAX are not reported.
+.TP
+\fB\-g\fR GRAPH_PREFIX
+Path and prefix to pre\-built de Bruijn graph (suffixed
+by .edges/.nodes) if jointly used with \fB\-r\fR, graph used
+to find bubbles and reads used for quantification.
+.TP
+\fB\-o\fR OUT_DIR
+Path to store the results (default = ./results).
+.TP
+\fB\-d\fR PATH_TO_TMP
+Specific directory (absolute path) where to build
+temporary files (default temporary directory otherwise).
+.TP
+\fB\-t\fR NBPROCS
+Number of cores (must be <= number of physical cores).
+.TP
+\fB\-s\fR OUTPUT_SNPS
+0, 1 or 2. Changes which types of SNPs will be output. If 0 (default), will not output SNPs. If 1, will output Type0a-SNPs. If 2, will output Type0a and Type0b SNPs (warning: this option may increase a lot the running time.).
+.TP
+\fB\-v\fR
+Verbose mode.
+.TP
+\fB\-u\fR
+Keep the nodes/edges file for unfinished bccs.
+.TP
+\fB\-c\fR MIN_COV
+Discard k\-mers tha are present strictly less than this
+number of times in the dataset.
+(default 2).
+.TP
+\fB\-C\fR MIN_RELATIVE_COV
+Discard edges with relative coverage
+below MIN_RELATIVE_COV expressed as a percentage in [0,1).
+(default 0.05).
+.TP
+\fB\-e\fR MIN_EDIT_DIST
+Classify as inexact repeats those bubbles whose paths'
+edit distance is smaller than MIN_EDIT_DIST
+(default 3).
+.TP
+\fB\-y\fR MAX_CYCLES
+Maximal number of bubble enumerations in each bcc. If
+exceeded, no bubble is output for the bcc (default:
+100000000).
+.TP
+\fB\-\-mismatches\fR NB_MISMATCHES
+Maximal number of substitutions authorized between a 
+read and a fragment (for quantification only), default 2. If you increase the mismatch and use \fB\-\-counts\fR think of increasing min_overlap too.
+.TP
+\fB\-\-counts\fR COUNTS_TYPE
+Changes how the counts will be reported. If 0:
+total counts, if 1: counts on junctions, if 2 (default): all counts.
+.TP
+\fB\-\-min_overlap\fR MIN_OVERLAP
+Sets how many nt must overlap a junction to be counted by --counts option (default: 5).
+.TP 
+\fB\-\-timeout\fR TIMEOUT
+Max amount of time (in seconds) spent for enumerating
+bubbles in each bcc. If exceeded, no bubble is output
+for the bcc (default 100000).
+.TP
+\fB\-\-version\fR
+Display program's version number and exit.
+.TP 
+\fB\-\-output-context\fR 
+Will output the maximum non-ambiguous context of a bubble.
+.TP 
+\fB\-\-output-path\fR
+Will output the id of the nodes composing the two paths 
+of the bubbles.
+.TP
+\fB\-\-output-branch-count\fR
+Will output the number of branching nodes in each path.
+.TP
+\fB\-\-keep-bccs\fR
+Keep the node/edges files for all bccs.
+.TP
+\fB\-\-not-experimental\fR
+Do not use a new experimental algorithm that searches for bubbles by listing all paths.
+.TP
+\fB\-\-max-memory MAX_MEMORY\fR
+If you use the experimental algorithm, you must provide the maximum size of the process's virtual memory (address space) in megabytes (default unlimited).
+.TP
+\fB\-\-keep-counts\fR
+Keep the .counts file after the sequencing-errors-removal step.
+.TP
+\fB\-\-get-mapping-info\fR
+Creates a file with the KissReads mapping information of the reads on the bubbles.
+.TP
+\fB\-\-stranded\fR
+Execute kissreads in stranded mode.
+.TP
+\fB\-\-strandedAbsoluteThreshold\fR
+Sets the minimum number of reads mapping to a path of a bubble in a read set is needed to call a strand.
+.TP
+\fB\-\-strandedRelativeThreshold\fR
+If a strand is called for a path of a bubble in a read set, but the proportion of reads calling this strand is less than this threshold, then the strand of the path is set to '?' (any strand - not enough evidence to call a strand).
+.TP
+\fB\-\-keep-redundancy\fR
+Keep the Type_1 redundant cycles in the result file.
+.TP
+\fB\-\-keep-low-complexity\fR
+Keep the low-complexity Type_1 cycles in the result file.
+.TP
+\fB\-\-lc-entropy-threshold\fR
+Cycles with a Shannon entropy value for their upper path below this value will be removed (use --keep-low-complexity to keep them).
+.TP
+\fB\-\-get-redundance-info\fR
+Creates files with informations on compressed redundant cycles.
+.TP
+\fB\-\-get-low-complexity-info\fR
+Creates a file with informations on removed low-complexity cycles.
+.TP
+\fB\-\-type1-only\fR
+Only quantify Type 1 bubbles (alternative splicing events, MAJOR SPEED UP with -b > 10 BUT all other bubbles will not appear in the result file).

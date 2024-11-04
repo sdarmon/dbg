@@ -119,9 +119,9 @@ with open(Arg[2], 'r') as f:
         target = func(line)
         if "matches_ref_protein \"True\";" in line:
             match_prot.add(target)
-        if "UTR" in line :
+        if "UTR" or "five_prime_utr" or "three_prime_utr" in line :
             UTR.add(target)
-        if "CDS" in line:
+        if "CDS" or "start_codon" or "stop_codon" in line:
             CDS.add(target)
         genes.add(target)
 
