@@ -1,0 +1,3257 @@
+STAR version=2.7.11b
+STAR compilation time,server,dir=2024-01-25T16:12:02-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+STAR git: On branch master ; commit a72e5fa27331108f524211d667949dc5ff4072e8 ; diff files: CHANGES.md README.md doc/STARmanual.pdf extras/doc-latex/STARmanual.tex extras/doc-latex/parametersDefault.tex extras/docker/Dockerfile source/VERSION 
+##### Command Line:
+/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /beegfs/data/sdarmon/results/mus/rb_ref --genomeFastaFiles /beegfs/data/sdarmon/mus/TE_Rb.fa --genomeSAindexNbases 9 --genomeSAsparseD 4 --genomeChrBinNbits 16
+##### Initial USER parameters from Command Line:
+###### All USER parameters from Command Line:
+runThreadN                    8     ~RE-DEFINED
+runMode                       genomeGenerate        ~RE-DEFINED
+genomeDir                     /beegfs/data/sdarmon/results/mus/rb_ref     ~RE-DEFINED
+genomeFastaFiles              /beegfs/data/sdarmon/mus/TE_Rb.fa        ~RE-DEFINED
+genomeSAindexNbases           9     ~RE-DEFINED
+genomeSAsparseD               4     ~RE-DEFINED
+genomeChrBinNbits             16     ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runMode                           genomeGenerate   
+runThreadN                        8
+genomeDir                         /beegfs/data/sdarmon/results/mus/rb_ref
+genomeFastaFiles                  /beegfs/data/sdarmon/mus/TE_Rb.fa   
+genomeSAindexNbases               9
+genomeChrBinNbits                 16
+genomeSAsparseD                   4
+
+-------------------------------
+##### Final effective command line:
+/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STAR   --runMode genomeGenerate      --runThreadN 8   --genomeDir /beegfs/data/sdarmon/results/mus/rb_ref   --genomeFastaFiles /beegfs/data/sdarmon/mus/TE_Rb.fa      --genomeSAindexNbases 9   --genomeChrBinNbits 16   --genomeSAsparseD 4
+----------------------------------------
+
+Number of fastq files for each mate = 1
+ParametersSolo: --soloCellFilterType CellRanger2.2 filtering parameters:  3000 0.99 10
+Finished loading and checking parameters
+--genomeDir directory exists and will be overwritten: /beegfs/data/sdarmon/results/mus/rb_ref/
+!!!!! WARNING: Could not move Log.out file from ./Log.out into /beegfs/data/sdarmon/results/mus/rb_ref/Log.out. Will keep ./Log.out
+
+Nov 19 18:57:23 ... starting to generate Genome files
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 0  "rb_MamRep38" chrStart: 0
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1  "rb_MamRep1527" chrStart: 65536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 2  "rb_UCON56" chrStart: 131072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 3  "rb_Eutr10" chrStart: 196608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 4  "rb_MER135" chrStart: 262144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 5  "rb_UCON39" chrStart: 327680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 6  "rb_MLT2B3" chrStart: 393216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 7  "rb_LTR80B" chrStart: 458752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 8  "rb_MIR" chrStart: 524288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 9  "rb_UCON53" chrStart: 589824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 10  "rb_X15_LINE" chrStart: 655360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 11  "rb_MER21C" chrStart: 720896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 12  "rb_EUTREP14" chrStart: 786432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 13  "rb_Eutr7" chrStart: 851968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 14  "rb_MER31A" chrStart: 917504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 15  "rb_MER104" chrStart: 983040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 16  "rb_L2D" chrStart: 1048576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 17  "rb_MARE1" chrStart: 1114112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 18  "rb_Charlie18a" chrStart: 1179648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 19  "rb_MER57C2" chrStart: 1245184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 20  "rb_UCON45" chrStart: 1310720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 21  "rb_MER104B" chrStart: 1376256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 22  "rb_UCON38" chrStart: 1441792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 23  "rb_Eutr17" chrStart: 1507328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 24  "rb_UCON102" chrStart: 1572864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 25  "rb_MamGypLTR1b" chrStart: 1638400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 26  "rb_MER74" chrStart: 1703936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 27  "rb_MER44D" chrStart: 1769472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 28  "rb_EUTREP4" chrStart: 1835008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 29  "rb_L1MC5" chrStart: 1900544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 30  "rb_MARE5" chrStart: 1966080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 31  "rb_MLT2B4" chrStart: 2031616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 32  "rb_DNA1_Mam" chrStart: 2097152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 33  "rb_MARE3" chrStart: 2162688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 34  "rb_UCON55" chrStart: 2228224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 35  "rb_MER76-int" chrStart: 2293760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 36  "rb_L1M1_5" chrStart: 2359296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 37  "rb_EuthAT-2" chrStart: 2424832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 38  "rb_X22_DNA" chrStart: 2490368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 39  "rb_UCON49" chrStart: 2555904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 40  "rb_L1ME3F_3end" chrStart: 2621440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 41  "rb_UCON81" chrStart: 2686976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 42  "rb_MamGyp-int" chrStart: 2752512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 43  "rb_X11_DNA" chrStart: 2818048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 44  "rb_MLT1F2" chrStart: 2883584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 45  "rb_MER47B" chrStart: 2949120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 46  "rb_Tigger16a" chrStart: 3014656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 47  "rb_UCON46" chrStart: 3080192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 48  "rb_GOLEM" chrStart: 3145728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 49  "rb_UCON90" chrStart: 3211264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 50  "rb_Tigger13a" chrStart: 3276800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 51  "rb_EUTREP15" chrStart: 3342336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 52  "rb_MER82" chrStart: 3407872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 53  "rb_EUTREP3" chrStart: 3473408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 54  "rb_LTR16E2" chrStart: 3538944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 55  "rb_MER65A" chrStart: 3604480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 56  "rb_ZOMBI_C" chrStart: 3670016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 57  "rb_MER58B" chrStart: 3735552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 58  "rb_EUTREP7" chrStart: 3801088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 59  "rb_MER92C" chrStart: 3866624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 60  "rb_MamTip2" chrStart: 3932160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 61  "rb_Eutr11" chrStart: 3997696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 62  "rb_MLT1J1" chrStart: 4063232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 63  "rb_UCON84" chrStart: 4128768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 64  "rb_LTR79" chrStart: 4194304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 65  "rb_LTR104_Mam" chrStart: 4259840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 66  "rb_Charlie16a" chrStart: 4325376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 67  "rb_UCON92" chrStart: 4390912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 68  "rb_LTR90A" chrStart: 4456448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 69  "rb_MamRep564" chrStart: 4521984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 70  "rb_X24_LINE" chrStart: 4587520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 71  "rb_Charlie21a" chrStart: 4653056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 72  "rb_L2C" chrStart: 4718592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 73  "rb_LTR16B2" chrStart: 4784128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 74  "rb_EUTREP6" chrStart: 4849664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 75  "rb_HERVS71" chrStart: 4915200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 76  "rb_Kanga11a" chrStart: 4980736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 77  "rb_MamGypLTR1a" chrStart: 5046272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 78  "rb_EUTREP16" chrStart: 5111808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 79  "rb_UCON41" chrStart: 5177344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 80  "rb_UCON51" chrStart: 5242880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 81  "rb_X28_DNA" chrStart: 5308416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 82  "rb_Charlie13a" chrStart: 5373952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 83  "rb_X23_DNA" chrStart: 5439488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 84  "rb_Eutr18" chrStart: 5505024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 85  "rb_MARE8" chrStart: 5570560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 86  "rb_UCON98" chrStart: 5636096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 87  "rb_UCON94" chrStart: 5701632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 88  "rb_MER3" chrStart: 5767168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 89  "rb_ERVL-E" chrStart: 5832704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 90  "rb_MLT1J" chrStart: 5898240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 91  "rb_UCON63" chrStart: 5963776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 92  "rb_UCON64" chrStart: 6029312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 93  "rb_UCON87" chrStart: 6094848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 94  "rb_UCON57" chrStart: 6160384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 95  "rb_Charlie22a" chrStart: 6225920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 96  "rb_CR1_Mam" chrStart: 6291456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 97  "rb_GOLEM_B" chrStart: 6356992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 98  "rb_UCON42" chrStart: 6422528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 99  "rb_LTR86C" chrStart: 6488064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 100  "rb_SVA2" chrStart: 6553600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 101  "rb_MER63C" chrStart: 6619136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 102  "rb_Eutr1" chrStart: 6684672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 103  "rb_CHARLIE4" chrStart: 6750208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 104  "rb_LTR16A" chrStart: 6815744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 105  "rb_MamRep137" chrStart: 6881280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 106  "rb_L1MB6_5" chrStart: 6946816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 107  "rb_X34_DNA" chrStart: 7012352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 108  "rb_L2" chrStart: 7077888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 109  "rb_X6b_DNA" chrStart: 7143424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 110  "rb_MLT1A0" chrStart: 7208960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 111  "rb_Zaphod3" chrStart: 7274496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 112  "rb_L1MB4_5" chrStart: 7340032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 113  "rb_LTR85b" chrStart: 7405568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 114  "rb_L2B" chrStart: 7471104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 115  "rb_MLT1J2" chrStart: 7536640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 116  "rb_CHARLIE1B" chrStart: 7602176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 117  "rb_X20_LINE" chrStart: 7667712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 118  "rb_LTR16B" chrStart: 7733248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 119  "rb_MLT2E" chrStart: 7798784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 120  "rb_MER21B" chrStart: 7864320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 121  "rb_X12_LINE" chrStart: 7929856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 122  "rb_LTR90B" chrStart: 7995392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 123  "rb_ZOMBI_B" chrStart: 8060928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 124  "rb_EUTREP11" chrStart: 8126464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 125  "rb_X29a_DNA" chrStart: 8192000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 126  "rb_MIRb" chrStart: 8257536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 127  "rb_EuthAT-2B" chrStart: 8323072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 128  "rb_MER68_I" chrStart: 8388608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 129  "rb_LTR85a" chrStart: 8454144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 130  "rb_MLT1A1" chrStart: 8519680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 131  "rb_MER104A" chrStart: 8585216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 132  "rb_MLT1E1A" chrStart: 8650752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 133  "rb_UCON103" chrStart: 8716288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 134  "rb_UCON80" chrStart: 8781824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 135  "rb_Eutr16" chrStart: 8847360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 136  "rb_MER47C" chrStart: 8912896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 137  "rb_RICKSHA" chrStart: 8978432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 138  "rb_MER57E2" chrStart: 9043968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 139  "rb_MER6" chrStart: 9109504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 140  "rb_UCON91" chrStart: 9175040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 141  "rb_X5b_DNA" chrStart: 9240576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 142  "rb_MER69A" chrStart: 9306112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 143  "rb_X11_LINE" chrStart: 9371648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 144  "rb_MER2" chrStart: 9437184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 145  "rb_MamGypLTR2b" chrStart: 9502720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 146  "rb_UCON71" chrStart: 9568256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 147  "rb_CHARLIE1" chrStart: 9633792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 148  "rb_MER68A" chrStart: 9699328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 149  "rb_L1ME5" chrStart: 9764864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 150  "rb_L4" chrStart: 9830400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 151  "rb_LTR82B" chrStart: 9895936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 152  "rb_L1MEg_5end" chrStart: 9961472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 153  "rb_MER30" chrStart: 10027008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 154  "rb_EUTREP12" chrStart: 10092544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 155  "rb_EUTREP5" chrStart: 10158080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 156  "rb_X20_DNA" chrStart: 10223616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 157  "rb_MARE9" chrStart: 10289152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 158  "rb_MER5A1" chrStart: 10354688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 159  "rb_LTR33B" chrStart: 10420224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 160  "rb_MER97d" chrStart: 10485760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 161  "rb_MER65I" chrStart: 10551296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 162  "rb_X2_LR" chrStart: 10616832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 163  "rb_MER5C1" chrStart: 10682368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 164  "rb_MLT-int" chrStart: 10747904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 165  "rb_CHARLIE1A" chrStart: 10813440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 166  "rb_X17_DNA" chrStart: 10878976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 167  "rb_LTR78" chrStart: 10944512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 168  "rb_L1ME3C_3end" chrStart: 11010048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 169  "rb_X4_LR" chrStart: 11075584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 170  "rb_CHARLIE8A" chrStart: 11141120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 171  "rb_Charlie24" chrStart: 11206656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 172  "rb_MER57E3" chrStart: 11272192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 173  "rb_UCON85" chrStart: 11337728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 174  "rb_MER57C1" chrStart: 11403264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 175  "rb_MSTC" chrStart: 11468800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 176  "rb_UCON99" chrStart: 11534336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 177  "rb_TAR1" chrStart: 11599872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 178  "rb_UCON105" chrStart: 11665408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 179  "rb_UCON69" chrStart: 11730944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 180  "rb_Eutr4" chrStart: 11796480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 181  "rb_LTR87" chrStart: 11862016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 182  "rb_MamGypLTR1c" chrStart: 11927552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 183  "rb_X13_DNA" chrStart: 11993088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 184  "rb_X18_LINE" chrStart: 12058624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 185  "rb_X1_LR" chrStart: 12124160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 186  "rb_L1MEf_5end" chrStart: 12189696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 187  "rb_HERVH" chrStart: 12255232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 188  "rb_UCON96" chrStart: 12320768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 189  "rb_ORSL-2a" chrStart: 12386304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 190  "rb_THER2" chrStart: 12451840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 191  "rb_L1ME5_3end" chrStart: 12517376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 192  "rb_UCON97" chrStart: 12582912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 193  "rb_X6a_DNA" chrStart: 12648448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 194  "rb_X27_DNA" chrStart: 12713984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 195  "rb_MARE11" chrStart: 12779520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 196  "rb_MLT1C1" chrStart: 12845056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 197  "rb_Eutr13" chrStart: 12910592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 198  "rb_MamRep1894" chrStart: 12976128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 199  "rb_L1MC4B" chrStart: 13041664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 200  "rb_LTR16B1" chrStart: 13107200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 201  "rb_MER70_I" chrStart: 13172736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 202  "rb_HERVKC4" chrStart: 13238272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 203  "rb_MamRep1879" chrStart: 13303808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 204  "rb_Tigger12A" chrStart: 13369344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 205  "rb_UCON50" chrStart: 13434880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 206  "rb_UCON43" chrStart: 13500416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 207  "rb_MLT1_I" chrStart: 13565952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 208  "rb_Charlie15a" chrStart: 13631488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 209  "rb_Tigger10" chrStart: 13697024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 210  "rb_MamGypLTR3" chrStart: 13762560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 211  "rb_MLT2B2" chrStart: 13828096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 212  "rb_MLT1E" chrStart: 13893632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 213  "rb_UCON75" chrStart: 13959168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 214  "rb_LTR75_1" chrStart: 14024704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 215  "rb_EUTREP2" chrStart: 14090240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 216  "rb_LTR10E" chrStart: 14155776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 217  "rb_MER69B" chrStart: 14221312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 218  "rb_Tigger14a" chrStart: 14286848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 219  "rb_LTR88b" chrStart: 14352384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 220  "rb_X18_DNA" chrStart: 14417920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 221  "rb_L1MC3" chrStart: 14483456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 222  "rb_MamRep4096" chrStart: 14548992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 223  "rb_MARE7" chrStart: 14614528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 224  "rb_HAL1M8" chrStart: 14680064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 225  "rb_L1MEe_5end" chrStart: 14745600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 226  "rb_X21_LINE" chrStart: 14811136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 227  "rb_Charlie28" chrStart: 14876672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 228  "rb_UCON60" chrStart: 14942208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 229  "rb_Charlie27" chrStart: 15007744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 230  "rb_LTR88a" chrStart: 15073280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 231  "rb_X32_DNA" chrStart: 15138816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 232  "rb_Eutr14" chrStart: 15204352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 233  "rb_UCON83" chrStart: 15269888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 234  "rb_EutTc1-N1" chrStart: 15335424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 235  "rb_EUTREP13" chrStart: 15400960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 236  "rb_L1M3DE_5" chrStart: 15466496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 237  "rb_UCON67" chrStart: 15532032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 238  "rb_Eutr3" chrStart: 15597568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 239  "rb_UCON107" chrStart: 15663104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 240  "rb_L1MA10" chrStart: 15728640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 241  "rb_MLT2F" chrStart: 15794176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 242  "rb_TIGGER5_A" chrStart: 15859712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 243  "rb_L1ME4" chrStart: 15925248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 244  "rb_UCON32" chrStart: 15990784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 245  "rb_L1M3A_5" chrStart: 16056320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 246  "rb_Tigger16b" chrStart: 16121856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 247  "rb_X31_DNA" chrStart: 16187392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 248  "rb_X4a_DNA" chrStart: 16252928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 249  "rb_MamRep434" chrStart: 16318464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 250  "rb_MER46C" chrStart: 16384000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 251  "rb_UCON88" chrStart: 16449536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 252  "rb_Charlie17a" chrStart: 16515072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 253  "rb_HERVK22I" chrStart: 16580608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 254  "rb_MER74A" chrStart: 16646144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 255  "rb_TIGGER5A" chrStart: 16711680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 256  "rb_MER105" chrStart: 16777216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 257  "rb_Charlie13b" chrStart: 16842752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 258  "rb_MLT1C" chrStart: 16908288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 259  "rb_L1P_MA2" chrStart: 16973824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 260  "rb_LTR84a" chrStart: 17039360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 261  "rb_X7_DNA" chrStart: 17104896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 262  "rb_MamSINE1" chrStart: 17170432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 263  "rb_ZOMBI" chrStart: 17235968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 264  "rb_X26_DNA" chrStart: 17301504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 265  "rb_UCON78" chrStart: 17367040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 266  "rb_LTR108e_Mam" chrStart: 17432576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 267  "rb_MLT1D" chrStart: 17498112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 268  "rb_L1MDA_5" chrStart: 17563648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 269  "rb_MER103" chrStart: 17629184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 270  "rb_UCON52" chrStart: 17694720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 271  "rb_EUTREP10" chrStart: 17760256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 272  "rb_TIGGER5_B" chrStart: 17825792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 273  "rb_MER57D" chrStart: 17891328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 274  "rb_MER57E1" chrStart: 17956864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 275  "rb_MLT1O" chrStart: 18022400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 276  "rb_EUTREP1" chrStart: 18087936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 277  "rb_LTR81A" chrStart: 18153472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 278  "rb_X15_DNA" chrStart: 18219008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 279  "rb_UCON74" chrStart: 18284544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 280  "rb_MARE6" chrStart: 18350080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 281  "rb_UCON35" chrStart: 18415616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 282  "rb_UCON77" chrStart: 18481152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 283  "rb_MER116" chrStart: 18546688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 284  "rb_UCON36" chrStart: 18612224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 285  "rb_MLT1F1" chrStart: 18677760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 286  "rb_MST_I" chrStart: 18743296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 287  "rb_HERVL66I" chrStart: 18808832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 288  "rb_X21_DNA" chrStart: 18874368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 289  "rb_X2b_DNA" chrStart: 18939904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 290  "rb_LTR10A" chrStart: 19005440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 291  "rb_MLT1E1" chrStart: 19070976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 292  "rb_X13_LINE" chrStart: 19136512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 293  "rb_L1M3D_5" chrStart: 19202048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 294  "rb_X30_DNA" chrStart: 19267584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 295  "rb_MER34A" chrStart: 19333120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 296  "rb_Charlie25" chrStart: 19398656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 297  "rb_MER58A" chrStart: 19464192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 298  "rb_LTR88c" chrStart: 19529728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 299  "rb_Eutr5" chrStart: 19595264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 300  "rb_X25_DNA" chrStart: 19660800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 301  "rb_X29b_DNA" chrStart: 19726336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 302  "rb_EUTREP8" chrStart: 19791872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 303  "rb_MER57B1" chrStart: 19857408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 304  "rb_MamGypLTR1d" chrStart: 19922944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 305  "rb_MER5A" chrStart: 19988480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 306  "rb_UCON73" chrStart: 20054016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 307  "rb_MER34A1" chrStart: 20119552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 308  "rb_UCON68" chrStart: 20185088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 309  "rb_ERVL-B4" chrStart: 20250624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 310  "rb_LTR108d_Mam" chrStart: 20316160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 311  "rb_UCON44" chrStart: 20381696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 312  "rb_UCON34" chrStart: 20447232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 313  "rb_UCON82" chrStart: 20512768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 314  "rb_MIRc" chrStart: 20578304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 315  "rb_LTR84b" chrStart: 20643840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 316  "rb_MLT1E2" chrStart: 20709376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 317  "rb_UCON40" chrStart: 20774912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 318  "rb_Charlie19a" chrStart: 20840448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 319  "rb_UCON101" chrStart: 20905984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 320  "rb_MamGypLTR2" chrStart: 20971520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 321  "rb_MARE4" chrStart: 21037056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 322  "rb_UCON106" chrStart: 21102592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 323  "rb_MLT1B" chrStart: 21168128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 324  "rb_L5" chrStart: 21233664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 325  "rb_X5a_DNA" chrStart: 21299200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 326  "rb_X2a_DNA" chrStart: 21364736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 327  "rb_X12_DNA" chrStart: 21430272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 328  "rb_EuthAT-1" chrStart: 21495808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 329  "rb_LTR85c" chrStart: 21561344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 330  "rb_LTR67B" chrStart: 21626880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 331  "rb_MERX" chrStart: 21692416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 332  "rb_MER104C" chrStart: 21757952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 333  "rb_MER121" chrStart: 21823488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 334  "rb_UCON61" chrStart: 21889024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 335  "rb_MER2B" chrStart: 21954560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 336  "rb_X10b_DNA" chrStart: 22020096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 337  "rb_L3b_3end" chrStart: 22085632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 338  "rb_LTR83" chrStart: 22151168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 339  "rb_MER6C" chrStart: 22216704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 340  "rb_MER80" chrStart: 22282240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 341  "rb_MLT1M" chrStart: 22347776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 342  "rb_HAL1" chrStart: 22413312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 343  "rb_LTR37-int" chrStart: 22478848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 344  "rb_UCON79" chrStart: 22544384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 345  "rb_MLT1F_I" chrStart: 22609920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 346  "rb_UCON37" chrStart: 22675456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 347  "rb_RICKSHA_0" chrStart: 22740992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 348  "rb_X19_LINE" chrStart: 22806528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 349  "rb_LTR33" chrStart: 22872064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 350  "rb_UCON93" chrStart: 22937600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 351  "rb_UCON70" chrStart: 23003136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 352  "rb_BLACKJACK" chrStart: 23068672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 353  "rb_L1ME3E_3end" chrStart: 23134208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 354  "rb_MER5C" chrStart: 23199744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 355  "rb_MLT1C2" chrStart: 23265280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 356  "rb_MLT1F" chrStart: 23330816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 357  "rb_LTR68" chrStart: 23396352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 358  "rb_LTR86B2" chrStart: 23461888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 359  "rb_UCON89" chrStart: 23527424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 360  "rb_X10a_DNA" chrStart: 23592960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 361  "rb_UCON65" chrStart: 23658496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 362  "rb_LTR89" chrStart: 23724032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 363  "rb_ORSL" chrStart: 23789568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 364  "rb_MER90a_LTR" chrStart: 23855104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 365  "rb_LTR16D2" chrStart: 23920640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 366  "rb_Ricksha_a" chrStart: 23986176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 367  "rb_MER91B" chrStart: 24051712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 368  "rb_EuthAT-N1" chrStart: 24117248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 369  "rb_Eutr12" chrStart: 24182784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 370  "rb_LTR54" chrStart: 24248320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 371  "rb_LTR86A1" chrStart: 24313856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 372  "rb_UCON76" chrStart: 24379392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 373  "rb_X4b_DNA" chrStart: 24444928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 374  "rb_UCON33" chrStart: 24510464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 375  "rb_X1_DNA" chrStart: 24576000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 376  "rb_THER1" chrStart: 24641536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 377  "rb_X17_LINE" chrStart: 24707072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 378  "rb_Eutr9" chrStart: 24772608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 379  "rb_Kanga1" chrStart: 24838144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 380  "rb_Kanga1d" chrStart: 24903680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 381  "rb_Eutr2" chrStart: 24969216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 382  "rb_ALINE" chrStart: 25034752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 383  "rb_MamRep488" chrStart: 25100288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 384  "rb_X9a_DNA" chrStart: 25165824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 385  "rb_UCON132a" chrStart: 25231360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 386  "rb_L1MEC_5" chrStart: 25296896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 387  "rb_Helitron3Na_Mam" chrStart: 25362432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 388  "rb_MER124" chrStart: 25427968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 389  "rb_LTR40A1" chrStart: 25493504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 390  "rb_X9c_DNA" chrStart: 25559040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 391  "rb_UCON66" chrStart: 25624576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 392  "rb_MER115" chrStart: 25690112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 393  "rb_UCON54" chrStart: 25755648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 394  "rb_X24_DNA" chrStart: 25821184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 395  "rb_Tigger12" chrStart: 25886720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 396  "rb_LTR81C" chrStart: 25952256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 397  "rb_LTR80A" chrStart: 26017792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 398  "rb_Eutr8" chrStart: 26083328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 399  "rb_LTR33A" chrStart: 26148864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 400  "rb_MLT1J-int" chrStart: 26214400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 401  "rb_X33a_DNA" chrStart: 26279936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 402  "rb_LTR81B" chrStart: 26345472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 403  "rb_UCON47" chrStart: 26411008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 404  "rb_X3_LINE" chrStart: 26476544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 405  "rb_LTR82A" chrStart: 26542080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 406  "rb_L1ME3D_3end" chrStart: 26607616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 407  "rb_Charlie26a" chrStart: 26673152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 408  "rb_MIR3" chrStart: 26738688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 409  "rb_MLT1H_I" chrStart: 26804224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 410  "rb_L1M6_5end" chrStart: 26869760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 411  "rb_Helitron1Nb_Mam" chrStart: 26935296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 412  "rb_MER34-int" chrStart: 27000832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 413  "rb_HERVFH21I" chrStart: 27066368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 414  "rb_UCON48" chrStart: 27131904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 415  "rb_Tigger15a" chrStart: 27197440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 416  "rb_Tigger9b" chrStart: 27262976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 417  "rb_L1MD1_5" chrStart: 27328512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 418  "rb_UCON132b" chrStart: 27394048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 419  "rb_UCON95" chrStart: 27459584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 420  "rb_Charlie11" chrStart: 27525120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 421  "rb_MARE10" chrStart: 27590656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 422  "rb_CHARLIE2" chrStart: 27656192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 423  "rb_UCON59" chrStart: 27721728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 424  "rb_MER21C_BT" chrStart: 27787264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 425  "rb_L1MA9_5" chrStart: 27852800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 426  "rb_LTR53-int" chrStart: 27918336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 427  "rb_ORSL-2b" chrStart: 27983872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 428  "rb_MER58C" chrStart: 28049408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 429  "rb_X9b_DNA" chrStart: 28114944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 430  "rb_LTR16D1" chrStart: 28180480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 431  "rb_LTR16E1" chrStart: 28246016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 432  "rb_L1MB7" chrStart: 28311552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 433  "rb_L1MC4_5end" chrStart: 28377088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 434  "rb_UCON104" chrStart: 28442624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 435  "rb_X3_LR" chrStart: 28508160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 436  "rb_LTR86B1" chrStart: 28573696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 437  "rb_LTR54B" chrStart: 28639232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 438  "rb_LTR10G" chrStart: 28704768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 439  "rb_UCON58" chrStart: 28770304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 440  "rb_MER58D" chrStart: 28835840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 441  "rb_Eutr15" chrStart: 28901376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 442  "rb_LTR33C" chrStart: 28966912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 443  "rb_L1M7_5end" chrStart: 29032448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 444  "rb_TIGGER6A" chrStart: 29097984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 445  "rb_UCON62" chrStart: 29163520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 446  "rb_HERVL68" chrStart: 29229056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 447  "rb_UCON100" chrStart: 29294592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 448  "rb_UCON72" chrStart: 29360128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 449  "rb_MamRep605" chrStart: 29425664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 450  "rb_UCON86" chrStart: 29491200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 451  "rb_LTR86A2" chrStart: 29556736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 452  "rb_Eutr6" chrStart: 29622272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 453  "rb_MamGypLTR2c" chrStart: 29687808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 454  "rb_LmeSINE1c" chrStart: 29753344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 455  "rb_(TAACC)n" chrStart: 29818880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 456  "rb_LmeSINE1b" chrStart: 29884416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 457  "rb_LSU-rRNA_Hsa" chrStart: 29949952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 458  "rb_DeuSINE" chrStart: 30015488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 459  "rb_MamRep38" chrStart: 30081024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 460  "rb_MamRep1527" chrStart: 30146560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 461  "rb_UCON56" chrStart: 30212096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 462  "rb_Eutr10" chrStart: 30277632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 463  "rb_MER135" chrStart: 30343168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 464  "rb_UCON39" chrStart: 30408704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 465  "rb_LTR80B" chrStart: 30474240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 466  "rb_MIR" chrStart: 30539776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 467  "rb_UCON53" chrStart: 30605312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 468  "rb_X15_LINE" chrStart: 30670848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 469  "rb_MER21C" chrStart: 30736384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 470  "rb_EUTREP14" chrStart: 30801920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 471  "rb_Eutr7" chrStart: 30867456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 472  "rb_L2D" chrStart: 30932992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 473  "rb_MARE1" chrStart: 30998528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 474  "rb_Charlie18a" chrStart: 31064064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 475  "rb_MER57C2" chrStart: 31129600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 476  "rb_UCON45" chrStart: 31195136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 477  "rb_UCON38" chrStart: 31260672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 478  "rb_Eutr17" chrStart: 31326208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 479  "rb_UCON102" chrStart: 31391744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 480  "rb_MamGypLTR1b" chrStart: 31457280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 481  "rb_MER74" chrStart: 31522816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 482  "rb_EUTREP4" chrStart: 31588352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 483  "rb_MARE5" chrStart: 31653888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 484  "rb_DNA1_Mam" chrStart: 31719424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 485  "rb_MARE3" chrStart: 31784960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 486  "rb_UCON55" chrStart: 31850496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 487  "rb_MER76-int" chrStart: 31916032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 488  "rb_EuthAT-2" chrStart: 31981568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 489  "rb_X22_DNA" chrStart: 32047104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 490  "rb_UCON49" chrStart: 32112640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 491  "rb_L1ME3F_3end" chrStart: 32178176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 492  "rb_UCON81" chrStart: 32243712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 493  "rb_MamGyp-int" chrStart: 32309248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 494  "rb_X11_DNA" chrStart: 32374784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 495  "rb_MER47B" chrStart: 32440320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 496  "rb_Tigger16a" chrStart: 32505856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 497  "rb_UCON46" chrStart: 32571392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 498  "rb_GOLEM" chrStart: 32636928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 499  "rb_UCON90" chrStart: 32702464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 500  "rb_Tigger13a" chrStart: 32768000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 501  "rb_EUTREP15" chrStart: 32833536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 502  "rb_MER82" chrStart: 32899072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 503  "rb_EUTREP3" chrStart: 32964608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 504  "rb_LTR16E2" chrStart: 33030144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 505  "rb_ZOMBI_C" chrStart: 33095680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 506  "rb_MER58B" chrStart: 33161216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 507  "rb_EUTREP7" chrStart: 33226752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 508  "rb_MamTip2" chrStart: 33292288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 509  "rb_Eutr11" chrStart: 33357824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 510  "rb_UCON84" chrStart: 33423360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 511  "rb_LTR79" chrStart: 33488896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 512  "rb_LTR104_Mam" chrStart: 33554432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 513  "rb_Charlie16a" chrStart: 33619968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 514  "rb_UCON92" chrStart: 33685504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 515  "rb_LTR90A" chrStart: 33751040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 516  "rb_MamRep564" chrStart: 33816576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 517  "rb_X24_LINE" chrStart: 33882112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 518  "rb_Charlie21a" chrStart: 33947648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 519  "rb_L2C" chrStart: 34013184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 520  "rb_LTR16B2" chrStart: 34078720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 521  "rb_EUTREP6" chrStart: 34144256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 522  "rb_HERVS71" chrStart: 34209792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 523  "rb_Kanga11a" chrStart: 34275328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 524  "rb_MamGypLTR1a" chrStart: 34340864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 525  "rb_EUTREP16" chrStart: 34406400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 526  "rb_UCON41" chrStart: 34471936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 527  "rb_UCON51" chrStart: 34537472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 528  "rb_X28_DNA" chrStart: 34603008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 529  "rb_Charlie13a" chrStart: 34668544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 530  "rb_X23_DNA" chrStart: 34734080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 531  "rb_Eutr18" chrStart: 34799616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 532  "rb_MARE8" chrStart: 34865152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 533  "rb_UCON98" chrStart: 34930688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 534  "rb_UCON94" chrStart: 34996224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 535  "rb_MER3" chrStart: 35061760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 536  "rb_ERVL-E" chrStart: 35127296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 537  "rb_UCON63" chrStart: 35192832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 538  "rb_UCON64" chrStart: 35258368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 539  "rb_UCON87" chrStart: 35323904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 540  "rb_UCON57" chrStart: 35389440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 541  "rb_Charlie22a" chrStart: 35454976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 542  "rb_CR1_Mam" chrStart: 35520512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 543  "rb_GOLEM_B" chrStart: 35586048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 544  "rb_UCON42" chrStart: 35651584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 545  "rb_LTR86C" chrStart: 35717120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 546  "rb_MER63C" chrStart: 35782656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 547  "rb_Eutr1" chrStart: 35848192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 548  "rb_MamRep137" chrStart: 35913728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 549  "rb_L1MB6_5" chrStart: 35979264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 550  "rb_X34_DNA" chrStart: 36044800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 551  "rb_L2" chrStart: 36110336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 552  "rb_X6b_DNA" chrStart: 36175872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 553  "rb_MLT1A0" chrStart: 36241408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 554  "rb_Zaphod3" chrStart: 36306944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 555  "rb_LTR85b" chrStart: 36372480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 556  "rb_L2B" chrStart: 36438016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 557  "rb_X20_LINE" chrStart: 36503552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 558  "rb_LTR16B" chrStart: 36569088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 559  "rb_MER21B" chrStart: 36634624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 560  "rb_X12_LINE" chrStart: 36700160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 561  "rb_LTR90B" chrStart: 36765696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 562  "rb_ZOMBI_B" chrStart: 36831232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 563  "rb_EUTREP11" chrStart: 36896768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 564  "rb_X29a_DNA" chrStart: 36962304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 565  "rb_MIRb" chrStart: 37027840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 566  "rb_EuthAT-2B" chrStart: 37093376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 567  "rb_MER68_I" chrStart: 37158912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 568  "rb_LTR85a" chrStart: 37224448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 569  "rb_MER25" chrStart: 37289984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 570  "rb_UCON103" chrStart: 37355520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 571  "rb_UCON80" chrStart: 37421056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 572  "rb_Eutr16" chrStart: 37486592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 573  "rb_MER47C" chrStart: 37552128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 574  "rb_MER57E2" chrStart: 37617664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 575  "rb_UCON91" chrStart: 37683200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 576  "rb_X5b_DNA" chrStart: 37748736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 577  "rb_MER69A" chrStart: 37814272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 578  "rb_X11_LINE" chrStart: 37879808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 579  "rb_MER2" chrStart: 37945344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 580  "rb_MamGypLTR2b" chrStart: 38010880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 581  "rb_UCON71" chrStart: 38076416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 582  "rb_MER68A" chrStart: 38141952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 583  "rb_L4" chrStart: 38207488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 584  "rb_LTR82B" chrStart: 38273024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 585  "rb_L1MEg_5end" chrStart: 38338560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 586  "rb_EUTREP12" chrStart: 38404096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 587  "rb_EUTREP5" chrStart: 38469632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 588  "rb_X20_DNA" chrStart: 38535168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 589  "rb_MARE9" chrStart: 38600704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 590  "rb_LTR33B" chrStart: 38666240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 591  "rb_MER97d" chrStart: 38731776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 592  "rb_X2_LR" chrStart: 38797312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 593  "rb_MER5C1" chrStart: 38862848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 594  "rb_MLT-int" chrStart: 38928384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 595  "rb_CHARLIE1A" chrStart: 38993920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 596  "rb_X17_DNA" chrStart: 39059456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 597  "rb_LTR78" chrStart: 39124992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 598  "rb_L1ME3C_3end" chrStart: 39190528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 599  "rb_X4_LR" chrStart: 39256064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 600  "rb_Charlie24" chrStart: 39321600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 601  "rb_MER57E3" chrStart: 39387136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 602  "rb_UCON85" chrStart: 39452672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 603  "rb_MER57C1" chrStart: 39518208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 604  "rb_MSTC" chrStart: 39583744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 605  "rb_UCON99" chrStart: 39649280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 606  "rb_UCON105" chrStart: 39714816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 607  "rb_UCON69" chrStart: 39780352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 608  "rb_Eutr4" chrStart: 39845888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 609  "rb_LTR87" chrStart: 39911424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 610  "rb_MamGypLTR1c" chrStart: 39976960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 611  "rb_X13_DNA" chrStart: 40042496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 612  "rb_X18_LINE" chrStart: 40108032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 613  "rb_X1_LR" chrStart: 40173568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 614  "rb_L1MEf_5end" chrStart: 40239104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 615  "rb_UCON96" chrStart: 40304640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 616  "rb_ORSL-2a" chrStart: 40370176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 617  "rb_THER2" chrStart: 40435712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 618  "rb_L1ME5_3end" chrStart: 40501248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 619  "rb_UCON97" chrStart: 40566784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 620  "rb_X6a_DNA" chrStart: 40632320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 621  "rb_X27_DNA" chrStart: 40697856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 622  "rb_MARE11" chrStart: 40763392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 623  "rb_Eutr13" chrStart: 40828928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 624  "rb_MamRep1894" chrStart: 40894464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 625  "rb_L1MC4B" chrStart: 40960000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 626  "rb_LTR16B1" chrStart: 41025536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 627  "rb_MER70_I" chrStart: 41091072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 628  "rb_MamRep1879" chrStart: 41156608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 629  "rb_Tigger12A" chrStart: 41222144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 630  "rb_UCON50" chrStart: 41287680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 631  "rb_UCON43" chrStart: 41353216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 632  "rb_MLT1_I" chrStart: 41418752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 633  "rb_Charlie15a" chrStart: 41484288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 634  "rb_Tigger10" chrStart: 41549824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 635  "rb_MamGypLTR3" chrStart: 41615360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 636  "rb_MLT2B2" chrStart: 41680896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 637  "rb_MLT1E" chrStart: 41746432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 638  "rb_UCON75" chrStart: 41811968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 639  "rb_LTR75_1" chrStart: 41877504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 640  "rb_EUTREP2" chrStart: 41943040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 641  "rb_MER69B" chrStart: 42008576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 642  "rb_Tigger14a" chrStart: 42074112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 643  "rb_LTR88b" chrStart: 42139648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 644  "rb_X18_DNA" chrStart: 42205184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 645  "rb_L1MC3" chrStart: 42270720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 646  "rb_MamRep4096" chrStart: 42336256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 647  "rb_MARE7" chrStart: 42401792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 648  "rb_HAL1M8" chrStart: 42467328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 649  "rb_L1MEe_5end" chrStart: 42532864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 650  "rb_X21_LINE" chrStart: 42598400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 651  "rb_Charlie28" chrStart: 42663936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 652  "rb_UCON60" chrStart: 42729472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 653  "rb_Charlie27" chrStart: 42795008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 654  "rb_LTR88a" chrStart: 42860544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 655  "rb_X32_DNA" chrStart: 42926080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 656  "rb_Eutr14" chrStart: 42991616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 657  "rb_UCON83" chrStart: 43057152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 658  "rb_EutTc1-N1" chrStart: 43122688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 659  "rb_EUTREP13" chrStart: 43188224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 660  "rb_UCON67" chrStart: 43253760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 661  "rb_Eutr3" chrStart: 43319296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 662  "rb_UCON107" chrStart: 43384832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 663  "rb_L1MA10" chrStart: 43450368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 664  "rb_UCON32" chrStart: 43515904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 665  "rb_Tigger16b" chrStart: 43581440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 666  "rb_X31_DNA" chrStart: 43646976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 667  "rb_X4a_DNA" chrStart: 43712512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 668  "rb_MamRep434" chrStart: 43778048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 669  "rb_MER46C" chrStart: 43843584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 670  "rb_UCON88" chrStart: 43909120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 671  "rb_Charlie17a" chrStart: 43974656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 672  "rb_HERVK22I" chrStart: 44040192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 673  "rb_MER105" chrStart: 44105728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 674  "rb_Charlie13b" chrStart: 44171264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 675  "rb_MLT1C" chrStart: 44236800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 676  "rb_L1P_MA2" chrStart: 44302336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 677  "rb_LTR84a" chrStart: 44367872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 678  "rb_X7_DNA" chrStart: 44433408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 679  "rb_MamSINE1" chrStart: 44498944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 680  "rb_ZOMBI" chrStart: 44564480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 681  "rb_X26_DNA" chrStart: 44630016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 682  "rb_UCON78" chrStart: 44695552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 683  "rb_LTR108e_Mam" chrStart: 44761088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 684  "rb_MLT1D" chrStart: 44826624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 685  "rb_UCON52" chrStart: 44892160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 686  "rb_EUTREP10" chrStart: 44957696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 687  "rb_MER57D" chrStart: 45023232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 688  "rb_MER57E1" chrStart: 45088768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 689  "rb_MLT1O" chrStart: 45154304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 690  "rb_EUTREP1" chrStart: 45219840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 691  "rb_LTR81A" chrStart: 45285376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 692  "rb_X15_DNA" chrStart: 45350912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 693  "rb_UCON74" chrStart: 45416448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 694  "rb_MARE6" chrStart: 45481984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 695  "rb_UCON35" chrStart: 45547520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 696  "rb_UCON77" chrStart: 45613056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 697  "rb_MER116" chrStart: 45678592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 698  "rb_UCON36" chrStart: 45744128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 699  "rb_MST_I" chrStart: 45809664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 700  "rb_X21_DNA" chrStart: 45875200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 701  "rb_X2b_DNA" chrStart: 45940736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 702  "rb_X13_LINE" chrStart: 46006272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 703  "rb_X30_DNA" chrStart: 46071808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 704  "rb_MER34A" chrStart: 46137344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 705  "rb_Charlie25" chrStart: 46202880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 706  "rb_MER58A" chrStart: 46268416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 707  "rb_LTR88c" chrStart: 46333952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 708  "rb_Eutr5" chrStart: 46399488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 709  "rb_X25_DNA" chrStart: 46465024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 710  "rb_X29b_DNA" chrStart: 46530560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 711  "rb_EUTREP8" chrStart: 46596096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 712  "rb_MER57B1" chrStart: 46661632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 713  "rb_MamGypLTR1d" chrStart: 46727168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 714  "rb_MER5A" chrStart: 46792704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 715  "rb_UCON73" chrStart: 46858240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 716  "rb_MER34A1" chrStart: 46923776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 717  "rb_UCON68" chrStart: 46989312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 718  "rb_ERVL-B4" chrStart: 47054848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 719  "rb_LTR108d_Mam" chrStart: 47120384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 720  "rb_UCON44" chrStart: 47185920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 721  "rb_UCON34" chrStart: 47251456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 722  "rb_UCON82" chrStart: 47316992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 723  "rb_MIRc" chrStart: 47382528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 724  "rb_LTR84b" chrStart: 47448064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 725  "rb_UCON40" chrStart: 47513600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 726  "rb_Charlie19a" chrStart: 47579136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 727  "rb_UCON101" chrStart: 47644672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 728  "rb_MamGypLTR2" chrStart: 47710208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 729  "rb_MARE4" chrStart: 47775744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 730  "rb_UCON106" chrStart: 47841280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 731  "rb_MLT1B" chrStart: 47906816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 732  "rb_L5" chrStart: 47972352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 733  "rb_X5a_DNA" chrStart: 48037888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 734  "rb_X2a_DNA" chrStart: 48103424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 735  "rb_X12_DNA" chrStart: 48168960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 736  "rb_EuthAT-1" chrStart: 48234496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 737  "rb_LTR85c" chrStart: 48300032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 738  "rb_LTR67B" chrStart: 48365568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 739  "rb_MERX" chrStart: 48431104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 740  "rb_MER121" chrStart: 48496640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 741  "rb_UCON61" chrStart: 48562176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 742  "rb_X10b_DNA" chrStart: 48627712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 743  "rb_L3b_3end" chrStart: 48693248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 744  "rb_LTR83" chrStart: 48758784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 745  "rb_MER6C" chrStart: 48824320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 746  "rb_MER80" chrStart: 48889856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 747  "rb_MLT1M" chrStart: 48955392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 748  "rb_LTR37-int" chrStart: 49020928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 749  "rb_UCON79" chrStart: 49086464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 750  "rb_MLT1F_I" chrStart: 49152000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 751  "rb_PB1D11" chrStart: 49217536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 752  "rb_UCON37" chrStart: 49283072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 753  "rb_X19_LINE" chrStart: 49348608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 754  "rb_UCON93" chrStart: 49414144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 755  "rb_UCON70" chrStart: 49479680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 756  "rb_BLACKJACK" chrStart: 49545216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 757  "rb_L1ME3E_3end" chrStart: 49610752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 758  "rb_MLT1C2" chrStart: 49676288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 759  "rb_MLT1F" chrStart: 49741824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 760  "rb_LTR68" chrStart: 49807360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 761  "rb_LTR86B2" chrStart: 49872896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 762  "rb_UCON89" chrStart: 49938432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 763  "rb_X10a_DNA" chrStart: 50003968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 764  "rb_UCON65" chrStart: 50069504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 765  "rb_LTR89" chrStart: 50135040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 766  "rb_ORSL" chrStart: 50200576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 767  "rb_MER90a_LTR" chrStart: 50266112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 768  "rb_LTR16D2" chrStart: 50331648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 769  "rb_Ricksha_a" chrStart: 50397184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 770  "rb_MER91B" chrStart: 50462720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 771  "rb_EuthAT-N1" chrStart: 50528256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 772  "rb_Eutr12" chrStart: 50593792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 773  "rb_LTR86A1" chrStart: 50659328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 774  "rb_UCON76" chrStart: 50724864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 775  "rb_X4b_DNA" chrStart: 50790400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 776  "rb_UCON33" chrStart: 50855936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 777  "rb_X1_DNA" chrStart: 50921472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 778  "rb_THER1" chrStart: 50987008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 779  "rb_X17_LINE" chrStart: 51052544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 780  "rb_Eutr9" chrStart: 51118080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 781  "rb_Kanga1" chrStart: 51183616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 782  "rb_Kanga1d" chrStart: 51249152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 783  "rb_Eutr2" chrStart: 51314688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 784  "rb_ALINE" chrStart: 51380224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 785  "rb_MamRep488" chrStart: 51445760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 786  "rb_X9a_DNA" chrStart: 51511296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 787  "rb_UCON132a" chrStart: 51576832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 788  "rb_L1MEC_5" chrStart: 51642368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 789  "rb_Helitron3Na_Mam" chrStart: 51707904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 790  "rb_MER124" chrStart: 51773440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 791  "rb_LTR40A1" chrStart: 51838976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 792  "rb_X9c_DNA" chrStart: 51904512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 793  "rb_UCON66" chrStart: 51970048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 794  "rb_MER115" chrStart: 52035584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 795  "rb_UCON54" chrStart: 52101120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 796  "rb_X24_DNA" chrStart: 52166656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 797  "rb_Tigger12" chrStart: 52232192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 798  "rb_LTR81C" chrStart: 52297728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 799  "rb_LTR80A" chrStart: 52363264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 800  "rb_Eutr8" chrStart: 52428800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 801  "rb_MLT1J-int" chrStart: 52494336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 802  "rb_X33a_DNA" chrStart: 52559872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 803  "rb_LTR81B" chrStart: 52625408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 804  "rb_UCON47" chrStart: 52690944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 805  "rb_X3_LINE" chrStart: 52756480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 806  "rb_LTR82A" chrStart: 52822016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 807  "rb_L1ME3D_3end" chrStart: 52887552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 808  "rb_Charlie26a" chrStart: 52953088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 809  "rb_MIR3" chrStart: 53018624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 810  "rb_MLT1H_I" chrStart: 53084160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 811  "rb_L1M6_5end" chrStart: 53149696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 812  "rb_Helitron1Nb_Mam" chrStart: 53215232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 813  "rb_MER34-int" chrStart: 53280768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 814  "rb_HERVFH21I" chrStart: 53346304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 815  "rb_UCON48" chrStart: 53411840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 816  "rb_Tigger15a" chrStart: 53477376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 817  "rb_Tigger9b" chrStart: 53542912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 818  "rb_UCON132b" chrStart: 53608448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 819  "rb_UCON95" chrStart: 53673984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 820  "rb_Charlie11" chrStart: 53739520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 821  "rb_MARE10" chrStart: 53805056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 822  "rb_UCON59" chrStart: 53870592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 823  "rb_MER21C_BT" chrStart: 53936128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 824  "rb_LTR53-int" chrStart: 54001664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 825  "rb_ORSL-2b" chrStart: 54067200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 826  "rb_MER58C" chrStart: 54132736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 827  "rb_X9b_DNA" chrStart: 54198272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 828  "rb_LTR16D1" chrStart: 54263808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 829  "rb_LTR16E1" chrStart: 54329344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 830  "rb_L1MB7" chrStart: 54394880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 831  "rb_L1MC4_5end" chrStart: 54460416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 832  "rb_UCON104" chrStart: 54525952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 833  "rb_X3_LR" chrStart: 54591488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 834  "rb_LTR86B1" chrStart: 54657024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 835  "rb_UCON58" chrStart: 54722560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 836  "rb_MER58D" chrStart: 54788096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 837  "rb_Eutr15" chrStart: 54853632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 838  "rb_LTR33C" chrStart: 54919168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 839  "rb_L1M7_5end" chrStart: 54984704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 840  "rb_UCON62" chrStart: 55050240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 841  "rb_UCON100" chrStart: 55115776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 842  "rb_UCON72" chrStart: 55181312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 843  "rb_MamRep605" chrStart: 55246848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 844  "rb_UCON86" chrStart: 55312384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 845  "rb_LTR86A2" chrStart: 55377920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 846  "rb_Eutr6" chrStart: 55443456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 847  "rb_MamGypLTR2c" chrStart: 55508992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 848  "rb_MamRep38" chrStart: 55574528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 849  "rb_MamRep1527" chrStart: 55640064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 850  "rb_UCON56" chrStart: 55705600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 851  "rb_Eutr10" chrStart: 55771136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 852  "rb_ORR1D" chrStart: 55836672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 853  "rb_MER135" chrStart: 55902208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 854  "rb_UCON39" chrStart: 55967744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 855  "rb_RMER1B" chrStart: 56033280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 856  "rb_LTR80B" chrStart: 56098816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 857  "rb_MurSatRep1" chrStart: 56164352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 858  "rb_MIR" chrStart: 56229888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 859  "rb_UCON53" chrStart: 56295424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 860  "rb_X15_LINE" chrStart: 56360960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 861  "rb_MER21C" chrStart: 56426496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 862  "rb_RMER16" chrStart: 56492032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 863  "rb_ORR1E" chrStart: 56557568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 864  "rb_EUTREP14" chrStart: 56623104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 865  "rb_Eutr7" chrStart: 56688640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 866  "rb_MER31A" chrStart: 56754176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 867  "rb_MER104" chrStart: 56819712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 868  "rb_L2D" chrStart: 56885248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 869  "rb_MARE1" chrStart: 56950784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 870  "rb_ORR1D1_LTR" chrStart: 57016320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 871  "rb_MMSAT4" chrStart: 57081856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 872  "rb_B1_Mus2" chrStart: 57147392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 873  "rb_Charlie18a" chrStart: 57212928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 874  "rb_MER57C2" chrStart: 57278464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 875  "rb_UCON45" chrStart: 57344000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 876  "rb_RLTR20A" chrStart: 57409536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 877  "rb_MER104B" chrStart: 57475072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 878  "rb_L1_Rod_5end" chrStart: 57540608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 879  "rb_ETnERV3" chrStart: 57606144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 880  "rb_UCON38" chrStart: 57671680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 881  "rb_MLTR11A" chrStart: 57737216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 882  "rb_MTC" chrStart: 57802752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 883  "rb_Eutr17" chrStart: 57868288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 884  "rb_UCON102" chrStart: 57933824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 885  "rb_MamGypLTR1b" chrStart: 57999360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 886  "rb_MER74" chrStart: 58064896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 887  "rb_MER44D" chrStart: 58130432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 888  "rb_ERVB5_1-I_MM" chrStart: 58195968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 889  "rb_EUTREP4" chrStart: 58261504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 890  "rb_L1MC5" chrStart: 58327040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 891  "rb_BGLII_LTR" chrStart: 58392576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 892  "rb_IAPLTR2b" chrStart: 58458112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 893  "rb_MARE5" chrStart: 58523648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 894  "rb_MusHAL1_5end" chrStart: 58589184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 895  "rb_DNA1_Mam" chrStart: 58654720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 896  "rb_PB1D10" chrStart: 58720256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 897  "rb_MARE3" chrStart: 58785792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 898  "rb_UCON55" chrStart: 58851328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 899  "rb_IAPLTR2_Mm" chrStart: 58916864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 900  "rb_MER76-int" chrStart: 58982400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 901  "rb_EuthAT-2" chrStart: 59047936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 902  "rb_X22_DNA" chrStart: 59113472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 903  "rb_4.5SRNA" chrStart: 59179008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 904  "rb_UCON49" chrStart: 59244544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 905  "rb_MTEa_LTR" chrStart: 59310080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 906  "rb_L1ME3F_3end" chrStart: 59375616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 907  "rb_Lx2B2_3end" chrStart: 59441152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 908  "rb_UCON81" chrStart: 59506688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 909  "rb_MamGyp-int" chrStart: 59572224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 910  "rb_X11_DNA" chrStart: 59637760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 911  "rb_L1_Mur1_orf2" chrStart: 59703296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 912  "rb_MER47B" chrStart: 59768832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 913  "rb_Tigger16a" chrStart: 59834368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 914  "rb_UCON46" chrStart: 59899904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 915  "rb_GOLEM" chrStart: 59965440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 916  "rb_UCON90" chrStart: 60030976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 917  "rb_Tigger13a" chrStart: 60096512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 918  "rb_MTD" chrStart: 60162048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 919  "rb_EUTREP15" chrStart: 60227584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 920  "rb_RLTR31_Mur" chrStart: 60293120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 921  "rb_MER82" chrStart: 60358656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 922  "rb_MMERGLN_LTR" chrStart: 60424192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 923  "rb_EUTREP3" chrStart: 60489728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 924  "rb_LTR16E2" chrStart: 60555264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 925  "rb_MER65A" chrStart: 60620800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 926  "rb_MurERV4" chrStart: 60686336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 927  "rb_MTB_Mm_LTR" chrStart: 60751872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 928  "rb_ZOMBI_C" chrStart: 60817408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 929  "rb_MER58B" chrStart: 60882944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 930  "rb_EUTREP7" chrStart: 60948480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 931  "rb_MER92C" chrStart: 61014016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 932  "rb_IAP-d" chrStart: 61079552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 933  "rb_MLTR14" chrStart: 61145088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 934  "rb_SRV_MM-int" chrStart: 61210624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 935  "rb_MamTip2" chrStart: 61276160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 936  "rb_RMER6B" chrStart: 61341696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 937  "rb_Lx3B_3end" chrStart: 61407232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 938  "rb_Eutr11" chrStart: 61472768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 939  "rb_RMER6BA" chrStart: 61538304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 940  "rb_RMER4B_LTR" chrStart: 61603840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 941  "rb_UCON84" chrStart: 61669376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 942  "rb_LTR79" chrStart: 61734912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 943  "rb_LTR104_Mam" chrStart: 61800448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 944  "rb_RLTR42_I" chrStart: 61865984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 945  "rb_RMER13A1" chrStart: 61931520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 946  "rb_Charlie16a" chrStart: 61997056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 947  "rb_UCON92" chrStart: 62062592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 948  "rb_LTR90A" chrStart: 62128128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 949  "rb_Lx2_3end" chrStart: 62193664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 950  "rb_RMER12" chrStart: 62259200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 951  "rb_MamRep564" chrStart: 62324736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 952  "rb_X24_LINE" chrStart: 62390272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 953  "rb_B1-dID" chrStart: 62455808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 954  "rb_ORR1D-int" chrStart: 62521344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 955  "rb_Charlie21a" chrStart: 62586880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 956  "rb_L2C" chrStart: 62652416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 957  "rb_LTR16B2" chrStart: 62717952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 958  "rb_RMER16A2" chrStart: 62783488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 959  "rb_EUTREP6" chrStart: 62849024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 960  "rb_HERVS71" chrStart: 62914560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 961  "rb_Kanga11a" chrStart: 62980096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 962  "rb_MLTR73" chrStart: 63045632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 963  "rb_MamGypLTR1a" chrStart: 63111168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 964  "rb_EUTREP16" chrStart: 63176704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 965  "rb_UCON41" chrStart: 63242240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 966  "rb_UCON51" chrStart: 63307776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 967  "rb_B2_Mm1t" chrStart: 63373312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 968  "rb_X28_DNA" chrStart: 63438848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 969  "rb_Charlie13a" chrStart: 63504384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 970  "rb_X23_DNA" chrStart: 63569920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 971  "rb_Eutr18" chrStart: 63635456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 972  "rb_MARE8" chrStart: 63700992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 973  "rb_UCON98" chrStart: 63766528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 974  "rb_UCON94" chrStart: 63832064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 975  "rb_L1VL2_5end" chrStart: 63897600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 976  "rb_MER3" chrStart: 63963136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 977  "rb_MusHAL1" chrStart: 64028672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 978  "rb_ERVL-E" chrStart: 64094208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 979  "rb_MLT1J" chrStart: 64159744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 980  "rb_UCON63" chrStart: 64225280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 981  "rb_MTEb_LTR" chrStart: 64290816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 982  "rb_UCON64" chrStart: 64356352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 983  "rb_UCON87" chrStart: 64421888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 984  "rb_Lx7_3end" chrStart: 64487424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 985  "rb_UCON57" chrStart: 64552960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 986  "rb_Charlie22a" chrStart: 64618496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 987  "rb_CR1_Mam" chrStart: 64684032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 988  "rb_Lx_3end" chrStart: 64749568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 989  "rb_RodERV21" chrStart: 64815104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 990  "rb_BC1_Mm" chrStart: 64880640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 991  "rb_GOLEM_B" chrStart: 64946176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 992  "rb_IAPLTR4_LTR" chrStart: 65011712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 993  "rb_ORR1A4_LTR" chrStart: 65077248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 994  "rb_RLTR10" chrStart: 65142784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 995  "rb_RLTR26_MM" chrStart: 65208320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 996  "rb_UCON42" chrStart: 65273856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 997  "rb_LTR86C" chrStart: 65339392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 998  "rb_RLTR18" chrStart: 65404928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 999  "rb_MER63C" chrStart: 65470464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1000  "rb_ORR1A2_LTR" chrStart: 65536000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1001  "rb_Eutr1" chrStart: 65601536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1002  "rb_B1_Mm" chrStart: 65667072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1003  "rb_LTR16A" chrStart: 65732608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1004  "rb_MamRep137" chrStart: 65798144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1005  "rb_L1MB6_5" chrStart: 65863680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1006  "rb_RMER16C" chrStart: 65929216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1007  "rb_X34_DNA" chrStart: 65994752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1008  "rb_L2" chrStart: 66060288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1009  "rb_X6b_DNA" chrStart: 66125824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1010  "rb_L1_Mur1_5end" chrStart: 66191360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1011  "rb_MuRRS4-int" chrStart: 66256896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1012  "rb_MLT1A0" chrStart: 66322432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1013  "rb_L1_Mur3_5end" chrStart: 66387968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1014  "rb_Zaphod3" chrStart: 66453504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1015  "rb_URR1B" chrStart: 66519040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1016  "rb_LTR85b" chrStart: 66584576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1017  "rb_L1Md_F_5end" chrStart: 66650112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1018  "rb_LTR10_RN" chrStart: 66715648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1019  "rb_L2B" chrStart: 66781184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1020  "rb_CHARLIE1B" chrStart: 66846720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1021  "rb_X20_LINE" chrStart: 66912256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1022  "rb_LTR16B" chrStart: 66977792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1023  "rb_MLT2E" chrStart: 67043328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1024  "rb_MER21B" chrStart: 67108864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1025  "rb_X12_LINE" chrStart: 67174400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1026  "rb_LTR90B" chrStart: 67239936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1027  "rb_L1_Mur3_orf2" chrStart: 67305472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1028  "rb_ZOMBI_B" chrStart: 67371008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1029  "rb_EUTREP11" chrStart: 67436544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1030  "rb_X29a_DNA" chrStart: 67502080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1031  "rb_ORR1AI" chrStart: 67567616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1032  "rb_RLTR20A4" chrStart: 67633152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1033  "rb_MIRb" chrStart: 67698688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1034  "rb_ORR1B1-int" chrStart: 67764224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1035  "rb_L1_Mus2_3end" chrStart: 67829760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1036  "rb_EuthAT-2B" chrStart: 67895296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1037  "rb_MER68_I" chrStart: 67960832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1038  "rb_LTR85a" chrStart: 68026368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1039  "rb_MLT1A1" chrStart: 68091904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1040  "rb_MER104A" chrStart: 68157440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1041  "rb_MLT1E1A" chrStart: 68222976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1042  "rb_B2_Mm2" chrStart: 68288512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1043  "rb_UCON103" chrStart: 68354048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1044  "rb_UCON80" chrStart: 68419584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1045  "rb_Eutr16" chrStart: 68485120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1046  "rb_RMER15-int" chrStart: 68550656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1047  "rb_MER47C" chrStart: 68616192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1048  "rb_RICKSHA" chrStart: 68681728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1049  "rb_MTA" chrStart: 68747264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1050  "rb_ORR1B" chrStart: 68812800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1051  "rb_MER57E2" chrStart: 68878336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1052  "rb_MER6" chrStart: 68943872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1053  "rb_UCON91" chrStart: 69009408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1054  "rb_X5b_DNA" chrStart: 69074944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1055  "rb_MER69A" chrStart: 69140480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1056  "rb_X11_LINE" chrStart: 69206016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1057  "rb_MER2" chrStart: 69271552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1058  "rb_RMER20B" chrStart: 69337088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1059  "rb_MamGypLTR2b" chrStart: 69402624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1060  "rb_UCON71" chrStart: 69468160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1061  "rb_CHARLIE1" chrStart: 69533696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1062  "rb_MER68A" chrStart: 69599232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1063  "rb_RLTR9C" chrStart: 69664768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1064  "rb_L4" chrStart: 69730304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1065  "rb_LTR82B" chrStart: 69795840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1066  "rb_L1MEg_5end" chrStart: 69861376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1067  "rb_RLTR31B2" chrStart: 69926912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1068  "rb_MER30" chrStart: 69992448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1069  "rb_EUTREP12" chrStart: 70057984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1070  "rb_EUTREP5" chrStart: 70123520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1071  "rb_IAP5-Mm_LTR" chrStart: 70189056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1072  "rb_X20_DNA" chrStart: 70254592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1073  "rb_MMERGLN_I" chrStart: 70320128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1074  "rb_PB1D7" chrStart: 70385664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1075  "rb_MARE9" chrStart: 70451200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1076  "rb_RLTR14_I" chrStart: 70516736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1077  "rb_RMER12C" chrStart: 70582272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1078  "rb_LTR33B" chrStart: 70647808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1079  "rb_RSINE2A" chrStart: 70713344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1080  "rb_RLTR10D" chrStart: 70778880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1081  "rb_MER97d" chrStart: 70844416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1082  "rb_RMER16A3" chrStart: 70909952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1083  "rb_RLTR25B" chrStart: 70975488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1084  "rb_RMER3D4_LTR" chrStart: 71041024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1085  "rb_RMER16B" chrStart: 71106560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1086  "rb_RMER3D1_LTR" chrStart: 71172096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1087  "rb_ZP3AR" chrStart: 71237632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1088  "rb_MER65I" chrStart: 71303168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1089  "rb_X2_LR" chrStart: 71368704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1090  "rb_MER5C1" chrStart: 71434240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1091  "rb_MLT-int" chrStart: 71499776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1092  "rb_ETnERV2" chrStart: 71565312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1093  "rb_RSINE2" chrStart: 71630848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1094  "rb_CHARLIE1A" chrStart: 71696384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1095  "rb_BGLII_B2" chrStart: 71761920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1096  "rb_ERVB4_1C-LTR_Mm" chrStart: 71827456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1097  "rb_ORR1C2_LTR" chrStart: 71892992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1098  "rb_X17_DNA" chrStart: 71958528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1099  "rb_LTR78" chrStart: 72024064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1100  "rb_L1ME3C_3end" chrStart: 72089600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1101  "rb_X4_LR" chrStart: 72155136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1102  "rb_Charlie24" chrStart: 72220672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1103  "rb_MER57E3" chrStart: 72286208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1104  "rb_UCON85" chrStart: 72351744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1105  "rb_MER57C1" chrStart: 72417280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1106  "rb_MSTC" chrStart: 72482816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1107  "rb_UCON99" chrStart: 72548352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1108  "rb_TAR1" chrStart: 72613888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1109  "rb_UCON105" chrStart: 72679424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1110  "rb_UCON69" chrStart: 72744960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1111  "rb_Eutr4" chrStart: 72810496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1112  "rb_LTR87" chrStart: 72876032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1113  "rb_MamGypLTR1c" chrStart: 72941568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1114  "rb_X13_DNA" chrStart: 73007104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1115  "rb_X18_LINE" chrStart: 73072640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1116  "rb_X1_LR" chrStart: 73138176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1117  "rb_L1MEf_5end" chrStart: 73203712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1118  "rb_HERVH" chrStart: 73269248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1119  "rb_UCON96" chrStart: 73334784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1120  "rb_RLTR42" chrStart: 73400320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1121  "rb_RLTR43B" chrStart: 73465856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1122  "rb_ORSL-2a" chrStart: 73531392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1123  "rb_B3A" chrStart: 73596928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1124  "rb_THER2" chrStart: 73662464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1125  "rb_RNLTR23" chrStart: 73728000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1126  "rb_MurSAT1" chrStart: 73793536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1127  "rb_L1ME5_3end" chrStart: 73859072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1128  "rb_B1_Mur2" chrStart: 73924608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1129  "rb_UCON97" chrStart: 73990144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1130  "rb_X6a_DNA" chrStart: 74055680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1131  "rb_X27_DNA" chrStart: 74121216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1132  "rb_MARE11" chrStart: 74186752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1133  "rb_RMER13A" chrStart: 74252288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1134  "rb_PB1" chrStart: 74317824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1135  "rb_ORR1F" chrStart: 74383360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1136  "rb_MUSID3" chrStart: 74448896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1137  "rb_RLTR14_RN" chrStart: 74514432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1138  "rb_Eutr13" chrStart: 74579968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1139  "rb_Lx2B_3end" chrStart: 74645504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1140  "rb_MYSERV6" chrStart: 74711040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1141  "rb_B4A" chrStart: 74776576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1142  "rb_MamRep1894" chrStart: 74842112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1143  "rb_L1MC4B" chrStart: 74907648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1144  "rb_LTR16B1" chrStart: 74973184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1145  "rb_B1_Mur3" chrStart: 75038720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1146  "rb_MER70_I" chrStart: 75104256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1147  "rb_MamRep1879" chrStart: 75169792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1148  "rb_RMER13B" chrStart: 75235328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1149  "rb_RMER6A" chrStart: 75300864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1150  "rb_RMER20C_Mm" chrStart: 75366400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1151  "rb_Tigger12A" chrStart: 75431936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1152  "rb_UCON50" chrStart: 75497472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1153  "rb_UCON43" chrStart: 75563008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1154  "rb_ORR1G" chrStart: 75628544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1155  "rb_MLT1_I" chrStart: 75694080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1156  "rb_Charlie15a" chrStart: 75759616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1157  "rb_Tigger10" chrStart: 75825152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1158  "rb_MamGypLTR3" chrStart: 75890688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1159  "rb_RLTR10-int" chrStart: 75956224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1160  "rb_MLT2B2" chrStart: 76021760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1161  "rb_MLT1E" chrStart: 76087296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1162  "rb_UCON75" chrStart: 76152832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1163  "rb_LTR75_1" chrStart: 76218368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1164  "rb_EUTREP2" chrStart: 76283904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1165  "rb_MER69B" chrStart: 76349440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1166  "rb_Tigger14a" chrStart: 76414976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1167  "rb_LTR88b" chrStart: 76480512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1168  "rb_X18_DNA" chrStart: 76546048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1169  "rb_RMER3D-int" chrStart: 76611584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1170  "rb_L1MC3" chrStart: 76677120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1171  "rb_MamRep4096" chrStart: 76742656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1172  "rb_Lx2A1_3end" chrStart: 76808192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1173  "rb_MARE7" chrStart: 76873728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1174  "rb_RMER19C" chrStart: 76939264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1175  "rb_HAL1M8" chrStart: 77004800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1176  "rb_L1MEe_5end" chrStart: 77070336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1177  "rb_RLTR20B3" chrStart: 77135872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1178  "rb_X21_LINE" chrStart: 77201408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1179  "rb_Charlie28" chrStart: 77266944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1180  "rb_L1_Mur2_5end" chrStart: 77332480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1181  "rb_RMER3D2_LTR" chrStart: 77398016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1182  "rb_RMER5" chrStart: 77463552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1183  "rb_UCON60" chrStart: 77529088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1184  "rb_B1_Mur4" chrStart: 77594624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1185  "rb_Charlie27" chrStart: 77660160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1186  "rb_LTR88a" chrStart: 77725696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1187  "rb_X32_DNA" chrStart: 77791232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1188  "rb_Eutr14" chrStart: 77856768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1189  "rb_UCON83" chrStart: 77922304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1190  "rb_EutTc1-N1" chrStart: 77987840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1191  "rb_EUTREP13" chrStart: 78053376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1192  "rb_RMER1" chrStart: 78118912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1193  "rb_L1M3DE_5" chrStart: 78184448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1194  "rb_UCON67" chrStart: 78249984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1195  "rb_MUSID4" chrStart: 78315520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1196  "rb_Eutr3" chrStart: 78381056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1197  "rb_UCON107" chrStart: 78446592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1198  "rb_L1MA10" chrStart: 78512128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1199  "rb_IAPEY_LTR" chrStart: 78577664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1200  "rb_MLT2F" chrStart: 78643200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1201  "rb_PB1D9" chrStart: 78708736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1202  "rb_TIGGER5_A" chrStart: 78774272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1203  "rb_UCON32" chrStart: 78839808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1204  "rb_L1M3A_5" chrStart: 78905344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1205  "rb_Tigger16b" chrStart: 78970880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1206  "rb_X31_DNA" chrStart: 79036416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1207  "rb_X4a_DNA" chrStart: 79101952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1208  "rb_MamRep434" chrStart: 79167488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1209  "rb_MER46C" chrStart: 79233024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1210  "rb_MLTR13" chrStart: 79298560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1211  "rb_L1_Mur2_3end" chrStart: 79364096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1212  "rb_UCON88" chrStart: 79429632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1213  "rb_LTRIS_Mm" chrStart: 79495168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1214  "rb_IAPLTR2a2_Mm" chrStart: 79560704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1215  "rb_Charlie17a" chrStart: 79626240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1216  "rb_HERVK22I" chrStart: 79691776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1217  "rb_MER74A" chrStart: 79757312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1218  "rb_RLTR44D_LTR" chrStart: 79822848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1219  "rb_RLTR30" chrStart: 79888384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1220  "rb_MER105" chrStart: 79953920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1221  "rb_LTR72_RN" chrStart: 80019456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1222  "rb_Charlie13b" chrStart: 80084992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1223  "rb_MLT1C" chrStart: 80150528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1224  "rb_L1P_MA2" chrStart: 80216064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1225  "rb_RSINE1" chrStart: 80281600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1226  "rb_LTR84a" chrStart: 80347136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1227  "rb_ORR1A" chrStart: 80412672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1228  "rb_X7_DNA" chrStart: 80478208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1229  "rb_MamSINE1" chrStart: 80543744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1230  "rb_B1F2" chrStart: 80609280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1231  "rb_ZOMBI" chrStart: 80674816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1232  "rb_X26_DNA" chrStart: 80740352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1233  "rb_UCON78" chrStart: 80805888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1234  "rb_LTR108e_Mam" chrStart: 80871424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1235  "rb_MLT1D" chrStart: 80936960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1236  "rb_L1MDA_5" chrStart: 81002496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1237  "rb_MER103" chrStart: 81068032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1238  "rb_ORR1D2_LTR" chrStart: 81133568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1239  "rb_UCON52" chrStart: 81199104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1240  "rb_EUTREP10" chrStart: 81264640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1241  "rb_TIGGER5_B" chrStart: 81330176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1242  "rb_B2_Mm1a" chrStart: 81395712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1243  "rb_MER57D" chrStart: 81461248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1244  "rb_MER57E1" chrStart: 81526784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1245  "rb_MLT1O" chrStart: 81592320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1246  "rb_B1_Mus1" chrStart: 81657856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1247  "rb_MurERV4_19" chrStart: 81723392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1248  "rb_EUTREP1" chrStart: 81788928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1249  "rb_LTR81A" chrStart: 81854464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1250  "rb_X15_DNA" chrStart: 81920000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1251  "rb_UCON74" chrStart: 81985536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1252  "rb_MARE6" chrStart: 82051072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1253  "rb_UCON35" chrStart: 82116608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1254  "rb_UCON77" chrStart: 82182144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1255  "rb_MER116" chrStart: 82247680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1256  "rb_UCON36" chrStart: 82313216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1257  "rb_MLT1F1" chrStart: 82378752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1258  "rb_MST_I" chrStart: 82444288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1259  "rb_X21_DNA" chrStart: 82509824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1260  "rb_X2b_DNA" chrStart: 82575360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1261  "rb_LTR10A" chrStart: 82640896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1262  "rb_MLT1E1" chrStart: 82706432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1263  "rb_RMER16-int" chrStart: 82771968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1264  "rb_X13_LINE" chrStart: 82837504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1265  "rb_L1M3D_5" chrStart: 82903040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1266  "rb_X30_DNA" chrStart: 82968576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1267  "rb_MER34A" chrStart: 83034112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1268  "rb_Charlie25" chrStart: 83099648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1269  "rb_MER58A" chrStart: 83165184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1270  "rb_LTR88c" chrStart: 83230720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1271  "rb_Eutr5" chrStart: 83296256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1272  "rb_X25_DNA" chrStart: 83361792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1273  "rb_X29b_DNA" chrStart: 83427328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1274  "rb_EUTREP8" chrStart: 83492864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1275  "rb_MER57B1" chrStart: 83558400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1276  "rb_MTA_Mm_LTR" chrStart: 83623936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1277  "rb_RMER30" chrStart: 83689472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1278  "rb_MamGypLTR1d" chrStart: 83755008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1279  "rb_Lx3C_3end" chrStart: 83820544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1280  "rb_MER5A" chrStart: 83886080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1281  "rb_UCON73" chrStart: 83951616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1282  "rb_RLTR11D" chrStart: 84017152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1283  "rb_MER34A1" chrStart: 84082688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1284  "rb_UCON68" chrStart: 84148224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1285  "rb_URR1" chrStart: 84213760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1286  "rb_ERVL-B4" chrStart: 84279296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1287  "rb_BGLII_A" chrStart: 84344832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1288  "rb_MTE2b_LTR" chrStart: 84410368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1289  "rb_ORR1BI" chrStart: 84475904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1290  "rb_LTR108d_Mam" chrStart: 84541440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1291  "rb_UCON44" chrStart: 84606976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1292  "rb_UCON34" chrStart: 84672512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1293  "rb_UCON82" chrStart: 84738048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1294  "rb_ID_B1" chrStart: 84803584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1295  "rb_RLTR44C_LTR" chrStart: 84869120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1296  "rb_MIRc" chrStart: 84934656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1297  "rb_LTR84b" chrStart: 85000192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1298  "rb_RNERVK23" chrStart: 85065728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1299  "rb_UCON40" chrStart: 85131264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1300  "rb_Charlie19a" chrStart: 85196800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1301  "rb_UCON101" chrStart: 85262336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1302  "rb_RMER1C" chrStart: 85327872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1303  "rb_MamGypLTR2" chrStart: 85393408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1304  "rb_MARE4" chrStart: 85458944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1305  "rb_UCON106" chrStart: 85524480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1306  "rb_MLT1B" chrStart: 85590016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1307  "rb_L5" chrStart: 85655552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1308  "rb_X5a_DNA" chrStart: 85721088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1309  "rb_X2a_DNA" chrStart: 85786624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1310  "rb_MERVL_2A" chrStart: 85852160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1311  "rb_X12_DNA" chrStart: 85917696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1312  "rb_EuthAT-1" chrStart: 85983232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1313  "rb_LTR85c" chrStart: 86048768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1314  "rb_LTR67B" chrStart: 86114304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1315  "rb_MERX" chrStart: 86179840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1316  "rb_Tigger2b" chrStart: 86245376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1317  "rb_B1_Mur1" chrStart: 86310912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1318  "rb_MER104C" chrStart: 86376448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1319  "rb_MER121" chrStart: 86441984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1320  "rb_UCON61" chrStart: 86507520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1321  "rb_MER2B" chrStart: 86573056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1322  "rb_X10b_DNA" chrStart: 86638592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1323  "rb_RLTR44A_LTR" chrStart: 86704128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1324  "rb_L3b_3end" chrStart: 86769664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1325  "rb_LTR83" chrStart: 86835200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1326  "rb_MER6C" chrStart: 86900736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1327  "rb_RMER17C2" chrStart: 86966272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1328  "rb_MER80" chrStart: 87031808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1329  "rb_BGLII_Mur" chrStart: 87097344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1330  "rb_MLT1M" chrStart: 87162880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1331  "rb_HAL1" chrStart: 87228416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1332  "rb_RMER16_Mm" chrStart: 87293952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1333  "rb_LTR37-int" chrStart: 87359488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1334  "rb_UCON79" chrStart: 87425024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1335  "rb_MLT1F_I" chrStart: 87490560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1336  "rb_UCON37" chrStart: 87556096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1337  "rb_MUSID5" chrStart: 87621632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1338  "rb_BGLII_B" chrStart: 87687168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1339  "rb_X19_LINE" chrStart: 87752704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1340  "rb_LTR33" chrStart: 87818240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1341  "rb_UCON93" chrStart: 87883776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1342  "rb_MTC_I" chrStart: 87949312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1343  "rb_UCON70" chrStart: 88014848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1344  "rb_BLACKJACK" chrStart: 88080384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1345  "rb_L1ME3E_3end" chrStart: 88145920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1346  "rb_MLT1C2" chrStart: 88211456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1347  "rb_MLT1F" chrStart: 88276992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1348  "rb_MT2B1" chrStart: 88342528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1349  "rb_RLTR44B_LTR" chrStart: 88408064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1350  "rb_LTR68" chrStart: 88473600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1351  "rb_LTR86B2" chrStart: 88539136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1352  "rb_L1_Mur2_orf2" chrStart: 88604672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1353  "rb_UCON89" chrStart: 88670208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1354  "rb_X10a_DNA" chrStart: 88735744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1355  "rb_UCON65" chrStart: 88801280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1356  "rb_RLTR44E_LTR" chrStart: 88866816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1357  "rb_LTR89" chrStart: 88932352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1358  "rb_RMER6-int" chrStart: 88997888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1359  "rb_ORSL" chrStart: 89063424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1360  "rb_MER90a_LTR" chrStart: 89128960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1361  "rb_MLTR12" chrStart: 89194496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1362  "rb_RLTR43A" chrStart: 89260032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1363  "rb_LTR16D2" chrStart: 89325568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1364  "rb_Ricksha_a" chrStart: 89391104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1365  "rb_MER91B" chrStart: 89456640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1366  "rb_EuthAT-N1" chrStart: 89522176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1367  "rb_RMER19A_LTR" chrStart: 89587712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1368  "rb_Eutr12" chrStart: 89653248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1369  "rb_LTR54" chrStart: 89718784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1370  "rb_LTR86A1" chrStart: 89784320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1371  "rb_UCON76" chrStart: 89849856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1372  "rb_X4b_DNA" chrStart: 89915392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1373  "rb_UCON33" chrStart: 89980928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1374  "rb_X1_DNA" chrStart: 90046464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1375  "rb_THER1" chrStart: 90112000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1376  "rb_X17_LINE" chrStart: 90177536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1377  "rb_Eutr9" chrStart: 90243072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1378  "rb_Kanga1" chrStart: 90308608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1379  "rb_Kanga1d" chrStart: 90374144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1380  "rb_RLTR10A" chrStart: 90439680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1381  "rb_Eutr2" chrStart: 90505216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1382  "rb_ALINE" chrStart: 90570752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1383  "rb_MamRep488" chrStart: 90636288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1384  "rb_RMER12B" chrStart: 90701824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1385  "rb_RMER4" chrStart: 90767360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1386  "rb_X9a_DNA" chrStart: 90832896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1387  "rb_RMER19B" chrStart: 90898432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1388  "rb_UCON132a" chrStart: 90963968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1389  "rb_ID4_" chrStart: 91029504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1390  "rb_RMER1A" chrStart: 91095040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1391  "rb_L1MEC_5" chrStart: 91160576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1392  "rb_RCHARR1" chrStart: 91226112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1393  "rb_ORR1A3_LTR" chrStart: 91291648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1394  "rb_Helitron3Na_Mam" chrStart: 91357184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1395  "rb_MER124" chrStart: 91422720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1396  "rb_LTR40A1" chrStart: 91488256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1397  "rb_X9c_DNA" chrStart: 91553792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1398  "rb_L1VL1_5end" chrStart: 91619328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1399  "rb_B4" chrStart: 91684864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1400  "rb_RMER17C_I" chrStart: 91750400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1401  "rb_UCON66" chrStart: 91815936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1402  "rb_RLTR30D_RN" chrStart: 91881472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1403  "rb_L1Md_Gf_5end" chrStart: 91947008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1404  "rb_MER115" chrStart: 92012544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1405  "rb_RMER16B2" chrStart: 92078080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1406  "rb_RMER3D3_LTR" chrStart: 92143616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1407  "rb_RLTR26" chrStart: 92209152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1408  "rb_UCON54" chrStart: 92274688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1409  "rb_X24_DNA" chrStart: 92340224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1410  "rb_Tigger12" chrStart: 92405760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1411  "rb_LTR81C" chrStart: 92471296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1412  "rb_ORR1C" chrStart: 92536832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1413  "rb_LTR80A" chrStart: 92602368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1414  "rb_Eutr8" chrStart: 92667904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1415  "rb_MLT1J-int" chrStart: 92733440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1416  "rb_X33a_DNA" chrStart: 92798976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1417  "rb_RMER13A2" chrStart: 92864512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1418  "rb_LTR81B" chrStart: 92930048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1419  "rb_UCON47" chrStart: 92995584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1420  "rb_X3_LINE" chrStart: 93061120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1421  "rb_L1_Rod_orf2" chrStart: 93126656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1422  "rb_RLTR19-int" chrStart: 93192192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1423  "rb_LTR82A" chrStart: 93257728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1424  "rb_L1ME3D_3end" chrStart: 93323264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1425  "rb_Charlie26a" chrStart: 93388800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1426  "rb_MIR3" chrStart: 93454336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1427  "rb_MLT1H_I" chrStart: 93519872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1428  "rb_RMER4A_LTR" chrStart: 93585408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1429  "rb_L1M6_5end" chrStart: 93650944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1430  "rb_B3" chrStart: 93716480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1431  "rb_Lx2A_3end" chrStart: 93782016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1432  "rb_Helitron1Nb_Mam" chrStart: 93847552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1433  "rb_MER34-int" chrStart: 93913088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1434  "rb_HERVFH21I" chrStart: 93978624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1435  "rb_UCON48" chrStart: 94044160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1436  "rb_RLTR41" chrStart: 94109696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1437  "rb_Tigger15a" chrStart: 94175232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1438  "rb_MURVY-int" chrStart: 94240768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1439  "rb_RLTR11A2" chrStart: 94306304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1440  "rb_MTAI" chrStart: 94371840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1441  "rb_Tigger9b" chrStart: 94437376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1442  "rb_UCON132b" chrStart: 94502912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1443  "rb_UCON95" chrStart: 94568448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1444  "rb_Charlie11" chrStart: 94633984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1445  "rb_MARE10" chrStart: 94699520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1446  "rb_CHARLIE2" chrStart: 94765056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1447  "rb_IAP5-Mm_I" chrStart: 94830592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1448  "rb_MUSID2" chrStart: 94896128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1449  "rb_UCON59" chrStart: 94961664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1450  "rb_MER21C_BT" chrStart: 95027200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1451  "rb_RMER19B2" chrStart: 95092736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1452  "rb_LTR53-int" chrStart: 95158272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1453  "rb_ORSL-2b" chrStart: 95223808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1454  "rb_MER58C" chrStart: 95289344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1455  "rb_MT2B2_LTR" chrStart: 95354880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1456  "rb_X9b_DNA" chrStart: 95420416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1457  "rb_LTR16D1" chrStart: 95485952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1458  "rb_LTR16E1" chrStart: 95551488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1459  "rb_RLTR12BD_Mm" chrStart: 95617024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1460  "rb_L1MB7" chrStart: 95682560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1461  "rb_L1_Mus1_3end" chrStart: 95748096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1462  "rb_MTE2a_LTR" chrStart: 95813632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1463  "rb_L1MC4_5end" chrStart: 95879168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1464  "rb_UCON104" chrStart: 95944704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1465  "rb_ORR1A3-I" chrStart: 96010240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1466  "rb_X3_LR" chrStart: 96075776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1467  "rb_MT2A" chrStart: 96141312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1468  "rb_LTR86B1" chrStart: 96206848
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1469  "rb_MRLTR33" chrStart: 96272384
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1470  "rb_MTE-int" chrStart: 96337920
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1471  "rb_UCON58" chrStart: 96403456
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1472  "rb_MER58D" chrStart: 96468992
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1473  "rb_Eutr15" chrStart: 96534528
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1474  "rb_LTR33C" chrStart: 96600064
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1475  "rb_B1F1" chrStart: 96665600
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1476  "rb_L1M7_5end" chrStart: 96731136
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1477  "rb_RMER16B3" chrStart: 96796672
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1478  "rb_LX" chrStart: 96862208
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1479  "rb_RLTR31M" chrStart: 96927744
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1480  "rb_UCON62" chrStart: 96993280
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1481  "rb_MLTR11B" chrStart: 97058816
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1482  "rb_HERVL68" chrStart: 97124352
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1483  "rb_UCON100" chrStart: 97189888
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1484  "rb_UCON72" chrStart: 97255424
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1485  "rb_MTB" chrStart: 97320960
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1486  "rb_MamRep605" chrStart: 97386496
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1487  "rb_UCON86" chrStart: 97452032
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1488  "rb_MMAR1" chrStart: 97517568
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1489  "rb_L1VL4_5end" chrStart: 97583104
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1490  "rb_MERVK26" chrStart: 97648640
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1491  "rb_LTR86A2" chrStart: 97714176
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1492  "rb_RLTR18_I" chrStart: 97779712
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1493  "rb_Eutr6" chrStart: 97845248
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1494  "rb_MamGypLTR2c" chrStart: 97910784
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1495  "rb_Eulor2A" chrStart: 97976320
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1496  "rb_MER136" chrStart: 98041856
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1497  "rb_tRNA-Thr-ACY_" chrStart: 98107392
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1498  "rb_MER133A" chrStart: 98172928
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1499  "rb_Eulor6D" chrStart: 98238464
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1500  "rb_UCON27" chrStart: 98304000
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1501  "rb_X7D_LINE" chrStart: 98369536
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1502  "rb_UCON25" chrStart: 98435072
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1503  "rb_UCON28c" chrStart: 98500608
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1504  "rb_MER130" chrStart: 98566144
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1505  "rb_Eulor4" chrStart: 98631680
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1506  "rb_Eulor1" chrStart: 98697216
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1507  "rb_Eulor9B" chrStart: 98762752
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1508  "rb_X6A_LINE" chrStart: 98828288
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1509  "rb_tRNA-Val-GTA" chrStart: 98893824
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1510  "rb_MER127" chrStart: 98959360
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1511  "rb_UCON1" chrStart: 99024896
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1512  "rb_UCON7" chrStart: 99090432
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1513  "rb_tRNA-Met_" chrStart: 99155968
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1514  "rb_X7A_LINE" chrStart: 99221504
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1515  "rb_MER123" chrStart: 99287040
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1516  "rb_X5B_LINE" chrStart: 99352576
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1517  "rb_Eulor5B" chrStart: 99418112
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1518  "rb_Eulor11" chrStart: 99483648
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1519  "rb_MER132" chrStart: 99549184
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1520  "rb_tRNA-Ala-GCA" chrStart: 99614720
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1521  "rb_MER6" chrStart: 99680256
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1522  "rb_UCON3" chrStart: 99745792
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1523  "rb_MER30" chrStart: 99811328
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1524  "rb_UCON13" chrStart: 99876864
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1525  "rb_UCON6" chrStart: 99942400
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1526  "rb_Eulor6C" chrStart: 100007936
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1527  "rb_UCON4" chrStart: 100073472
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1528  "rb_UCON18" chrStart: 100139008
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1529  "rb_MER134" chrStart: 100204544
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1530  "rb_UCON31" chrStart: 100270080
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1531  "rb_UCON14" chrStart: 100335616
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1532  "rb_X6B_LINE" chrStart: 100401152
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1533  "rb_UCON19" chrStart: 100466688
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1534  "rb_tRNA-Met" chrStart: 100532224
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1535  "rb_UCON29" chrStart: 100597760
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1536  "rb_X5A_LINE" chrStart: 100663296
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1537  "rb_UCON12A" chrStart: 100728832
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1538  "rb_CR1L" chrStart: 100794368
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1539  "rb_X7B_LINE" chrStart: 100859904
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1540  "rb_MER126" chrStart: 100925440
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1541  "rb_UCON2" chrStart: 100990976
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1542  "rb_Eulor12_CM" chrStart: 101056512
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1543  "rb_X7C_LINE" chrStart: 101122048
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1544  "rb_Eulor5A" chrStart: 101187584
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1545  "rb_X9_LINE" chrStart: 101253120
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1546  "rb_UCON26" chrStart: 101318656
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1547  "rb_MER125" chrStart: 101384192
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1548  "rb_tRNA-Ile-ATC" chrStart: 101449728
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1549  "rb_UCON9" chrStart: 101515264
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1550  "rb_tRNA-Lys-AAG" chrStart: 101580800
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1551  "rb_tRNA-Arg-CGA" chrStart: 101646336
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1552  "rb_X8_LINE" chrStart: 101711872
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1553  "rb_UCON15" chrStart: 101777408
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1554  "rb_MER131" chrStart: 101842944
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1555  "rb_UCON11" chrStart: 101908480
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1556  "rb_tRNA-Asp-GAY" chrStart: 101974016
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1557  "rb_Eulor2B" chrStart: 102039552
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1558  "rb_tRNA-Arg-CGG" chrStart: 102105088
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1559  "rb_Eulor2C" chrStart: 102170624
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1560  "rb_Eulor6A" chrStart: 102236160
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1561  "rb_UCON24" chrStart: 102301696
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1562  "rb_Eulor6B" chrStart: 102367232
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1563  "rb_X4_LINE" chrStart: 102432768
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1564  "rb_UCON28" chrStart: 102498304
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1565  "rb_Eulor7" chrStart: 102563840
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1566  "rb_UCON28b" chrStart: 102629376
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1567  "rb_MER129" chrStart: 102694912
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1568  "rb_tRNA-Ala-GCY_" chrStart: 102760448
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1569  "rb_tRNA-Met-i" chrStart: 102825984
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1570  "rb_UCON21" chrStart: 102891520
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1571  "rb_X2_LINE" chrStart: 102957056
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1572  "rb_UCON10" chrStart: 103022592
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1573  "rb_Eulor6E" chrStart: 103088128
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1574  "rb_Eulor9C" chrStart: 103153664
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1575  "rb_Eulor3" chrStart: 103219200
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1576  "rb_Eulor8" chrStart: 103284736
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1577  "rb_X1_LINE" chrStart: 103350272
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1578  "rb_UCON5" chrStart: 103415808
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1579  "rb_tRNA-Ile-ATT" chrStart: 103481344
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1580  "rb_Eulor12" chrStart: 103546880
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1581  "rb_UCON12" chrStart: 103612416
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1582  "rb_MER133B" chrStart: 103677952
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1583  "rb_Eulor9A" chrStart: 103743488
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1584  "rb_UCON22" chrStart: 103809024
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1585  "rb_Eulor12B_CM" chrStart: 103874560
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1586  "rb_UCON16" chrStart: 103940096
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1587  "rb_UCON23" chrStart: 104005632
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1588  "rb_UCON28a" chrStart: 104071168
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1589  "rb_UCON20" chrStart: 104136704
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1590  "rb_Eulor10" chrStart: 104202240
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1591  "rb_UCON8" chrStart: 104267776
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1592  "rb_tRNA-Thr-ACG_" chrStart: 104333312
+/beegfs/data/sdarmon/mus/TE_Rb.fa : chr # 1593  "rb_UCON17" chrStart: 104398848
+Chromosome sequence lengths: 
+rb_MamRep38	295
+rb_MamRep1527	969
+rb_UCON56	138
+rb_Eutr10	753
+rb_MER135	228
+rb_UCON39	182
+rb_MLT2B3	717
+rb_LTR80B	584
+rb_MIR	260
+rb_UCON53	234
+rb_X15_LINE	223
+rb_MER21C	935
+rb_EUTREP14	262
+rb_Eutr7	277
+rb_MER31A	485
+rb_MER104	180
+rb_L2D	307
+rb_MARE1	945
+rb_Charlie18a	342
+rb_MER57C2	434
+rb_UCON45	167
+rb_MER104B	915
+rb_UCON38	156
+rb_Eutr17	343
+rb_UCON102	107
+rb_MamGypLTR1b	782
+rb_MER74	624
+rb_MER44D	705
+rb_EUTREP4	126
+rb_L1MC5	2174
+rb_MARE5	564
+rb_MLT2B4	557
+rb_DNA1_Mam	407
+rb_MARE3	180
+rb_UCON55	170
+rb_MER76-int	6189
+rb_L1M1_5	3834
+rb_EuthAT-2	1956
+rb_X22_DNA	149
+rb_UCON49	141
+rb_L1ME3F_3end	990
+rb_UCON81	84
+rb_MamGyp-int	5103
+rb_X11_DNA	426
+rb_MLT1F2	523
+rb_MER47B	418
+rb_Tigger16a	933
+rb_UCON46	181
+rb_GOLEM	3029
+rb_UCON90	148
+rb_Tigger13a	771
+rb_EUTREP15	373
+rb_MER82	653
+rb_EUTREP3	807
+rb_LTR16E2	568
+rb_MER65A	445
+rb_ZOMBI_C	333
+rb_MER58B	341
+rb_EUTREP7	383
+rb_MER92C	554
+rb_MamTip2	305
+rb_Eutr11	559
+rb_MLT1J1	446
+rb_UCON84	234
+rb_LTR79	527
+rb_LTR104_Mam	1509
+rb_Charlie16a	342
+rb_UCON92	132
+rb_LTR90A	976
+rb_MamRep564	357
+rb_X24_LINE	269
+rb_Charlie21a	1213
+rb_L2C	473
+rb_LTR16B2	462
+rb_EUTREP6	152
+rb_HERVS71	8909
+rb_Kanga11a	970
+rb_MamGypLTR1a	784
+rb_EUTREP16	139
+rb_UCON41	139
+rb_UCON51	99
+rb_X28_DNA	388
+rb_Charlie13a	1514
+rb_X23_DNA	218
+rb_Eutr18	153
+rb_MARE8	156
+rb_UCON98	143
+rb_UCON94	133
+rb_MER3	209
+rb_ERVL-E	5667
+rb_MLT1J	516
+rb_UCON63	165
+rb_UCON64	183
+rb_UCON87	121
+rb_UCON57	88
+rb_Charlie22a	491
+rb_CR1_Mam	2204
+rb_GOLEM_B	1205
+rb_UCON42	315
+rb_LTR86C	621
+rb_SVA2	217
+rb_MER63C	930
+rb_Eutr1	201
+rb_CHARLIE4	1961
+rb_LTR16A	450
+rb_MamRep137	444
+rb_L1MB6_5	1711
+rb_X34_DNA	166
+rb_L2	3419
+rb_X6b_DNA	243
+rb_MLT1A0	374
+rb_Zaphod3	2623
+rb_L1MB4_5	1795
+rb_LTR85b	784
+rb_L2B	419
+rb_MLT1J2	450
+rb_CHARLIE1B	518
+rb_X20_LINE	253
+rb_LTR16B	463
+rb_MLT2E	622
+rb_MER21B	863
+rb_X12_LINE	194
+rb_LTR90B	796
+rb_ZOMBI_B	468
+rb_EUTREP11	408
+rb_X29a_DNA	360
+rb_MIRb	268
+rb_EuthAT-2B	930
+rb_MER68_I	2990
+rb_LTR85a	702
+rb_MLT1A1	410
+rb_MER104A	744
+rb_MLT1E1A	698
+rb_UCON103	152
+rb_UCON80	142
+rb_Eutr16	550
+rb_MER47C	97
+rb_RICKSHA	2030
+rb_MER57E2	402
+rb_MER6	865
+rb_UCON91	146
+rb_X5b_DNA	187
+rb_MER69A	177
+rb_X11_LINE	275
+rb_MER2	344
+rb_MamGypLTR2b	922
+rb_UCON71	126
+rb_CHARLIE1	2761
+rb_MER68A	563
+rb_L1ME5	507
+rb_L4	1960
+rb_LTR82B	830
+rb_L1MEg_5end	2101
+rb_MER30	230
+rb_EUTREP12	269
+rb_EUTREP5	197
+rb_X20_DNA	199
+rb_MARE9	139
+rb_MER5A1	160
+rb_LTR33B	503
+rb_MER97d	1205
+rb_MER65I	4871
+rb_X2_LR	179
+rb_MER5C1	263
+rb_MLT-int	1735
+rb_CHARLIE1A	1450
+rb_X17_DNA	306
+rb_LTR78	1304
+rb_L1ME3C_3end	870
+rb_X4_LR	331
+rb_CHARLIE8A	341
+rb_Charlie24	2450
+rb_MER57E3	487
+rb_UCON85	80
+rb_MER57C1	385
+rb_MSTC	428
+rb_UCON99	100
+rb_TAR1	2111
+rb_UCON105	159
+rb_UCON69	107
+rb_Eutr4	548
+rb_LTR87	624
+rb_MamGypLTR1c	803
+rb_X13_DNA	507
+rb_X18_LINE	227
+rb_X1_LR	162
+rb_L1MEf_5end	2217
+rb_HERVH	7713
+rb_UCON96	157
+rb_ORSL-2a	342
+rb_THER2	169
+rb_L1ME5_3end	941
+rb_UCON97	137
+rb_X6a_DNA	350
+rb_X27_DNA	339
+rb_MARE11	197
+rb_MLT1C1	504
+rb_Eutr13	184
+rb_MamRep1894	123
+rb_L1MC4B	1522
+rb_LTR16B1	480
+rb_MER70_I	5023
+rb_HERVKC4	5262
+rb_MamRep1879	216
+rb_Tigger12A	791
+rb_UCON50	133
+rb_UCON43	172
+rb_MLT1_I	1375
+rb_Charlie15a	224
+rb_Tigger10	1843
+rb_MamGypLTR3	839
+rb_MLT2B2	503
+rb_MLT1E	593
+rb_UCON75	206
+rb_LTR75_1	546
+rb_EUTREP2	267
+rb_LTR10E	637
+rb_MER69B	1226
+rb_Tigger14a	329
+rb_LTR88b	837
+rb_X18_DNA	337
+rb_L1MC3	2487
+rb_MamRep4096	426
+rb_MARE7	150
+rb_HAL1M8	2991
+rb_L1MEe_5end	1164
+rb_X21_LINE	185
+rb_Charlie28	948
+rb_UCON60	137
+rb_Charlie27	1237
+rb_LTR88a	816
+rb_X32_DNA	336
+rb_Eutr14	223
+rb_UCON83	102
+rb_EutTc1-N1	492
+rb_EUTREP13	646
+rb_L1M3DE_5	2137
+rb_UCON67	112
+rb_Eutr3	237
+rb_UCON107	205
+rb_L1MA10	1069
+rb_MLT2F	661
+rb_TIGGER5_A	351
+rb_L1ME4	596
+rb_UCON32	246
+rb_L1M3A_5	2728
+rb_Tigger16b	337
+rb_X31_DNA	313
+rb_X4a_DNA	215
+rb_MamRep434	426
+rb_MER46C	338
+rb_UCON88	112
+rb_Charlie17a	219
+rb_HERVK22I	6823
+rb_MER74A	558
+rb_TIGGER5A	366
+rb_MER105	204
+rb_Charlie13b	512
+rb_MLT1C	467
+rb_L1P_MA2	7678
+rb_LTR84a	757
+rb_X7_DNA	328
+rb_MamSINE1	290
+rb_ZOMBI	2806
+rb_X26_DNA	551
+rb_UCON78	147
+rb_LTR108e_Mam	548
+rb_MLT1D	505
+rb_L1MDA_5	3320
+rb_MER103	166
+rb_UCON52	122
+rb_EUTREP10	708
+rb_TIGGER5_B	446
+rb_MER57D	411
+rb_MER57E1	373
+rb_MLT1O	441
+rb_EUTREP1	760
+rb_LTR81A	1350
+rb_X15_DNA	193
+rb_UCON74	659
+rb_MARE6	715
+rb_UCON35	131
+rb_UCON77	117
+rb_MER116	84
+rb_UCON36	149
+rb_MLT1F1	567
+rb_MST_I	1651
+rb_HERVL66I	4329
+rb_X21_DNA	159
+rb_X2b_DNA	189
+rb_LTR10A	609
+rb_MLT1E1	654
+rb_X13_LINE	191
+rb_L1M3D_5	1375
+rb_X30_DNA	287
+rb_MER34A	571
+rb_Charlie25	2524
+rb_MER58A	224
+rb_LTR88c	862
+rb_Eutr5	343
+rb_X25_DNA	189
+rb_X29b_DNA	386
+rb_EUTREP8	175
+rb_MER57B1	401
+rb_MamGypLTR1d	813
+rb_MER5A	189
+rb_UCON73	105
+rb_MER34A1	587
+rb_UCON68	132
+rb_ERVL-B4	5714
+rb_LTR108d_Mam	544
+rb_UCON44	183
+rb_UCON34	125
+rb_UCON82	148
+rb_MIRc	268
+rb_LTR84b	761
+rb_MLT1E2	626
+rb_UCON40	315
+rb_Charlie19a	386
+rb_UCON101	120
+rb_MamGypLTR2	1189
+rb_MARE4	117
+rb_UCON106	191
+rb_MLT1B	390
+rb_L5	2265
+rb_X5a_DNA	176
+rb_X2a_DNA	155
+rb_X12_DNA	307
+rb_EuthAT-1	898
+rb_LTR85c	823
+rb_LTR67B	620
+rb_MERX	756
+rb_MER104C	729
+rb_MER121	399
+rb_UCON61	137
+rb_MER2B	335
+rb_X10b_DNA	176
+rb_L3b_3end	482
+rb_LTR83	780
+rb_MER6C	202
+rb_MER80	508
+rb_MLT1M	672
+rb_HAL1	2510
+rb_LTR37-int	4060
+rb_UCON79	171
+rb_MLT1F_I	1399
+rb_UCON37	143
+rb_RICKSHA_0	1708
+rb_X19_LINE	224
+rb_LTR33	521
+rb_UCON93	156
+rb_UCON70	146
+rb_BLACKJACK	2969
+rb_L1ME3E_3end	989
+rb_MER5C	324
+rb_MLT1C2	461
+rb_MLT1F	542
+rb_LTR68	740
+rb_LTR86B2	487
+rb_UCON89	167
+rb_X10a_DNA	78
+rb_UCON65	177
+rb_LTR89	879
+rb_ORSL	275
+rb_MER90a_LTR	614
+rb_LTR16D2	572
+rb_Ricksha_a	1181
+rb_MER91B	184
+rb_EuthAT-N1	316
+rb_Eutr12	180
+rb_LTR54	510
+rb_LTR86A1	513
+rb_UCON76	241
+rb_X4b_DNA	399
+rb_UCON33	275
+rb_X1_DNA	606
+rb_THER1	263
+rb_X17_LINE	296
+rb_Eutr9	79
+rb_Kanga1	1745
+rb_Kanga1d	609
+rb_Eutr2	364
+rb_ALINE	617
+rb_MamRep488	219
+rb_X9a_DNA	326
+rb_UCON132a	153
+rb_L1MEC_5	2527
+rb_Helitron3Na_Mam	486
+rb_MER124	397
+rb_LTR40A1	584
+rb_X9c_DNA	287
+rb_UCON66	144
+rb_MER115	693
+rb_UCON54	178
+rb_X24_DNA	173
+rb_Tigger12	1959
+rb_LTR81C	1153
+rb_LTR80A	583
+rb_Eutr8	255
+rb_LTR33A	523
+rb_MLT1J-int	1387
+rb_X33a_DNA	366
+rb_LTR81B	1393
+rb_UCON47	165
+rb_X3_LINE	233
+rb_LTR82A	872
+rb_L1ME3D_3end	989
+rb_Charlie26a	325
+rb_MIR3	224
+rb_MLT1H_I	1472
+rb_L1M6_5end	2515
+rb_Helitron1Nb_Mam	1116
+rb_MER34-int	8207
+rb_HERVFH21I	6529
+rb_UCON48	264
+rb_Tigger15a	715
+rb_Tigger9b	624
+rb_L1MD1_5	1010
+rb_UCON132b	148
+rb_UCON95	144
+rb_Charlie11	2196
+rb_MARE10	181
+rb_CHARLIE2	2760
+rb_UCON59	111
+rb_MER21C_BT	958
+rb_L1MA9_5	2113
+rb_LTR53-int	3329
+rb_ORSL-2b	508
+rb_MER58C	215
+rb_X9b_DNA	317
+rb_LTR16D1	675
+rb_LTR16E1	538
+rb_L1MB7	922
+rb_L1MC4_5end	2555
+rb_UCON104	177
+rb_X3_LR	178
+rb_LTR86B1	493
+rb_LTR54B	498
+rb_LTR10G	523
+rb_UCON58	142
+rb_MER58D	386
+rb_Eutr15	267
+rb_LTR33C	629
+rb_L1M7_5end	2237
+rb_TIGGER6A	1106
+rb_UCON62	124
+rb_HERVL68	3037
+rb_UCON100	122
+rb_UCON72	189
+rb_MamRep605	876
+rb_UCON86	190
+rb_LTR86A2	508
+rb_Eutr6	366
+rb_MamGypLTR2c	1068
+rb_LmeSINE1c	404
+rb_(TAACC)n	70
+rb_LmeSINE1b	415
+rb_LSU-rRNA_Hsa	5035
+rb_DeuSINE	347
+rb_MamRep38	295
+rb_MamRep1527	969
+rb_UCON56	138
+rb_Eutr10	753
+rb_MER135	228
+rb_UCON39	182
+rb_LTR80B	584
+rb_MIR	260
+rb_UCON53	234
+rb_X15_LINE	223
+rb_MER21C	935
+rb_EUTREP14	262
+rb_Eutr7	277
+rb_L2D	307
+rb_MARE1	945
+rb_Charlie18a	342
+rb_MER57C2	434
+rb_UCON45	167
+rb_UCON38	156
+rb_Eutr17	343
+rb_UCON102	107
+rb_MamGypLTR1b	782
+rb_MER74	624
+rb_EUTREP4	126
+rb_MARE5	564
+rb_DNA1_Mam	407
+rb_MARE3	180
+rb_UCON55	170
+rb_MER76-int	6189
+rb_EuthAT-2	1956
+rb_X22_DNA	149
+rb_UCON49	141
+rb_L1ME3F_3end	990
+rb_UCON81	84
+rb_MamGyp-int	5103
+rb_X11_DNA	426
+rb_MER47B	418
+rb_Tigger16a	933
+rb_UCON46	181
+rb_GOLEM	3029
+rb_UCON90	148
+rb_Tigger13a	771
+rb_EUTREP15	373
+rb_MER82	653
+rb_EUTREP3	807
+rb_LTR16E2	568
+rb_ZOMBI_C	333
+rb_MER58B	341
+rb_EUTREP7	383
+rb_MamTip2	305
+rb_Eutr11	559
+rb_UCON84	234
+rb_LTR79	527
+rb_LTR104_Mam	1509
+rb_Charlie16a	342
+rb_UCON92	132
+rb_LTR90A	976
+rb_MamRep564	357
+rb_X24_LINE	269
+rb_Charlie21a	1213
+rb_L2C	473
+rb_LTR16B2	462
+rb_EUTREP6	152
+rb_HERVS71	8909
+rb_Kanga11a	970
+rb_MamGypLTR1a	784
+rb_EUTREP16	139
+rb_UCON41	139
+rb_UCON51	99
+rb_X28_DNA	388
+rb_Charlie13a	1514
+rb_X23_DNA	218
+rb_Eutr18	153
+rb_MARE8	156
+rb_UCON98	143
+rb_UCON94	133
+rb_MER3	209
+rb_ERVL-E	5667
+rb_UCON63	165
+rb_UCON64	183
+rb_UCON87	121
+rb_UCON57	88
+rb_Charlie22a	491
+rb_CR1_Mam	2204
+rb_GOLEM_B	1205
+rb_UCON42	315
+rb_LTR86C	621
+rb_MER63C	930
+rb_Eutr1	201
+rb_MamRep137	444
+rb_L1MB6_5	1711
+rb_X34_DNA	166
+rb_L2	3419
+rb_X6b_DNA	243
+rb_MLT1A0	374
+rb_Zaphod3	2623
+rb_LTR85b	784
+rb_L2B	419
+rb_X20_LINE	253
+rb_LTR16B	463
+rb_MER21B	863
+rb_X12_LINE	194
+rb_LTR90B	796
+rb_ZOMBI_B	468
+rb_EUTREP11	408
+rb_X29a_DNA	360
+rb_MIRb	268
+rb_EuthAT-2B	930
+rb_MER68_I	2990
+rb_LTR85a	702
+rb_MER25	2136
+rb_UCON103	152
+rb_UCON80	142
+rb_Eutr16	550
+rb_MER47C	97
+rb_MER57E2	402
+rb_UCON91	146
+rb_X5b_DNA	187
+rb_MER69A	177
+rb_X11_LINE	275
+rb_MER2	344
+rb_MamGypLTR2b	922
+rb_UCON71	126
+rb_MER68A	563
+rb_L4	1960
+rb_LTR82B	830
+rb_L1MEg_5end	2101
+rb_EUTREP12	269
+rb_EUTREP5	197
+rb_X20_DNA	199
+rb_MARE9	139
+rb_LTR33B	503
+rb_MER97d	1205
+rb_X2_LR	179
+rb_MER5C1	263
+rb_MLT-int	1735
+rb_CHARLIE1A	1450
+rb_X17_DNA	306
+rb_LTR78	1304
+rb_L1ME3C_3end	870
+rb_X4_LR	331
+rb_Charlie24	2450
+rb_MER57E3	487
+rb_UCON85	80
+rb_MER57C1	385
+rb_MSTC	428
+rb_UCON99	100
+rb_UCON105	159
+rb_UCON69	107
+rb_Eutr4	548
+rb_LTR87	624
+rb_MamGypLTR1c	803
+rb_X13_DNA	507
+rb_X18_LINE	227
+rb_X1_LR	162
+rb_L1MEf_5end	2217
+rb_UCON96	157
+rb_ORSL-2a	342
+rb_THER2	169
+rb_L1ME5_3end	941
+rb_UCON97	137
+rb_X6a_DNA	350
+rb_X27_DNA	339
+rb_MARE11	197
+rb_Eutr13	184
+rb_MamRep1894	123
+rb_L1MC4B	1522
+rb_LTR16B1	480
+rb_MER70_I	5023
+rb_MamRep1879	216
+rb_Tigger12A	791
+rb_UCON50	133
+rb_UCON43	172
+rb_MLT1_I	1375
+rb_Charlie15a	224
+rb_Tigger10	1843
+rb_MamGypLTR3	839
+rb_MLT2B2	503
+rb_MLT1E	593
+rb_UCON75	206
+rb_LTR75_1	546
+rb_EUTREP2	267
+rb_MER69B	1226
+rb_Tigger14a	329
+rb_LTR88b	837
+rb_X18_DNA	337
+rb_L1MC3	2487
+rb_MamRep4096	426
+rb_MARE7	150
+rb_HAL1M8	2991
+rb_L1MEe_5end	1164
+rb_X21_LINE	185
+rb_Charlie28	948
+rb_UCON60	137
+rb_Charlie27	1237
+rb_LTR88a	816
+rb_X32_DNA	336
+rb_Eutr14	223
+rb_UCON83	102
+rb_EutTc1-N1	492
+rb_EUTREP13	646
+rb_UCON67	112
+rb_Eutr3	237
+rb_UCON107	205
+rb_L1MA10	1069
+rb_UCON32	246
+rb_Tigger16b	337
+rb_X31_DNA	313
+rb_X4a_DNA	215
+rb_MamRep434	426
+rb_MER46C	338
+rb_UCON88	112
+rb_Charlie17a	219
+rb_HERVK22I	6823
+rb_MER105	204
+rb_Charlie13b	512
+rb_MLT1C	467
+rb_L1P_MA2	7678
+rb_LTR84a	757
+rb_X7_DNA	328
+rb_MamSINE1	290
+rb_ZOMBI	2806
+rb_X26_DNA	551
+rb_UCON78	147
+rb_LTR108e_Mam	548
+rb_MLT1D	505
+rb_UCON52	122
+rb_EUTREP10	708
+rb_MER57D	411
+rb_MER57E1	373
+rb_MLT1O	441
+rb_EUTREP1	760
+rb_LTR81A	1350
+rb_X15_DNA	193
+rb_UCON74	659
+rb_MARE6	715
+rb_UCON35	131
+rb_UCON77	117
+rb_MER116	84
+rb_UCON36	149
+rb_MST_I	1651
+rb_X21_DNA	159
+rb_X2b_DNA	189
+rb_X13_LINE	191
+rb_X30_DNA	287
+rb_MER34A	571
+rb_Charlie25	2524
+rb_MER58A	224
+rb_LTR88c	862
+rb_Eutr5	343
+rb_X25_DNA	189
+rb_X29b_DNA	386
+rb_EUTREP8	175
+rb_MER57B1	401
+rb_MamGypLTR1d	813
+rb_MER5A	189
+rb_UCON73	105
+rb_MER34A1	587
+rb_UCON68	132
+rb_ERVL-B4	5714
+rb_LTR108d_Mam	544
+rb_UCON44	183
+rb_UCON34	125
+rb_UCON82	148
+rb_MIRc	268
+rb_LTR84b	761
+rb_UCON40	315
+rb_Charlie19a	386
+rb_UCON101	120
+rb_MamGypLTR2	1189
+rb_MARE4	117
+rb_UCON106	191
+rb_MLT1B	390
+rb_L5	2265
+rb_X5a_DNA	176
+rb_X2a_DNA	155
+rb_X12_DNA	307
+rb_EuthAT-1	898
+rb_LTR85c	823
+rb_LTR67B	620
+rb_MERX	756
+rb_MER121	399
+rb_UCON61	137
+rb_X10b_DNA	176
+rb_L3b_3end	482
+rb_LTR83	780
+rb_MER6C	202
+rb_MER80	508
+rb_MLT1M	672
+rb_LTR37-int	4060
+rb_UCON79	171
+rb_MLT1F_I	1399
+rb_PB1D11	118
+rb_UCON37	143
+rb_X19_LINE	224
+rb_UCON93	156
+rb_UCON70	146
+rb_BLACKJACK	2969
+rb_L1ME3E_3end	989
+rb_MLT1C2	461
+rb_MLT1F	542
+rb_LTR68	740
+rb_LTR86B2	487
+rb_UCON89	167
+rb_X10a_DNA	78
+rb_UCON65	177
+rb_LTR89	879
+rb_ORSL	275
+rb_MER90a_LTR	614
+rb_LTR16D2	572
+rb_Ricksha_a	1181
+rb_MER91B	184
+rb_EuthAT-N1	316
+rb_Eutr12	180
+rb_LTR86A1	513
+rb_UCON76	241
+rb_X4b_DNA	399
+rb_UCON33	275
+rb_X1_DNA	606
+rb_THER1	263
+rb_X17_LINE	296
+rb_Eutr9	79
+rb_Kanga1	1745
+rb_Kanga1d	609
+rb_Eutr2	364
+rb_ALINE	617
+rb_MamRep488	219
+rb_X9a_DNA	326
+rb_UCON132a	153
+rb_L1MEC_5	2527
+rb_Helitron3Na_Mam	486
+rb_MER124	397
+rb_LTR40A1	584
+rb_X9c_DNA	287
+rb_UCON66	144
+rb_MER115	693
+rb_UCON54	178
+rb_X24_DNA	173
+rb_Tigger12	1959
+rb_LTR81C	1153
+rb_LTR80A	583
+rb_Eutr8	255
+rb_MLT1J-int	1387
+rb_X33a_DNA	366
+rb_LTR81B	1393
+rb_UCON47	165
+rb_X3_LINE	233
+rb_LTR82A	872
+rb_L1ME3D_3end	989
+rb_Charlie26a	325
+rb_MIR3	224
+rb_MLT1H_I	1472
+rb_L1M6_5end	2515
+rb_Helitron1Nb_Mam	1116
+rb_MER34-int	8207
+rb_HERVFH21I	6529
+rb_UCON48	264
+rb_Tigger15a	715
+rb_Tigger9b	624
+rb_UCON132b	148
+rb_UCON95	144
+rb_Charlie11	2196
+rb_MARE10	181
+rb_UCON59	111
+rb_MER21C_BT	958
+rb_LTR53-int	3329
+rb_ORSL-2b	508
+rb_MER58C	215
+rb_X9b_DNA	317
+rb_LTR16D1	675
+rb_LTR16E1	538
+rb_L1MB7	922
+rb_L1MC4_5end	2555
+rb_UCON104	177
+rb_X3_LR	178
+rb_LTR86B1	493
+rb_UCON58	142
+rb_MER58D	386
+rb_Eutr15	267
+rb_LTR33C	629
+rb_L1M7_5end	2237
+rb_UCON62	124
+rb_UCON100	122
+rb_UCON72	189
+rb_MamRep605	876
+rb_UCON86	190
+rb_LTR86A2	508
+rb_Eutr6	366
+rb_MamGypLTR2c	1068
+rb_MamRep38	295
+rb_MamRep1527	969
+rb_UCON56	138
+rb_Eutr10	753
+rb_ORR1D	367
+rb_MER135	228
+rb_UCON39	182
+rb_RMER1B	1062
+rb_LTR80B	584
+rb_MurSatRep1	2137
+rb_MIR	260
+rb_UCON53	234
+rb_X15_LINE	223
+rb_MER21C	935
+rb_RMER16	533
+rb_ORR1E	359
+rb_EUTREP14	262
+rb_Eutr7	277
+rb_MER31A	485
+rb_MER104	180
+rb_L2D	307
+rb_MARE1	945
+rb_ORR1D1_LTR	374
+rb_MMSAT4	168
+rb_B1_Mus2	147
+rb_Charlie18a	342
+rb_MER57C2	434
+rb_UCON45	167
+rb_RLTR20A	541
+rb_MER104B	915
+rb_L1_Rod_5end	920
+rb_ETnERV3	5808
+rb_UCON38	156
+rb_MLTR11A	563
+rb_MTC	421
+rb_Eutr17	343
+rb_UCON102	107
+rb_MamGypLTR1b	782
+rb_MER74	624
+rb_MER44D	705
+rb_ERVB5_1-I_MM	8336
+rb_EUTREP4	126
+rb_L1MC5	2174
+rb_BGLII_LTR	421
+rb_IAPLTR2b	327
+rb_MARE5	564
+rb_MusHAL1_5end	784
+rb_DNA1_Mam	407
+rb_PB1D10	117
+rb_MARE3	180
+rb_UCON55	170
+rb_IAPLTR2_Mm	475
+rb_MER76-int	6189
+rb_EuthAT-2	1956
+rb_X22_DNA	149
+rb_4.5SRNA	94
+rb_UCON49	141
+rb_MTEa_LTR	379
+rb_L1ME3F_3end	990
+rb_Lx2B2_3end	1234
+rb_UCON81	84
+rb_MamGyp-int	5103
+rb_X11_DNA	426
+rb_L1_Mur1_orf2	4684
+rb_MER47B	418
+rb_Tigger16a	933
+rb_UCON46	181
+rb_GOLEM	3029
+rb_UCON90	148
+rb_Tigger13a	771
+rb_MTD	418
+rb_EUTREP15	373
+rb_RLTR31_Mur	553
+rb_MER82	653
+rb_MMERGLN_LTR	430
+rb_EUTREP3	807
+rb_LTR16E2	568
+rb_MER65A	445
+rb_MurERV4	5260
+rb_MTB_Mm_LTR	407
+rb_ZOMBI_C	333
+rb_MER58B	341
+rb_EUTREP7	383
+rb_MER92C	554
+rb_IAP-d	6542
+rb_MLTR14	543
+rb_SRV_MM-int	6139
+rb_MamTip2	305
+rb_RMER6B	461
+rb_Lx3B_3end	1387
+rb_Eutr11	559
+rb_RMER6BA	562
+rb_RMER4B_LTR	585
+rb_UCON84	234
+rb_LTR79	527
+rb_LTR104_Mam	1509
+rb_RLTR42_I	5522
+rb_RMER13A1	809
+rb_Charlie16a	342
+rb_UCON92	132
+rb_LTR90A	976
+rb_Lx2_3end	1411
+rb_RMER12	1322
+rb_MamRep564	357
+rb_X24_LINE	269
+rb_B1-dID	221
+rb_ORR1D-int	1370
+rb_Charlie21a	1213
+rb_L2C	473
+rb_LTR16B2	462
+rb_RMER16A2	486
+rb_EUTREP6	152
+rb_HERVS71	8909
+rb_Kanga11a	970
+rb_MLTR73	744
+rb_MamGypLTR1a	784
+rb_EUTREP16	139
+rb_UCON41	139
+rb_UCON51	99
+rb_B2_Mm1t	193
+rb_X28_DNA	388
+rb_Charlie13a	1514
+rb_X23_DNA	218
+rb_Eutr18	153
+rb_MARE8	156
+rb_UCON98	143
+rb_UCON94	133
+rb_L1VL2_5end	1045
+rb_MER3	209
+rb_MusHAL1	2712
+rb_ERVL-E	5667
+rb_MLT1J	516
+rb_UCON63	165
+rb_MTEb_LTR	379
+rb_UCON64	183
+rb_UCON87	121
+rb_Lx7_3end	2110
+rb_UCON57	88
+rb_Charlie22a	491
+rb_CR1_Mam	2204
+rb_Lx_3end	1068
+rb_RodERV21	4991
+rb_BC1_Mm	152
+rb_GOLEM_B	1205
+rb_IAPLTR4_LTR	312
+rb_ORR1A4_LTR	329
+rb_RLTR10	390
+rb_RLTR26_MM	709
+rb_UCON42	315
+rb_LTR86C	621
+rb_RLTR18	616
+rb_MER63C	930
+rb_ORR1A2_LTR	327
+rb_Eutr1	201
+rb_B1_Mm	147
+rb_LTR16A	450
+rb_MamRep137	444
+rb_L1MB6_5	1711
+rb_RMER16C	456
+rb_X34_DNA	166
+rb_L2	3419
+rb_X6b_DNA	243
+rb_L1_Mur1_5end	1342
+rb_MuRRS4-int	5063
+rb_MLT1A0	374
+rb_L1_Mur3_5end	1328
+rb_Zaphod3	2623
+rb_URR1B	225
+rb_LTR85b	784
+rb_L1Md_F_5end	1139
+rb_LTR10_RN	446
+rb_L2B	419
+rb_CHARLIE1B	518
+rb_X20_LINE	253
+rb_LTR16B	463
+rb_MLT2E	622
+rb_MER21B	863
+rb_X12_LINE	194
+rb_LTR90B	796
+rb_L1_Mur3_orf2	4678
+rb_ZOMBI_B	468
+rb_EUTREP11	408
+rb_X29a_DNA	360
+rb_ORR1AI	1784
+rb_RLTR20A4	585
+rb_MIRb	268
+rb_ORR1B1-int	1509
+rb_L1_Mus2_3end	980
+rb_EuthAT-2B	930
+rb_MER68_I	2990
+rb_LTR85a	702
+rb_MLT1A1	410
+rb_MER104A	744
+rb_MLT1E1A	698
+rb_B2_Mm2	195
+rb_UCON103	152
+rb_UCON80	142
+rb_Eutr16	550
+rb_RMER15-int	4999
+rb_MER47C	97
+rb_RICKSHA	2030
+rb_MTA	397
+rb_ORR1B	347
+rb_MER57E2	402
+rb_MER6	865
+rb_UCON91	146
+rb_X5b_DNA	187
+rb_MER69A	177
+rb_X11_LINE	275
+rb_MER2	344
+rb_RMER20B	627
+rb_MamGypLTR2b	922
+rb_UCON71	126
+rb_CHARLIE1	2761
+rb_MER68A	563
+rb_RLTR9C	393
+rb_L4	1960
+rb_LTR82B	830
+rb_L1MEg_5end	2101
+rb_RLTR31B2	391
+rb_MER30	230
+rb_EUTREP12	269
+rb_EUTREP5	197
+rb_IAP5-Mm_LTR	345
+rb_X20_DNA	199
+rb_MMERGLN_I	7556
+rb_PB1D7	120
+rb_MARE9	139
+rb_RLTR14_I	5317
+rb_RMER12C	1369
+rb_LTR33B	503
+rb_RSINE2A	303
+rb_RLTR10D	359
+rb_MER97d	1205
+rb_RMER16A3	457
+rb_RLTR25B	1028
+rb_RMER3D4_LTR	583
+rb_RMER16B	458
+rb_RMER3D1_LTR	624
+rb_ZP3AR	212
+rb_MER65I	4871
+rb_X2_LR	179
+rb_MER5C1	263
+rb_MLT-int	1735
+rb_ETnERV2	7406
+rb_RSINE2	334
+rb_CHARLIE1A	1450
+rb_BGLII_B2	513
+rb_ERVB4_1C-LTR_Mm	515
+rb_ORR1C2_LTR	384
+rb_X17_DNA	306
+rb_LTR78	1304
+rb_L1ME3C_3end	870
+rb_X4_LR	331
+rb_Charlie24	2450
+rb_MER57E3	487
+rb_UCON85	80
+rb_MER57C1	385
+rb_MSTC	428
+rb_UCON99	100
+rb_TAR1	2111
+rb_UCON105	159
+rb_UCON69	107
+rb_Eutr4	548
+rb_LTR87	624
+rb_MamGypLTR1c	803
+rb_X13_DNA	507
+rb_X18_LINE	227
+rb_X1_LR	162
+rb_L1MEf_5end	2217
+rb_HERVH	7713
+rb_UCON96	157
+rb_RLTR42	239
+rb_RLTR43B	375
+rb_ORSL-2a	342
+rb_B3A	211
+rb_THER2	169
+rb_RNLTR23	642
+rb_MurSAT1	120
+rb_L1ME5_3end	941
+rb_B1_Mur2	149
+rb_UCON97	137
+rb_X6a_DNA	350
+rb_X27_DNA	339
+rb_MARE11	197
+rb_RMER13A	860
+rb_PB1	127
+rb_ORR1F	391
+rb_MUSID3	79
+rb_RLTR14_RN	440
+rb_Eutr13	184
+rb_Lx2B_3end	1414
+rb_MYSERV6	8959
+rb_B4A	292
+rb_MamRep1894	123
+rb_L1MC4B	1522
+rb_LTR16B1	480
+rb_B1_Mur3	149
+rb_MER70_I	5023
+rb_MamRep1879	216
+rb_RMER13B	908
+rb_RMER6A	756
+rb_RMER20C_Mm	564
+rb_Tigger12A	791
+rb_UCON50	133
+rb_UCON43	172
+rb_ORR1G	348
+rb_MLT1_I	1375
+rb_Charlie15a	224
+rb_Tigger10	1843
+rb_MamGypLTR3	839
+rb_RLTR10-int	1987
+rb_MLT2B2	503
+rb_MLT1E	593
+rb_UCON75	206
+rb_LTR75_1	546
+rb_EUTREP2	267
+rb_MER69B	1226
+rb_Tigger14a	329
+rb_LTR88b	837
+rb_X18_DNA	337
+rb_RMER3D-int	2842
+rb_L1MC3	2487
+rb_MamRep4096	426
+rb_Lx2A1_3end	1422
+rb_MARE7	150
+rb_RMER19C	611
+rb_HAL1M8	2991
+rb_L1MEe_5end	1164
+rb_RLTR20B3	577
+rb_X21_LINE	185
+rb_Charlie28	948
+rb_L1_Mur2_5end	970
+rb_RMER3D2_LTR	590
+rb_RMER5	534
+rb_UCON60	137
+rb_B1_Mur4	150
+rb_Charlie27	1237
+rb_LTR88a	816
+rb_X32_DNA	336
+rb_Eutr14	223
+rb_UCON83	102
+rb_EutTc1-N1	492
+rb_EUTREP13	646
+rb_RMER1	400
+rb_L1M3DE_5	2137
+rb_UCON67	112
+rb_MUSID4	79
+rb_Eutr3	237
+rb_UCON107	205
+rb_L1MA10	1069
+rb_IAPEY_LTR	385
+rb_MLT2F	661
+rb_PB1D9	120
+rb_TIGGER5_A	351
+rb_UCON32	246
+rb_L1M3A_5	2728
+rb_Tigger16b	337
+rb_X31_DNA	313
+rb_X4a_DNA	215
+rb_MamRep434	426
+rb_MER46C	338
+rb_MLTR13	1282
+rb_L1_Mur2_3end	1458
+rb_UCON88	112
+rb_LTRIS_Mm	482
+rb_IAPLTR2a2_Mm	444
+rb_Charlie17a	219
+rb_HERVK22I	6823
+rb_MER74A	558
+rb_RLTR44D_LTR	486
+rb_RLTR30	379
+rb_MER105	204
+rb_LTR72_RN	478
+rb_Charlie13b	512
+rb_MLT1C	467
+rb_L1P_MA2	7678
+rb_RSINE1	177
+rb_LTR84a	757
+rb_ORR1A	327
+rb_X7_DNA	328
+rb_MamSINE1	290
+rb_B1F2	149
+rb_ZOMBI	2806
+rb_X26_DNA	551
+rb_UCON78	147
+rb_LTR108e_Mam	548
+rb_MLT1D	505
+rb_L1MDA_5	3320
+rb_MER103	166
+rb_ORR1D2_LTR	370
+rb_UCON52	122
+rb_EUTREP10	708
+rb_TIGGER5_B	446
+rb_B2_Mm1a	193
+rb_MER57D	411
+rb_MER57E1	373
+rb_MLT1O	441
+rb_B1_Mus1	148
+rb_MurERV4_19	5780
+rb_EUTREP1	760
+rb_LTR81A	1350
+rb_X15_DNA	193
+rb_UCON74	659
+rb_MARE6	715
+rb_UCON35	131
+rb_UCON77	117
+rb_MER116	84
+rb_UCON36	149
+rb_MLT1F1	567
+rb_MST_I	1651
+rb_X21_DNA	159
+rb_X2b_DNA	189
+rb_LTR10A	609
+rb_MLT1E1	654
+rb_RMER16-int	5406
+rb_X13_LINE	191
+rb_L1M3D_5	1375
+rb_X30_DNA	287
+rb_MER34A	571
+rb_Charlie25	2524
+rb_MER58A	224
+rb_LTR88c	862
+rb_Eutr5	343
+rb_X25_DNA	189
+rb_X29b_DNA	386
+rb_EUTREP8	175
+rb_MER57B1	401
+rb_MTA_Mm_LTR	396
+rb_RMER30	202
+rb_MamGypLTR1d	813
+rb_Lx3C_3end	1390
+rb_MER5A	189
+rb_UCON73	105
+rb_RLTR11D	501
+rb_MER34A1	587
+rb_UCON68	132
+rb_URR1	236
+rb_ERVL-B4	5714
+rb_BGLII_A	445
+rb_MTE2b_LTR	379
+rb_ORR1BI	1479
+rb_LTR108d_Mam	544
+rb_UCON44	183
+rb_UCON34	125
+rb_UCON82	148
+rb_ID_B1	224
+rb_RLTR44C_LTR	502
+rb_MIRc	268
+rb_LTR84b	761
+rb_RNERVK23	8217
+rb_UCON40	315
+rb_Charlie19a	386
+rb_UCON101	120
+rb_RMER1C	1938
+rb_MamGypLTR2	1189
+rb_MARE4	117
+rb_UCON106	191
+rb_MLT1B	390
+rb_L5	2265
+rb_X5a_DNA	176
+rb_X2a_DNA	155
+rb_MERVL_2A	5761
+rb_X12_DNA	307
+rb_EuthAT-1	898
+rb_LTR85c	823
+rb_LTR67B	620
+rb_MERX	756
+rb_Tigger2b	726
+rb_B1_Mur1	149
+rb_MER104C	729
+rb_MER121	399
+rb_UCON61	137
+rb_MER2B	335
+rb_X10b_DNA	176
+rb_RLTR44A_LTR	405
+rb_L3b_3end	482
+rb_LTR83	780
+rb_MER6C	202
+rb_RMER17C2	545
+rb_MER80	508
+rb_BGLII_Mur	448
+rb_MLT1M	672
+rb_HAL1	2510
+rb_RMER16_Mm	552
+rb_LTR37-int	4060
+rb_UCON79	171
+rb_MLT1F_I	1399
+rb_UCON37	143
+rb_MUSID5	83
+rb_BGLII_B	441
+rb_X19_LINE	224
+rb_LTR33	521
+rb_UCON93	156
+rb_MTC_I	1258
+rb_UCON70	146
+rb_BLACKJACK	2969
+rb_L1ME3E_3end	989
+rb_MLT1C2	461
+rb_MLT1F	542
+rb_MT2B1	521
+rb_RLTR44B_LTR	449
+rb_LTR68	740
+rb_LTR86B2	487
+rb_L1_Mur2_orf2	4675
+rb_UCON89	167
+rb_X10a_DNA	78
+rb_UCON65	177
+rb_RLTR44E_LTR	452
+rb_LTR89	879
+rb_RMER6-int	3177
+rb_ORSL	275
+rb_MER90a_LTR	614
+rb_MLTR12	494
+rb_RLTR43A	364
+rb_LTR16D2	572
+rb_Ricksha_a	1181
+rb_MER91B	184
+rb_EuthAT-N1	316
+rb_RMER19A_LTR	737
+rb_Eutr12	180
+rb_LTR54	510
+rb_LTR86A1	513
+rb_UCON76	241
+rb_X4b_DNA	399
+rb_UCON33	275
+rb_X1_DNA	606
+rb_THER1	263
+rb_X17_LINE	296
+rb_Eutr9	79
+rb_Kanga1	1745
+rb_Kanga1d	609
+rb_RLTR10A	411
+rb_Eutr2	364
+rb_ALINE	617
+rb_MamRep488	219
+rb_RMER12B	1404
+rb_RMER4	509
+rb_X9a_DNA	326
+rb_RMER19B	902
+rb_UCON132a	153
+rb_ID4_	83
+rb_RMER1A	2287
+rb_L1MEC_5	2527
+rb_RCHARR1	974
+rb_ORR1A3_LTR	326
+rb_Helitron3Na_Mam	486
+rb_MER124	397
+rb_LTR40A1	584
+rb_X9c_DNA	287
+rb_L1VL1_5end	1128
+rb_B4	292
+rb_RMER17C_I	3238
+rb_UCON66	144
+rb_RLTR30D_RN	453
+rb_L1Md_Gf_5end	1142
+rb_MER115	693
+rb_RMER16B2	416
+rb_RMER3D3_LTR	593
+rb_RLTR26	671
+rb_UCON54	178
+rb_X24_DNA	173
+rb_Tigger12	1959
+rb_LTR81C	1153
+rb_ORR1C	383
+rb_LTR80A	583
+rb_Eutr8	255
+rb_MLT1J-int	1387
+rb_X33a_DNA	366
+rb_RMER13A2	779
+rb_LTR81B	1393
+rb_UCON47	165
+rb_X3_LINE	233
+rb_L1_Rod_orf2	4645
+rb_RLTR19-int	5506
+rb_LTR82A	872
+rb_L1ME3D_3end	989
+rb_Charlie26a	325
+rb_MIR3	224
+rb_MLT1H_I	1472
+rb_RMER4A_LTR	466
+rb_L1M6_5end	2515
+rb_B3	226
+rb_Lx2A_3end	1422
+rb_Helitron1Nb_Mam	1116
+rb_MER34-int	8207
+rb_HERVFH21I	6529
+rb_UCON48	264
+rb_RLTR41	446
+rb_Tigger15a	715
+rb_MURVY-int	7452
+rb_RLTR11A2	527
+rb_MTAI	1098
+rb_Tigger9b	624
+rb_UCON132b	148
+rb_UCON95	144
+rb_Charlie11	2196
+rb_MARE10	181
+rb_CHARLIE2	2760
+rb_IAP5-Mm_I	7747
+rb_MUSID2	79
+rb_UCON59	111
+rb_MER21C_BT	958
+rb_RMER19B2	761
+rb_LTR53-int	3329
+rb_ORSL-2b	508
+rb_MER58C	215
+rb_MT2B2_LTR	584
+rb_X9b_DNA	317
+rb_LTR16D1	675
+rb_LTR16E1	538
+rb_RLTR12BD_Mm	431
+rb_L1MB7	922
+rb_L1_Mus1_3end	981
+rb_MTE2a_LTR	379
+rb_L1MC4_5end	2555
+rb_UCON104	177
+rb_ORR1A3-I	1963
+rb_X3_LR	178
+rb_MT2A	533
+rb_LTR86B1	493
+rb_MRLTR33	594
+rb_MTE-int	1580
+rb_UCON58	142
+rb_MER58D	386
+rb_Eutr15	267
+rb_LTR33C	629
+rb_B1F1	149
+rb_L1M7_5end	2237
+rb_RMER16B3	376
+rb_LX	1054
+rb_RLTR31M	585
+rb_UCON62	124
+rb_MLTR11B	482
+rb_HERVL68	3037
+rb_UCON100	122
+rb_UCON72	189
+rb_MTB	411
+rb_MamRep605	876
+rb_UCON86	190
+rb_MMAR1	1286
+rb_L1VL4_5end	989
+rb_MERVK26	6919
+rb_LTR86A2	508
+rb_RLTR18_I	5361
+rb_Eutr6	366
+rb_MamGypLTR2c	1068
+rb_Eulor2A	214
+rb_MER136	318
+rb_tRNA-Thr-ACY_	77
+rb_MER133A	106
+rb_Eulor6D	302
+rb_UCON27	1268
+rb_X7D_LINE	159
+rb_UCON25	137
+rb_UCON28c	568
+rb_MER130	475
+rb_Eulor4	424
+rb_Eulor1	357
+rb_Eulor9B	240
+rb_X6A_LINE	258
+rb_tRNA-Val-GTA	76
+rb_MER127	364
+rb_UCON1	236
+rb_UCON7	393
+rb_tRNA-Met_	76
+rb_X7A_LINE	267
+rb_MER123	210
+rb_X5B_LINE	185
+rb_Eulor5B	192
+rb_Eulor11	375
+rb_MER132	178
+rb_tRNA-Ala-GCA	75
+rb_MER6	865
+rb_UCON3	172
+rb_MER30	230
+rb_UCON13	513
+rb_UCON6	301
+rb_Eulor6C	208
+rb_UCON4	310
+rb_UCON18	333
+rb_MER134	213
+rb_UCON31	384
+rb_UCON14	347
+rb_X6B_LINE	290
+rb_UCON19	361
+rb_tRNA-Met	76
+rb_UCON29	437
+rb_X5A_LINE	230
+rb_UCON12A	369
+rb_CR1L	261
+rb_X7B_LINE	250
+rb_MER126	308
+rb_UCON2	282
+rb_Eulor12_CM	168
+rb_X7C_LINE	236
+rb_Eulor5A	316
+rb_X9_LINE	159
+rb_UCON26	343
+rb_MER125	176
+rb_tRNA-Ile-ATC	77
+rb_UCON9	323
+rb_tRNA-Lys-AAG	76
+rb_tRNA-Arg-CGA	76
+rb_X8_LINE	296
+rb_UCON15	340
+rb_MER131	174
+rb_UCON11	382
+rb_tRNA-Asp-GAY	75
+rb_Eulor2B	273
+rb_tRNA-Arg-CGG	76
+rb_Eulor2C	169
+rb_Eulor6A	248
+rb_UCON24	384
+rb_Eulor6B	350
+rb_X4_LINE	306
+rb_UCON28	280
+rb_Eulor7	197
+rb_UCON28b	575
+rb_MER129	469
+rb_tRNA-Ala-GCY_	75
+rb_tRNA-Met-i	75
+rb_UCON21	330
+rb_X2_LINE	193
+rb_UCON10	435
+rb_Eulor6E	292
+rb_Eulor9C	270
+rb_Eulor3	306
+rb_Eulor8	562
+rb_X1_LINE	645
+rb_UCON5	405
+rb_tRNA-Ile-ATT	77
+rb_Eulor12	184
+rb_UCON12	298
+rb_MER133B	140
+rb_Eulor9A	301
+rb_UCON22	340
+rb_Eulor12B_CM	128
+rb_UCON16	289
+rb_UCON23	154
+rb_UCON28a	807
+rb_UCON20	699
+rb_Eulor10	277
+rb_UCON8	381
+rb_tRNA-Thr-ACG_	77
+rb_UCON17	460
+Genome sequence total length = 1337024
+Genome size with padding = 104464384
+Estimated genome size with padding and SJs: total=genome+SJ=305464384 = 104464384 + 201000000
+GstrandBit=32
+Number of SA indices: 662923
+Nov 19 18:57:23 ... starting to sort Suffix Array. This may take a long time...
+Number of chunks: 8;   chunks size limit: 757624 bytes
+Nov 19 18:57:24 ... sorting Suffix Array chunks and saving them to disk...
+Writing 114168 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_7 ; empty space on disk = 246967594123264 bytes ... done
+Writing 737672 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_6 ; empty space on disk = 246967594123264 bytes ... done
+Writing 731720 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_0 ; empty space on disk = 246967594123264 bytes ...Writing 745624 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_1 ; empty space on disk = 246967594123264 bytes ... done
+Writing 745656 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_4 ; empty space on disk = 246967594123264 bytes ... done
+ done
+Writing 740848 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_3 ; empty space on disk = 246967594123264 bytes ...Writing 750384 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_2 ; empty space on disk = 246967594123264 bytes ...Writing 737312 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_5 ; empty space on disk = 246967594123264 bytes ...Writing 737312 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA_5 ; empty space on disk = 246967594123264 bytes ... done
+ done
+ done
+Nov 19 18:57:24 ... loading chunks from disk, packing SA...
+Nov 19 18:57:24 ... finished generating suffix array
+Nov 19 18:57:24 ... generating Suffix Array index
+Nov 19 18:57:24 ... completed Suffix Array index
+Nov 19 18:57:24 ... writing Genome to disk ...
+Writing 104464384 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//Genome ; empty space on disk = 246967594123264 bytes ... done
+SA size in bytes: 2734561
+Nov 19 18:57:24 ... writing Suffix Array to disk ...
+Writing 2734561 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SA ; empty space on disk = 246967594123264 bytes ... done
+Nov 19 18:57:24 ... writing SAindex to disk
+Writing 8 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SAindex ; empty space on disk = 246967594123264 bytes ... done
+Writing 80 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SAindex ; empty space on disk = 246967594123264 bytes ... done
+Writing 1529171 bytes into /beegfs/data/sdarmon/results/mus/rb_ref//SAindex ; empty space on disk = 246967594123264 bytes ... done
+Nov 19 18:57:24 ..... finished successfully
+DONE: Genome generation, EXITING

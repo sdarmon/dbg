@@ -1,0 +1,7 @@
+X_RaGOO	dmgoth101	exon	7929618	7944361	101	+	.	gene_id "ROO"; transcript_id "ROO$X_RaGOO$7929618$7944361";
+X_RaGOO	dmgoth101	exon	7929618	7944361	101	+	.	gene_id "ROO"; transcript_id "ROO$X_RaGOO$7929618$7944361";
+X_RaGOO	dmgoth101	exon	7929618	7944361	101	+	.	gene_id "ROO"; transcript_id "ROO$X_RaGOO$7929618$7944361";
+X_RaGOO	dmgoth101	exon	7929618	7944361	101	+	.	gene_id "ROO"; transcript_id "ROO$X_RaGOO$7929618$7944361";
+X_RaGOO	dmgoth101	exon	7986354	7986656	339	+	.	gene_id "XDMR"; transcript_id "XDMR$X_RaGOO$7986354$7986656";
+X_RaGOO	dmgoth101	exon	8179919	8180552	679	-	.	gene_id "FB4_DM"; transcript_id "FB4_DM$X_RaGOO$8179919$8180552";
+X_RaGOO	dmgoth101	exon	8179919	8180552	679	-	.	gene_id "FB4_DM"; transcript_id "FB4_DM$X_RaGOO$8179919$8180552";

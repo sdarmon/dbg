@@ -1,0 +1,1665 @@
+#!/usr/bin/env python3
+# ***************************************************************************
+#
+#                              KisSplice
+#      de-novo calling alternative splicing events from RNA-seq data.
+#
+# ***************************************************************************
+#
+# Copyright INRIA
+#  contributors :  Vincent Lacroix
+#                  Pierre Peterlongo
+#                  Gustavo Sacomoto
+#                  Alice Julien-Laferriere
+#                  David Parsons
+#                  Vincent Miele
+#		            Leandro Lima
+#		            Audric Cologne
+#
+# pierre.peterlongo@inria.fr
+# vincent.lacroix@univ-lyon1.fr
+#
+# This software is a computer program whose purpose is to detect alternative
+# splicing events from RNA-seq data.
+#
+# This software is governed by the CeCILL license under French law and
+# abiding by the rules of distribution of free software. You can  use,
+# modify and/ or redistribute the software under the terms of the CeCILL
+# license as circulated by CEA, CNRS and INRIA at the following URL
+# "http://www.cecill.info".
+
+# As a counterpart to the access to the source code and  rights to copy,
+# modify and redistribute granted by the license, users are provided only
+# with a limited warranty  and the software's author,  the holder of the
+# economic rights,  and the successive licensors  have only  limited
+# liability.
+
+# In this respect, the user's attention is drawn to the risks associated
+# with loading,  using,  modifying and/or developing or reproducing the
+# software by the user in light of its specific status of free software,
+# that may mean  that it is complicated to manipulate,  and  that  also
+# therefore means  that it is reserved for developers  and  experienced
+# professionals having in-depth computer knowledge. Users are therefore
+# encouraged to load and test the software's suitability as regards their
+# requirements in conditions enabling the security of their systems and/or
+# data to be ensured and,  more generally, to use and operate it in the
+# same conditions as regards security.
+#
+# The fact that you are presently reading this means that you have had
+# knowledge of the CeCILL license and that you accept its terms.
+import os
+import re
+import sys
+import time
+import shlex
+import logging
+import shutil
+import os.path
+import tempfile
+import argparse
+import threading
+import multiprocessing
+from random import randint
+from subprocess import Popen, PIPE, STDOUT
+
+
+TIMEOUT=100000
+MAXTIMEOUT=(2 ** 63 / 10 ** 9) - 1 # see https://stackoverflow.com/questions/45704243/what-is-the-value-of-c-pytime-t-in-python?rq=1
+logFile = 0
+logFileName = ""
+
+unfinished_bccs = []
+num_snps = {}
+
+############### NEW GLOBAL VALUES -> REDUNDANCE ###############
+# Maybe switch some of them to parameters?
+ENTROPYMAX=1.8 # If an upper path have less than this entropy, its cycle is deleted
+MAXLENGTHIDIOTIC=200 # Do idiotic strategie for upper paths of the same length and length >= this value
+MAXLENGTHALIGN=1000 # Do not try to align upper paths with a length >= this value (will miss some rare cases redundancy)
+BASEDIFFPATH_UP=2 # Base max difference of length between two upper path for them to be compared (try redundancy removal)
+BASEDIFFPATH_LOW=5 # Base max difference of length between two lower path for them to be compared (try redundancy removal)
+BASEMM_LOW=3 # Base max edit distance (levenshtein) allowed between 2 lower paths
+BASEMM_UP=3 # Base max edit distance (levenshtein) allowed between 2 upper paths
+WILDECARDS=["N","I"]
+# Levenshtein distance parameters
+EXT=1 # Malus for gap extension
+MATCH=0 # Malus for match 
+MMATCH=1 # Malus for mismatch
+GAP=1 # Malus for gap openning
+# Entropy
+WLEN=41 # Window length on sequence to compute entropy
+WSLIDE=41 # Right slide of the window on the sequence
+###############################################################
+
+###############################################################
+# SCRIPT_BINDIR : absolute path to the main executable (this file), computed at runtime
+# ../libexec/kissplice : relative path from main script to internal binaries, set by cmake
+# INTERNAL_BINDIR : absolute path to the secondary executables (eg ks_kissreads)
+SCRIPT_BINDIR = os.path.dirname(os.path.realpath(__file__))
+INTERNAL_BINDIR = os.path.realpath(os.path.join(SCRIPT_BINDIR, "../libexec/kissplice"))
+# Where to find bcalm ; BCALM_PACKAGING_MODE is set by cmake to either 'bundled' or 'system'.
+BCALM_PATH = os.path.join(INTERNAL_BINDIR, "bcalm") if "bundled" == "bundled" else "bcalm"
+
+############### NEW FUNCTIONS -> ENTROPY ###############
+# Natural log aproximation using ln(x)=lim(x->inf) n(x**(1/n)-1)
+def ln(x):
+    n = 10000.0 # Increase this number for more accurate estimation
+    return n * ((x ** (1/n)) - 1)
+
+LN2=ln(2) # For conversion between natural and base 2 log
+
+def entropyShannon(s):
+	n=0.0
+	dN={} # d[nucleotide]=occurence
+	for e in s:
+		n+=1
+		if e not in dN.keys():
+			dN[e]=0
+		dN[e]+=1
+
+	entShan=0
+	for base in dN.keys():
+		pN=dN[base]/n
+		entShan+=pN*(ln(pN)/LN2)
+	return entShan*-1
+
+def windowEntropy(s, wLen, wSlide):
+	# Compute Shannon entropy on a sequence s for each window of length wLen with a slide of length wSlide.
+	lE=[] # list of entropy
+	start=0 # start index
+	n=len(s)
+	for start in list(range(n))[::wSlide]:
+		end=start+wLen
+		if end >= n:
+			start=n-wLen
+			end=n-1
+			if start<0:
+				start=0
+		lE.append(entropyShannon(s[start:end]))
+	return lE
+##########################################################
+
+############### NEW FUNCTIONS -> REDUNDANCE ###############
+def idioticConsensus(s1,s2,maxEdit=3):
+		# Make consensus base per base (s1 and s2 have the same length)
+		cons=""
+		nN=0
+		#print(s1)
+		#print(s2)
+		for i in range(len(s1)):
+			if s1[i]==s2[i]:
+				cons+=s1[i]
+			else:
+				cons+="N"
+				if "N" not in [s1[i],s2[i]]:
+					nN+=1
+			i+=1
+			if not i%100 and nN>maxEdit:
+				#print(1)
+				#print(cons)
+				return [None,None]
+		if nN>maxEdit:
+			#print(2)
+			#print(cons)
+			return [None,None]
+		#print("OK")
+		#print(cons)
+		return [nN,cons]
+
+def consensus(s1,s2,mTB, trimN=True):
+	# 2 sequences and a traceback matrix
+	# Return one of the possible consensus, prioritazing match/mmatch, then T then L
+	# Create consensus sequence between 2 seq, adding "n" for indel and "N" for mismatches
+	# Will strip "N" of the consensus of trimN=True
+	nR=len(mTB)-1
+	nC=len(mTB[0])-1
+	cons=""
+	prev="D" # previous type of alignment
+	t=mTB[nR][nC]
+	while t!="E":
+		if prev in t: # If possible, continue the same type of alignment
+			do=prev
+		elif "D" in t: # else, priority to D
+			do="D"
+		elif "T" in t:
+			do="T"
+		else:
+			do="L"
+		if do=="D":
+			if s1[nC-1]==s2[nR-1]:
+				cons+=s1[nC-1]
+			elif s1[nC-1]=="I" or s2[nR-1]=="I":
+				cons+="I"
+			else:
+				cons+="N"
+			nR-=1
+			nC-=1
+		else:
+			cons+="I"
+			if do=="T":
+				nR-=1
+			else:
+				nC-=1
+		prev=do
+		t=mTB[nR][nC]
+	cons=cons[::-1]
+	if trimN:
+		cons=cons.strip("IN")
+	return cons
+
+
+def rc(s):
+    # reverse complement an ATGCN sequence
+	d={"A":"T","T":"A","G":"C","C":"G","N":"N","I":"I"}
+	return "".join([d[e] for e in s[::-1]])
+	
+def levDist(a,b, match=MATCH, mm=MMATCH, gap=GAP, ext=1, semiLoc=False, minRC=True, maxEdit=3, doConsensus=True, trimN=True):
+	# Levenshtein distance between two strings a and b of length n and m. Option for Semi-Local method (smallest sequence must fully aligng anywhere on the largest sequence)
+	# Semi-Local: To do this, no initialisation of the first row (insertion are cost-free before aligning the first base of the smallest sequence) and cost-free insertion on the last row (insertion are cost-free after aligning the last base of the smallest sequence)
+	# a is the largest sequence (switched if needed in the function)
+	# ext : gap extension cost
+	# minRC : also do reverse complement computation and take the minimum distance of the two
+	# maxEdit : stop process if the final score will be greater or equal to this number. -1 to keep everything.
+	# doConsensus : compute consensus sequence
+    # Maybe add a maximum indel length allowed, but this could be complicated...
+    # 'N' is considered as a wildcard
+	
+	cons=None
+	extD=ext
+	extI=ext
+	n=len(a)
+	m=len(b)
+	if n<m:
+		a,b=b,a
+		n,m=m,n
+	
+	# 1) Create an (n+1)x(m+1) matrix
+	mLev=[[None for x in range(n+1)] for y in range(m+1)]
+	mTB=[["O" for x in range(n+1)] for y in range(m+1)]# traceback to know if gap is extended or not. O by default, T for top, L for left (can be TL/LT)
+	
+	# 2) Intiliaze first column
+	mLev[0][0]=0
+	mTB[0][0]="E"
+	for r in range(1,m+1):
+		s=gap+(r-1)*ext
+		if maxEdit==-1 or s<maxEdit:
+			mLev[r][0]=s
+		mTB[r][0]="T"
+		# ... and the first row
+	for c in range(1,n+1):
+		mTB[0][c]="L"
+		if not semiLoc:
+			s=gap+(c-1)*ext
+			if maxEdit==-1 or s<maxEdit:
+				mLev[0][c]=s
+		else:
+			mLev[0][c]=0
+		
+	# 3) Fill the matrix
+	ins=gap
+	dele=gap
+	startC=1 # Starting column to compute score = last None surrounded by Nones + 1, for the first line of None
+	r=1
+	while r <= m:
+	#for r in range(1,m+1):
+		if semiLoc and r==m:
+			ins=0
+			extI=0
+		isFirstNone=True # indicate if this is the first line of None
+		c=startC
+		allNone=True
+		while c <= n:
+			T=mLev[r-1][c] # score if coming from T
+			L=mLev[r][c-1] # score if coming from L
+			D=mLev[r-1][c-1] # score if coming from D
+			if [T,L,D]==[None,None,None]: # Then we can add None and go to next cell or line
+				if isFirstNone: # First line of None : we will start the next line on the last column surrounded by None
+					startC=c
+			else:
+				allNone=False
+				if isFirstNone:
+					isFirstNone=False
+				# N is a wildcard
+				if b[r-1] in WILDECARDS or a[c-1] in WILDECARDS or b[r-1] == a[c-1]:
+					sub=0
+				else:
+					sub=1
+				
+				if T!=None:
+					if "T" in mTB[r-1][c]:
+						T+=extD
+					else:
+						T+=dele
+				
+				if L!=None:
+					if "L" in mTB[r][c-1]:
+						L+=extI
+					else:
+						L+=ins
+				if D!=None:
+					D+=sub
+				minLev=min([x for x in [T,L,D] if x!=None])
+				if maxEdit!=-1 and minLev>=maxEdit:
+					minLev=None
+				add=""
+				if minLev==T:
+					add+="T"
+				if minLev==L:
+					add+="L"
+				if minLev==D:
+					add+="D"
+				if add!="":
+					mTB[r][c]=add
+				mLev[r][c]=minLev
+			c+=1
+		r+=1
+		if allNone: # If the whole line was made of None values
+			# Then the alignment failed
+			r=m+1 # Exit the loop
+
+	lev=mLev[m][n]
+	if doConsensus and lev!=None:
+		cons=consensus(a,b,mTB,trimN=trimN)
+	#print(mLev)
+	#print(mTB)
+	isRC=False
+	if minRC and lev==None:
+		lLevRC=levDist(a,rc(b),match=match, mm=mm, gap=gap, ext=ext, maxEdit=maxEdit, minRC=False,semiLoc=semiLoc,trimN=trimN)
+		levRC=lLevRC[0]
+		if levRC!=None and (lev==None or levRC<lev):
+			lev=levRC
+			isRC=True
+			cons=lLevRC[2]
+	return [lev,isRC,cons]
+	
+def multLev(d, lID, triangular=True, semiLoc=False, lExclude=[], maxID=-1, k=41):
+	# Launch all successive Levenshtein distances between sequence in a dictionnary d[ID]=[[string1,string2],[len1,len2]] if length diff between sequence < threshold
+	# For seq1 seq2 seq3 seq4, true seq1-seq2 compression:
+	# - If compressed: try seq3-seq4 compression
+	# - If not compressed: try seq2-seq3 compression
+	# triangular is not useful
+	# smiLoc=True for semi-local alignment
+	# lExclude is a list of cycle ID tuple indicating cycles allready compared but that could not be compressed. Used to avoid recomputing their edit distance
+	# maxID: maximum number of cycle in a BCC to try compression. -1 for all.
+	# Return a dictionnary d[cycle1][cycle2]=[levDistLow,levDistUp,consensusLow,consensusUpSeq,consensusUpVar] (and the same for d[cycle1][cycle2] if triangular=True)
+	lComp=[]
+	nID=len(lID)
+	if len(lID)<2 or (maxID!=-1 and len(lID)>maxID):
+		return [{},lComp]
+	dLev={}
+	j=0
+	while j+1 < nID:
+		ID1=lID[j]
+		l1l=d[ID1][1][1]
+		l1u=d[ID1][1][0]
+		ID2=lID[(j+1)]
+		l2l=d[ID2][1][1]
+		l2u=d[ID2][1][0]
+		levL=None
+		levU=None
+		addErrorMin=int(l2u/300)
+		addErrorMax=int(l1u/100)
+		#print("Comparing "+ID1+" and "+ID2)
+		if (ID1,ID2) not in lExclude and abs(l1l-l2l)<=BASEDIFFPATH_LOW and abs(l1u-l2u)<=BASEDIFFPATH_UP+addErrorMin: # Length difference of lower path < 6 and length diff of upper path < 3
+			# LOW COMPARISON
+			# We had the variable sequence to the middle of the lower path
+			var1=d[ID1][0][2]
+			var2=d[ID2][0][2]
+			seqLow1=d[ID1][0][1]
+			#seqLow1=seqLow1[:k]+var1+seqLow1[k:]
+			seqLow2=d[ID2][0][1]
+			#seqLow2=seqLow2[:k]+var2+seqLow2[k:]
+			levL,isRC,consL=levDist(seqLow1,seqLow2,maxEdit=BASEMM_LOW,ext=EXT,semiLoc=True) # We allow an high error rate on the lower path
+			if levL!=None:
+				# UP COMPARISON
+				seqUp1=d[ID1][0][0]
+				seqUp2=d[ID2][0][0]
+				if isRC: # if reverse complement was used for lower path, use it for upper path
+					seqUp2=rc(seqUp2)
+					var2=rc(var2)
+				# Variable path comp
+				lLevV=levDist(var1,var2,mm=MMATCH/(addErrorMax+1),ext=EXT,semiLoc=False,minRC=False,trimN=False)
+				levV=lLevV[0]
+				consVar=lLevV[2]
+				if levV!=None: # Variable path align correctly
+					## Test if we are in a big IR cluster
+					idioticOK=False
+					if len(seqUp1)==len(seqUp2) and l1u>=MAXLENGTHIDIOTIC: # Both path of the same length and upper path > 2000nc, probably a big IR
+						levU,consU=idioticConsensus(seqUp1,seqUp2,maxEdit=BASEMM_UP+addErrorMax-levV)
+						if levU!=None:
+							idioticOK=True
+					##
+					if not idioticOK and l1u<MAXLENGTHALIGN:
+						# Do alignment
+						lLevU=levDist(seqUp1,seqUp2,maxEdit=BASEMM_UP-levV,mm=MMATCH/(addErrorMax+1),ext=EXT,semiLoc=False,minRC=False,trimN=False)
+						levU=lLevU[0]
+						consU=lLevU[2]
+			# We know if we compress or not if levU!=None
+			if levU==None: # We will remmember to not compare these two paths because their lower or upper path are too divergent
+				lExclude.append((ID1,ID2))
+			else:
+				#consLseq=consL[:k]+consL[-k:]
+				#consVar=consL[k:-k]
+				j+=1
+				if ID1 not in dLev.keys():
+					dLev[ID1]={}
+				dLev[ID1][ID2]=[levL,levU,consL,consU,consVar]
+				lComp.append((ID1,ID2))
+				if not triangular:
+					if not ID2 in dLev.keys():
+						dLev[ID2]={}
+					dLev[ID2][ID1]=[levL,levU,consL,consU,consVar]
+		j+=1
+	return [dLev,lComp]
+	
+def readFasta4(f, k=41, rmEntropy=True, entropy_threshold=ENTROPYMAX, dBCC2lc={}):
+	# Read 4 lines of a fasta file from KisSplice (1 cycle)
+	# return [ [bcc, cycle, type, length_up, length_low], [seq_up, seq_low, seq_var] ]
+	# return KO if the entropy filter failed (WARNING: do not try to recursively call readFasta4 in this case as the max recursive instance can easily be reached)
+	# seq_var is the sequence from the variable part of the upper path that can be find either at its begining or ending
+	# seq_up is the sequence from the variable part without seq_var
+	head=f.readline().strip()
+	if head=="":
+		return ""
+	lHead=head.split("|")
+	bcc=lHead[0].split("_")[1]
+	c=lHead[1].split("_")[1]
+	t=lHead[2].split("_")[1]
+	lup=int(lHead[3].split("_")[-1])
+	mk=min(lup,2*k)
+	seq=f.readline().strip()
+	seqUp="".join([x for x in seq if x.isupper()])
+	head=f.readline().strip()
+	lHead=head.split("|")
+	llow=int(lHead[3].split("_")[-1])
+	seq=f.readline().strip()
+	seqLow="".join([x for x in seq if x.isupper()])
+	lup=lup-llow
+	if rmEntropy:
+		#ent=entropyShannon(seqUp)
+		lEnt=windowEntropy(seqUp, WLEN, WSLIDE)
+		ent=max(lEnt)
+		if ent<entropy_threshold:
+			#print("\n".join([">bcc_"+bcc+"|Cycle_"+c,seqUp,">lower",seqLow]))
+			if not bcc in dBCC2lc.keys():
+				dBCC2lc[bcc]=[]
+			dBCC2lc[bcc].append([c,str(lEnt)])
+			return "KO"
+	# SeqUp will be the upper sequence without the potential repeated bases at the begining/end of the upperpath, ie :
+	# >bcc_9988|Cycle_0|Type_1|upper_path_length_163
+	# GGCTGCAACCGAGTCTTCATAGAAGAGAATCTGCTGTACCTCGGAATCCTCGCTGAAGTCTTCGGTGACGGTAGAGGAGGAGGCCTGCCGGGGGAGCTTGGCCTCGTATGCCATGACGCTCCACCTGTCCAGCATCTTGGTGCTGGCTCTCTCCAACTTCTCC
+	# >bcc_9988|Cycle_0|Type_1|lower_path_length_78
+	# GGCTGCAACCGAGTCTTCATAGAAGAGAATCTGCTGTACCTGTCCAGCATCTTGGTGCTGGCTCTCTCCAACTTCTCC
+	# In this exemple, the upper sequence can either be :
+	# CGGAATCCTCGCTGAAGTCTTCGGTGACGGTAGAGGAGGAGGCCTGCCGGGGGAGCTTGGCCTCGTATGCCATGACGCTCCACCT
+	# OR
+	# ACCTCGGAATCCTCGCTGAAGTCTTCGGTGACGGTAGAGGAGGAGGCCTGCCGGGGGAGCTTGGCCTCGTATGCCATGACGCTCC
+	# Because of the starting/ending ACCT
+	# We will report seqUp=CGGAATCCTCGCTGAAGTCTTCGGTGACGGTAGAGGAGGAGGCCTGCCGGGGGAGCTTGGCCTCGTATGCCATGACGCTCC and var=ACCT
+	# The size of var is 2*k-lowerPathLength
+	# In can happen that the upper path is < 2*k, in this case we have to use the lvar=lup-llow
+	lvar=mk-llow
+	var=seqUp[k-lvar:k]
+	seqUp=seqUp[k:k+lup-lvar]	
+	# It is possible that seqUp is empty, if the path of the var is the same as the upper path, ie
+	# >bcc_9962|Cycle_0|Type_1|upper_path_length_82
+	# ATAAAGGATATGTTGAATACACCTTTGTGTCCTTCACACAGCAGTTTACATCCAGTGCTGTTACCTTCAGATGTATTTGACC
+	# >bcc_9962|Cycle_0|Type_1|lower_path_length_79
+	# ATAAAGGATATGTTGAATACACCTTTGTGTCCTTCACACAGTTTACATCCAGTGCTGTTACCTTCAGATGTATTTGACC
+	# In this exemple, seqUp='' and var="CAG"
+	# So we simply invert them
+	if seqUp=="":
+		seqUp,var=var,seqUp
+	return [ [bcc, c, t, lup, llow], [seqUp, seqLow, var]]
+
+def compress(dLev, dSeq, lCycleOrder, lExclude):
+	# Remove one of the paths from dSeq and lCycleOrder
+	# Return dictionnary of compressed paths
+	#print(dLev)
+	#print("BEFORE COMPRESS")
+	#print(dSeq)
+	#print(lCycleOrder)
+	for ID1 in dLev.keys():
+		for ID2 in dLev[ID1].keys():
+			dSeq[ID1][0][0]=dLev[ID1][ID2][3]
+			dSeq[ID1][0][2]=dLev[ID1][ID2][4]
+			dSeq[ID1][0][1]=dLev[ID1][ID2][2]
+			dSeq[ID1][1][0]=len(dSeq[ID1][0][0])+len(dSeq[ID1][0][2])
+			dSeq[ID1][1][1]=len(dSeq[ID1][0][1])
+			del dSeq[ID2]
+			del lCycleOrder[lCycleOrder.index(ID2)]
+			# Delete pairs containing either ID1 or ID2 from lExclude
+			lExclude=[lExclude[i] for i in range(len(lExclude)) if ID1 not in lExclude[i] and ID2 not in lExclude[i]]
+	del dLev
+	#print("AFTER COMPRESS")
+	#print(dSeq)
+	#print(lCycleOrder)
+
+def addComp(d,l):
+	# Add compressed paths to the dictionnary of compressed path
+	# d : d[cycle]=[compCycle1, compCycle2, ...]
+	# l : [(cycle1, cycleComp1), (cycle2, cycleComp2), ...] cycleCompX is compressed in cycleX
+	# cycleCompX can be a key of d
+	for cycle,comp in l:
+		if cycle in d.keys():
+			d[cycle].append(comp)
+		else:
+			d[cycle]=[comp]
+		if comp in d.keys():
+			d[cycle].extend(d[comp])
+			del d[comp]
+
+def compressBcc(dBcc, cBcc, dSeq, lCycleOrder, dBcc2cycleComp, dBCC2size, dBccLen2nCompress, k):
+	# t is the type of event
+	# Compressed sequences will be written in fComp, an open writable file
+	# Do the whole compression of a BCC
+	lExclude=[] # list of cycle pairs that can not be compressed
+	# dBccLen2nCompress is not mendatory, contain useful(?) informations. d[BCCsize]=[nBCC, number of compressed path]
+	dBcc2cycleComp[cBcc]={} # not mendatory, contain useful(?) informations. d[bcc][cycle]=[compressed cycles]
+	BCCsize=len(dSeq.keys())
+	dBCC2size[cBcc]=BCCsize # not mendatory, contain useful(?) informations. d[bcc]=size
+	if not BCCsize in dBccLen2nCompress.keys():
+		dBccLen2nCompress[BCCsize]=[0,0]
+	dBccLen2nCompress[BCCsize][0]+=1
+	#print("BCC "+cBcc+" (of "+str(len(dSeq.keys()))+" cycles)")
+	dBcc[cBcc],lComp=multLev(dSeq,lCycleOrder,lExclude=lExclude,k=k)
+	while dBcc[cBcc] != {}: # While we have some compression to do
+		#print(lComp)
+		dBccLen2nCompress[BCCsize][1]+=len(lComp)
+		addComp(dBcc2cycleComp[cBcc],lComp)
+		compress(dBcc[cBcc], dSeq, lCycleOrder, lExclude)
+		dBcc[cBcc],lComp=multLev(dSeq,lCycleOrder,lExclude=lExclude,k=k)
+	#print(dBcc[cBcc])
+	#print(dBccLen2nCompress)
+	#print(dBcc2cycleComp)
+
+def writeCompressedCycles(dSeq, cBcc, t, fComp, kval):
+	# Write info in dSeq to fComp
+	# dSeq: d[cycle]=[ [seqUp, seqLow, var], [lenUp, lenLow] ]
+	# head format: >bcc_[cBcc]|Cycle_[cycle]|Type_[t]|upper/lower_path_length_[length]
+	headBcc=">bcc_"+cBcc
+	headType="Type_"+t
+	for cycle in dSeq.keys():
+		lInfo=dSeq[cycle]
+		seqLow=lInfo[0][1]
+		seqUp=seqLow[:kval]+lInfo[0][0]+lInfo[0][2]+seqLow[kval:]
+		lenUp=str(lInfo[1][0]+lInfo[1][1])
+		lenLow=str(lInfo[1][1])
+		headCycle="Cycle_"+cycle
+		headLenUp="upper_path_length_"+lenUp
+		headLenLow="lower_path_length_"+lenLow
+		head="|".join([headBcc,headCycle,headType])
+		headUp="|".join([head,headLenUp])
+		headLow="|".join([head,headLenLow])
+		fComp.write("\n".join([headUp,seqUp,headLow,seqLow])+"\n")
+
+def splitT1T234(fName, fNameT1, fNameT234):
+	f=open(fName,"r")
+	f1=open(fNameT1,"w")
+	f234=open(fNameT234,"w")
+	retype = re.compile(r"Type_\d+")
+	line=f.readline()
+	while line:
+		t=retype.search(line).group()
+		if t=="Type_1":
+			oF=f1
+		else:
+			oF=f234
+		oF.write(line)
+		line=f.readline()
+		oF.write(line)
+		line=f.readline()
+		oF.write(line)
+		line=f.readline()
+		oF.write(line)
+		line=f.readline()
+	f.close()
+	f1.close()
+	f234.close()
+
+def redundancyAndLowComplexityRemoval(workdir, mainFileName, keep_rd=False, keep_lc=False, lc_ent=ENTROPYMAX, get_rd_info=True, get_lc_info=True, t1o=False, kval=41):
+	# Main function for redundancy and low-complexity bubbles removal
+	# workdir: str, working directory
+	# mainFileName: str, fasta file name containing all types of bubbles
+	# keep_rd: boolean, do we remove redundancy?
+	# keep_lc: boolean, do we keep low-complexity bubbles?
+	# lc_ent: int, Shannon Entropy threshold to define a bubble as low-complexity (if below this value)
+	# get_rd_info: boolean, do we print useful(?) informations about redundancy removal in some files?
+	# get_lc_info: boolean, do we print useful(?) informations about low-complexity removal in some files?
+	# kval: int, k-mers value
+	# return list of files to copy from the workdir to the resultdir, will replace mainFile by a new file if needed, and will create new files in the workdir
+
+	# Do we need to do anything?
+	if keep_rd and keep_lc and not t1o:
+		return []
+
+	print("\n" + getTimestamp() + "--> Removing low-complexity/redundant bubbles...")
+	printlg("\n" + getTimestamp() + "--> Removing low-complexity/redundant bubbles...")
+	
+	toMove=[] # list of files to move to the result directory (will be returned)
+	toRm=[] # list of files to remove
+
+	# 1) Divide Type_1 bubbles in one file, other bubbles in another file
+	# The Type_1 file will be moved to the result directory
+	t1fileName="all_bcc_type1.fa"
+	t234fileName="all_bcc_type234.fa"
+	if not keep_lc or not keep_rd:
+		toMove.append(t1fileName)
+	toRm.append(t234fileName)
+	splitT1T234(os.path.join(workdir,mainFileName), os.path.join(workdir,t1fileName), os.path.join(workdir,t234fileName))
+
+	if not keep_rd or not keep_lc:
+		# 2) Define some dictionnaries...
+		dSeq={} # d[cycle]=[ [seqUp, seqLow, var], [lenUp, lenLow] ]
+		dBcc={} # d[bcc]=dLev with dLev = d[cycle1][cycle2]=[levDistLow,levDistUp,consensusLow,consensusUpSeq,consensusUpVar]
+		dBcc2cycleComp={} # d[bcc][cycle]=[compressed cycles]
+		dBccLen2nCompress={} # d[BCCsize]=[nBCC, number of compressed path]
+		dBCC2size={} # d[bcc]=size
+		dBCC2lc={} # d[bcc]=[ [removed cycle due to low complexity, entropy value], ...]
+		# ... and an output file
+		t1fileNameComp="all_bcc_type1_compressed.fa"
+		fComp=open(os.path.join(workdir,t1fileNameComp), "w")
+		if not keep_rd:
+			toMove.append(t1fileNameComp)
+
+		# 3) Open and read first line of Type_1 file
+		f=open(os.path.join(workdir,t1fileName),"r")
+		lFasta="KO"
+		while lFasta and lFasta=="KO":
+			lFasta=readFasta4(f, k=kval, rmEntropy=not keep_lc, entropy_threshold=lc_ent, dBCC2lc=dBCC2lc) # [ [bcc, cycle, type, length_up, length_low], [seq_up, seq_low, seq_var] ]
+		# Fasta file not empty and the cycle was not removed by entropy filter (!=KO)
+		if lFasta:
+			# First interesting line of fasta
+			cBcc=lFasta[0][0] # current BCC
+			dSeq[lFasta[0][1]]=[lFasta[1], lFasta[0][3:5]] # we add the sequences informations associated to this cycle to dSeq
+			lCycleOrder=[lFasta[0][1]] # list of cycles ID order as in the fasta file (close cycles have less divergence)
+			# 4) Read the whole fasta file and compress BCC
+			while lFasta:
+				# Read a new cycle
+				lFasta=readFasta4(f, k=kval, rmEntropy=not keep_lc, entropy_threshold=lc_ent, dBCC2lc=dBCC2lc) # [ [bcc, cycle, type, length_up, length_low], [seq_up, seq_low, seq_var] ]
+				if lFasta and lFasta!="KO": # EOF or removed cycle due to low complexity
+					if cBcc!=lFasta[0][0]: # New bcc
+						# Compress the cycles from the previous BCC, if needed
+						if not keep_rd:
+							compressBcc(dBcc, cBcc, dSeq, lCycleOrder, dBcc2cycleComp, dBCC2size, dBccLen2nCompress, kval)
+						writeCompressedCycles(dSeq, cBcc, "1", fComp, kval)
+						cBcc=lFasta[0][0] # New current BCC
+						dSeq={}
+						lCycleOrder=[]
+					dSeq[lFasta[0][1]]=[lFasta[1], lFasta[0][3:5]] # we add the sequences informations associated to this cycle to dSeq
+					lCycleOrder.extend([lFasta[0][1]]) # list of cycles ID order as in the fasta file (close cycles have less divergence)
+			# Compress the cycles of the last BCC
+			if not keep_rd:
+				compressBcc(dBcc, cBcc, dSeq, lCycleOrder, dBcc2cycleComp, dBCC2size, dBccLen2nCompress, kval)
+			writeCompressedCycles(dSeq, cBcc, "1", fComp, kval)
+
+		f.close()
+		fComp.close()
+
+		# 5) Make informations files
+		if get_rd_info:
+			fNameSummary="get_redundancy_info_summary.tsv"
+			fNameRd="get_redundancy_info_compressed_bubbles.tsv"
+			toMove.extend([fNameSummary,fNameRd])
+			makeSummaryRd(os.path.join(workdir,fNameSummary), os.path.join(workdir,fNameRd), dBcc2cycleComp, dBccLen2nCompress)
+
+		if get_lc_info:
+			fNameLc="get_low-complexity_info.tsv"
+			toMove.append(fNameLc)
+			makeSummaryLc(os.path.join(workdir,fNameLc), dBCC2lc)
+	
+	# 6) Write a new mainFile, combining filtered type 1 and type 234 or type 1 only
+	if t1o:
+		if not keep_rd or not keep_lc:
+			shutil.copy(os.path.join(workdir,t1fileNameComp), os.path.join(workdir,mainFileName))
+		else:
+			shutil.copy(os.path.join(workdir,t1fileName), os.path.join(workdir,mainFileName))
+	else:
+		os.system("cat "+os.path.join(workdir,t1fileNameComp)+" "+os.path.join(workdir,t234fileName)+" > "+os.path.join(workdir,mainFileName))
+
+	# 7) Remove some files
+	for fRm in toRm:
+		os.remove(os.path.join(workdir,fRm))
+
+	print(getTimestamp() + "--> Done!")
+	printlg(getTimestamp() + "--> Done!")
+
+	return toMove
+
+def makeSummaryLc(fNameLc, dBCC2lc):
+	# dBCC2lc : d[bcc]=[ [removed cycle due to low complexity, entropy value], ...]
+	fLc=open(fNameLc, "w")
+
+	# low-complexity file
+	# bcc removed_cycle entropy_value
+	head="\t".join(["bcc", "removed_cycle", "shannon_entropy"])
+	fLc.write(head)
+	for bcc in dBCC2lc.keys():
+		for lInfo in dBCC2lc[bcc]:
+			rmCycle=lInfo[0]
+			ent=str(lInfo[1])
+			fLc.write("\n"+"\t".join([bcc, rmCycle, ent]))
+	fLc.close()
+		
+
+
+
+def makeSummaryRd(fNameSummary, fNameRd, dBcc2cycleComp, dBccLen2nCompress):
+	# dBcc2cycleComp : d[bcc][cycle]=[compressed cycles]
+	# dBccLen2nCompress :  d[BCCsize]=[nBCC, number of compressed path]
+	fSum=open(fNameSummary, "w")
+	fRd=open(fNameRd, "w")
+
+	# redundancy file 
+	# bcc	consensus_cycle	compressed_cycles	nCompressed
+	headRd="\t".join(["bcc","consensus_cycle","compressed_cycles","nCompressed"])
+	fRd.write(headRd)
+	for bcc in dBcc2cycleComp.keys():
+		for cycle in dBcc2cycleComp[bcc].keys():
+			lComp=dBcc2cycleComp[bcc][cycle]
+			if lComp!=[]:
+				fRd.write("\n"+"\t".join([bcc, cycle, ",".join(lComp), str(len(lComp))]))
+	fRd.close()
+
+	# summary file 
+	# bcc_size	nBcc	nCycles	nCompressedCycles	%compressed	nRemainingCycles
+	headSum="\t".join(["bcc_size","nBcc","nCycles","nCompressedCycles", "%compressed", "nRemainingCycles"])
+	fSum.write(headSum)
+	for bccSize in sorted(list(dBccLen2nCompress.keys())):
+		lInfo=dBccLen2nCompress[bccSize]
+		nBcc=lInfo[0]
+		nComp=lInfo[1]
+		nCycles=bccSize*nBcc
+		nRemain=nCycles-nComp
+		pComp=round((nComp/nCycles)*100)
+		fSum.write("\n"+"\t".join([str(bccSize), str(nBcc), str(nCycles), str(nComp), str(pComp)+"%", str(nRemain)]))
+	fSum.close()
+	
+
+###########################################################
+
+# print str to the logFile
+def printlg (*args):
+    global logFile
+    print(''.join(str(arg) for arg in args), file=logFile)
+
+def getTimestamp() -> str:
+    return f"[{time.strftime('%H:%M:%S %d/%m/%Y')}] "
+
+
+class Command(object): # deprecated in the future with Python3
+    def __init__(self):
+        self.process = None
+
+    def target(self, **kwargs):
+        self.process = Popen(kwargs["args"], stdout=kwargs["stdout"], stderr=PIPE)
+        com = self.process.communicate()
+        if com[0] and (kwargs["verbose"] or self.process.returncode != 0):
+            print(com[0])
+
+        # Prints stderr that was piped by Popen
+        if com[1] and (kwargs["verbose"] or self.process.returncode != 0):
+            print(com[1])
+
+    def run(self, command_line, out_file = "", mode = 'w', verbose = False, timeout = MAXTIMEOUT):
+        if verbose:
+            print(getTimestamp() + "Running "+command_line)
+        args = shlex.split(command_line)
+        if len(out_file):
+            stdout_file = open(out_file, mode)
+            kwargs = {"verbose":verbose, "args":args, "stdout":stdout_file}
+        else:
+            kwargs = {"verbose":verbose, "args":args, "stdout":PIPE}
+
+        # Create a Thread object that will run "self.target" with arguments kwargs
+        # (given in the form of keyword argument) and start it
+        thread = threading.Thread(target=self.target, kwargs=kwargs)
+        thread.start()
+
+        # Wait for end of thread or time out
+        thread.join( timeout )
+
+        # Check whether thread has ended or timed out
+        # (if timed out, kill it and wait for it to actually die)
+        if thread.is_alive():
+            self.process.terminate()
+            thread.join()
+
+        if len(out_file):
+            stdout_file.close()
+
+        if self.process.returncode == -15:
+            print("\n\t\t *** Timeout reached! ***\n", file=sys.stderr) #+ command_line
+        elif self.process.returncode == 15:
+            print("\n\t\t *** Maximum number of bubbles reached! ***\n", file=sys.stderr)
+        elif self.process.returncode == -6:
+            print("\n\t\t *** Memory limit reached! ***\n", file=sys.stderr)
+        elif self.process.returncode == -11:
+            print("\n\t\t *** Problem with " + command_line.split()[0] + " ***", file=sys.stderr)
+            print("\t\t *** Try increasing your stack size before running KisSplice executing: \"ulimit -s unlimited\" (if your OS accepts it, otherwise, you can replace \"unlimited\" by the value returned when executing \"ulimit -H -s\").***\n", file=sys.stderr)
+            sys.exit(self.process.returncode)
+        elif self.process.returncode != 0:
+            print("Problem with " + command_line.split()[0], file=sys.stderr)
+            sys.exit(self.process.returncode)
+
+
+def mkdirTmp(tmpdir=None):
+    if not tmpdir:
+        workdir = tempfile.mkdtemp(prefix="kissplice.")
+    else:
+        workdir = tempfile.mkdtemp(prefix="kissplice.", dir=tmpdir)
+    return workdir
+
+def subprocessLauncher(command_line, out_file = "", mode = 'w', verbose = False, timeout = MAXTIMEOUT):
+    command = Command()
+    command.run(command_line, out_file, mode, verbose, timeout)
+    return command.process.returncode
+
+def to_file(readfiles, filename = "tmp"):
+    f = open(filename, 'w')
+    reads = readfiles.split(' ')
+    for r in reads:
+        f.write(os.path.abspath(r) + "\n")
+    f.close()
+
+#BCALM to KS graph format
+def BCALMUnitigs2DotNodes(inputFileName, outputFileName):
+    with open(inputFileName) as BCALMFile, open(outputFileName, "w") as dotNodesFile:
+        for line in BCALMFile:
+            line=line.strip()
+            if line.startswith(">"):
+                dotNodesFile.write(line.split()[0][1:]) #print just the id of the node
+            else:
+                dotNodesFile.write("\t%s\n"%line)
+
+
+def BCALMStrand2KSStrand(strand):
+    if strand=="-":
+        return "R"
+    elif strand=="+":
+        return "F"
+    else:
+        dieToFatalError("Error on BCALMStrand2KSStrand(). Offending strand: %s"%strand)
+
+#BCALM to KS edges format
+def BCALMUnitigs2DotEdges(inputFileName, outputFileName):
+    allEdges=[]
+    with open(inputFileName) as BCALMFile, open(outputFileName, "w") as dotEdgesFile:
+        for line in BCALMFile:
+            line=line.strip()
+            if line.startswith(">"):
+                words = line.split()
+                sourceNodeId = int(words[0][1:])
+                for word in words:
+                    if word.startswith("L:"):
+                        fields = word.split(":")
+                        sourceNodeStrand = BCALMStrand2KSStrand(fields[1])
+                        targetNodeId = int(fields[2])
+                        targetNodeStrand = BCALMStrand2KSStrand(fields[3])
+                        allEdges.append((sourceNodeId, targetNodeId, sourceNodeStrand+targetNodeStrand))
+
+        allEdges.sort()
+        for edge in allEdges:
+            dotEdgesFile.write("%d\t%d\t%s\n"%(edge[0], edge[1], edge[2]))
+
+#BCALM to KS unitigs abundance format
+def BCALMUnitigs2DotAbundance(inputFileName, outputFileName):
+    with open(inputFileName) as BCALMFile, open(outputFileName, "w") as dotAbundanceFile:
+        for line in BCALMFile:
+            line=line.strip()
+            if line.startswith(">"):
+                words = line.split()
+                for word in words:
+                    if word.startswith("km:f:"):
+                        fields = word.split(":")
+                        dotAbundanceFile.write("%s\n"%(fields[-1]))
+
+
+# Run debruijn graph construction
+def build_graph(workdir, readfiles, kval, graphfile, min_cov, nbCores, verbose = False):
+    print(getTimestamp() + "--> Building de Bruijn graph...")
+    printlg(getTimestamp() + "--> Building de Bruijn graph...")
+    print("Graph will be written in "+graphfile+".[edges/nodes]")
+    printlg("Graph will be written in "+graphfile+".[edges/nodes]")
+
+    #put all readfiles in a file
+    all_read_files = workdir + "/all_read_filenames"
+    to_file(readfiles, all_read_files)
+    all_read_files = os.path.abspath(all_read_files)
+
+    #to execute BCALM, we change wd because it produces the files in the wd
+    if not os.path.exists(workdir+"/bcalm"):
+        os.makedirs(workdir+"/bcalm")
+
+    previousWD = os.getcwd()
+    os.chdir(workdir+"/bcalm")
+
+    subprocessLauncher(f"{BCALM_PATH} -in {all_read_files} -kmer-size {kval} -abundance-min {min_cov} -nb-cores {nbCores} -out bcalm_out", verbose=verbose)
+
+    os.chdir(previousWD)
+
+    #transform BCALM unitigs 2 ks unitigs
+    BCALMUnitigs2DotNodes(workdir+"/bcalm/bcalm_out.unitigs.fa", graphfile + ".nodes")
+
+    #build .edges file from BCALM unitigs file
+    BCALMUnitigs2DotEdges(workdir+"/bcalm/bcalm_out.unitigs.fa", graphfile + ".edges")
+
+    #build the unitigs count file from BCALM unitigs file
+    BCALMUnitigs2DotAbundance(workdir+"/bcalm/bcalm_out.unitigs.fa", graphfile + ".abundance")
+
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+
+#Run error_removal for the graph (overwrite edge file)
+def error_removal(graphfile, nobuild, cutoff, verbose = False):
+    print("\n" + getTimestamp() + "--> Removing sequencing errors...")
+    printlg("\n" + getTimestamp() + "--> Removing sequencing errors...")
+    
+    #checks if user passed the graph for KisSplice. In this case, maybe the error_removal step is already done
+    if nobuild:
+        #checks if the file created by the error_removal step is already done
+        edge_suffix = "_C"+str(cutoff)+".edges"
+        if os.path.isfile(graphfile+edge_suffix):
+                print("Sequencing-errors-removal step skipped: using previously computed file "+graphfile+edge_suffix)
+                printlg("Sequencing-errors-removal step skipped: using previously computed file "+graphfile+edge_suffix)
+                print(getTimestamp() + "--> Done!")
+                printlg(getTimestamp() + "--> Done!")
+                return True
+
+
+    #Run the error-removal
+    command_line = INTERNAL_BINDIR+"/ks_error_removal "+graphfile+".edges "+graphfile+".abundance "+str(cutoff)+" "+graphfile+"_C"+str(cutoff)
+    subprocessLauncher(command_line, verbose=verbose)
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+    return True
+
+
+#Run the modules on the graph
+def run_modules(workdir, graphfile, kval, cutoff, verbose = False, output_context = False, exec_error_removal = False):
+    if not os.path.exists(workdir+"/bcc"):
+        os.mkdir(workdir+"/bcc")
+    print("\n" + getTimestamp() + "--> Finding the BCCs...")
+    printlg("\n" + getTimestamp() + "--> Finding the BCCs...")
+
+    edge_suffix = ".edges"
+    if exec_error_removal:
+        edge_suffix = "_C"+str(cutoff)+".edges"
+
+    command_line = INTERNAL_BINDIR+"/ks_run_modules "+graphfile+edge_suffix+" "+graphfile+".nodes "+str(kval)+" "+workdir+"/bcc/graph"
+    if output_context:
+        command_line += " --output-context"
+
+    return_code = subprocessLauncher(command_line, verbose=verbose)
+
+    if (return_code != 0):
+        print("\t\t *** Try increasing your stack size before running KisSplice executing: \"ulimit -s unlimited\" (if your OS accepts it, otherwise, you can replace \"unlimited\" by the value returned when executing \"ulimit -H -s\").***\n")
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+
+def count_alreadyfoundSNPs(workdir):
+    global num_snps
+    info_snp_file = open(workdir+"/bcc/graph_info_snp_bcc", 'r')
+    info_snp = info_snp_file.readlines()
+    for bcc_snp in info_snp:
+        info = bcc_snp.split()# format: bcc_id num_snps
+        num_snps[info[0]] = int(info[1])
+    info_snp_file.close()
+
+def find_bcc_ids_ordered_by_size(workdir, min_length = 4):
+    f = open( workdir+"/bcc/graph_info_bcc")
+    bccnum2size = f.readlines()[2:]
+    bccnumorderedbysize = [int(e[0])+1 for e in sorted(enumerate([int(t.split()[1]) for t in  bccnum2size]), key=lambda x:x[1], reverse=True) if int(e[1]) >= min_length ]
+    f.close()
+    return (bccnum2size, bccnumorderedbysize)
+    
+def enumerate_all_bubbles(workdir, outdir, kval, bval, output_snps, min_edit_dist, max_cycles, UL_MAX, LL_MAX, LL_MIN, timeout, nbprocs=1, verbose = False, output_context = False, output_path = False, output_branch_count = False, experimental = False, max_memory = 0):
+    print("\n" + getTimestamp() + "--> Enumerating all bubbles...")
+    printlg("\n" + getTimestamp() + "--> Enumerating all bubbles...")
+
+    if os.path.isfile(workdir+"/all_bcc_type0_"+str(kval)):
+      os.remove(workdir+"/all_bcc_type0_"+str(kval))
+    if os.path.isfile(workdir+"/all_bcc_type1234_"+str(kval)):
+        os.remove(workdir+"/all_bcc_type1234_"+str(kval))
+    f = open(workdir+"/bcc/graph_info_bcc")
+    n_bcc = int(f.readline())
+    f.close()
+
+    file2size = {}
+
+    # filling num_snps
+    count_alreadyfoundSNPs(workdir)
+    # ordering bcc by decreasing size and filtering if <4 nodes
+    bccnum2size, bccnumorderedbysize = find_bcc_ids_ordered_by_size(workdir, 4)
+    
+    if verbose:
+        if len(bccnumorderedbysize) != len(bccnum2size):
+            print("Less than 4 nodes, cannot contain a bubble!")
+
+    # multiprocessing step-  BEGIN
+    pool = multiprocessing.Pool(nbprocs)
+    TASKS = []
+    for i in bccnumorderedbysize:
+        TASKS +=  [(enumerate_bubbles_core, i, workdir, outdir, kval, bval, output_snps, min_edit_dist, max_cycles, UL_MAX, LL_MAX, LL_MIN, timeout, verbose, output_context, output_path, output_branch_count, experimental, max_memory)]
+
+    imap_unordered_it = pool.imap_unordered(eval_func_tuple, TASKS, 1)
+
+    for x in imap_unordered_it:
+        if x != -1:
+            unfinished_bccs.append(x)
+
+    pool.close()
+    pool.join()
+    # multiprocessing step - END
+
+    destinationSNPS = open(workdir+"/all_bcc_type0_"+str(kval), 'wb') ## THE FILE CONTAINS SNPS
+    destination1234 = open(workdir+"/all_bcc_type1234_"+str(kval), 'wb') ## THE FILE CONTAINS other bcc
+    for file in os.listdir(workdir):
+        if file[0:17] == "tmp_all_bcc_type0":
+            shutil.copyfileobj(open(workdir+"/"+file, 'rb'), destinationSNPS)
+        if file[0:20] == "tmp_all_bcc_type1234":
+            shutil.copyfileobj(open(workdir+"/"+file, 'rb'), destination1234)
+    destinationSNPS.close()
+    destination1234.close()
+
+    if output_path:
+        destination_paths = open(workdir+"/all_paths_k"+str(kval), 'wb')
+        for file in os.listdir(workdir):
+            if file[0:18] == "tmp_all_paths_bcc_":
+                shutil.copyfileobj(open(workdir+"/"+file, 'rb'), destination_paths)
+        destination_paths.close()
+
+    f = open(workdir+"/all_bcc_type0_"+str(kval))
+    size0 = sum(1 for line in f)
+    f.close()
+    f = open(workdir+"/all_bcc_type1234_"+str(kval))
+    size1234 = sum(1 for line in f)
+    f.close()
+    n_bubbles = (size0 + size1234)/4
+
+    print("Total number of bubbles found: ", n_bubbles)
+    printlg("Total number of bubbles found: ", n_bubbles)
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+
+
+
+
+def enumerate_bubbles_core(i, workdir, outdir, kval, bval, output_snps, min_edit_dist, max_cycles, UL_MAX, LL_MAX, LL_MIN, timeout, verbose = False, output_context = False, output_path = False, output_branch_count = False, experimental = False, max_memory = 0):
+    if verbose:
+      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      print("Enumerating bubbles in biconnected component "+str(i))
+    infofile = workdir+"/bcc/graph_info_bcc"
+    contents_file_edges = workdir+"/bcc/graph_contents_edges_bcc"
+    contents_file_nodes = workdir+"/bcc/graph_contents_nodes_bcc"
+    basename_edges = workdir+"/bcc/graph_all_edges_bcc"
+    basename_nodes = workdir+"/bcc/graph_all_nodes_bcc"
+
+    # Contains -1 if the process finished or the bcc number if it timed out.
+    flag = -1
+
+    # already num_snps found - it is also the starting number from enumerating cycle
+    num_snps_bcc = 0
+    if str(i) in num_snps:
+        num_snps_bcc = num_snps[str(i)]
+    command_line = INTERNAL_BINDIR+"/ks_bubble_enumeration "+ infofile+" "+ contents_file_edges+" "+ contents_file_nodes+" "+ basename_edges+" "+ basename_nodes\
+        +" "+str(i) \
+        +" "+str(kval)+" "+workdir+"/bcc/tmp_bcc_sequences_"+str(kval)+"_"+multiprocessing.current_process().name+" "+str(min_edit_dist) \
+        +" bcc_"+str(i) + " " + str(num_snps_bcc) + " -u "+str(UL_MAX) \
+        +" -L "+str(LL_MAX)+" -l "+str(LL_MIN)+" -M "+str(max_cycles)+" -s "+str(output_snps)
+    if output_context:
+      command_line += " -c"
+    if output_path:
+      command_line += " -p"
+    if bval is not None:
+      command_line += " -b" + str(bval)
+    if output_branch_count:
+      command_line += " -v"
+    if experimental:
+      command_line += " -e " + str(max_memory)
+
+      
+    process_returncode = subprocessLauncher(command_line, verbose=verbose, timeout=timeout)
+
+    # Store the bcc number if it timed out (return code -15) OR the maximum number of bubbles was reached (return code 15) OR the memory limit was exceeded (return code -6)
+    if process_returncode == -15 or process_returncode == 15 or process_returncode == -6:
+        flag = i
+
+    # Always append the results if the enumeration, even when it's incomplete.
+    command_line_type0 = INTERNAL_BINDIR+"/ks_clean_duplicates " + workdir + "/bcc/tmp_bcc_sequences_" + str(kval) +"_"+multiprocessing.current_process().name+ "_type0.fa"
+    command_line_type1234 = INTERNAL_BINDIR+"/ks_clean_duplicates " + workdir + "/bcc/tmp_bcc_sequences_" + str(kval) +"_"+multiprocessing.current_process().name+ "_type1234.fa"
+    subprocessLauncher(command_line_type0, workdir+"/tmp_all_bcc_type0_"+str(kval)+"_"+multiprocessing.current_process().name, 'a', verbose=verbose) # append ALL BCC IN THE SAME FILE
+    subprocessLauncher(command_line_type1234, workdir+"/tmp_all_bcc_type1234_"+str(kval)+"_"+multiprocessing.current_process().name, 'a', verbose=verbose) # append ALL BCC IN THE SAME FILE
+
+    if output_path:
+        command_line = "cat "+workdir+"/bcc/tmp_bcc_sequences_" + str(kval) +"_"+multiprocessing.current_process().name+ ".path"
+        subprocessLauncher(command_line, workdir+"/tmp_all_paths_bcc_"+str(kval)+"_"+multiprocessing.current_process().name, 'a', verbose=verbose) # append ALL BCC IN THE SAME FILE
+
+    if verbose:
+      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+
+    return flag
+
+def eval_func_tuple(f_args):
+    return f_args[0](*f_args[1:])
+
+def concatenate_graph_all_log_bcc_to_all_bcc_type0(workdir, kval, output_snps):
+    if output_snps==2: #concatenate all non-branching snps
+        destinationSNPS = open(workdir+"/all_bcc_type0_"+str(kval), 'a') ## THE UNIQUE FILE ALSO CONTAINS SNPS
+        shutil.copyfileobj(open(workdir+"/bcc/graph_all_log_bcc", 'r'), destinationSNPS)
+        destinationSNPS.close()
+    elif output_snps==1: #concatenate only non-branching Type-0a
+        destinationSNPS = open(workdir+"/all_bcc_type0_"+str(kval), 'a') ## THE UNIQUE FILE ALSO CONTAINS SNPS
+        
+        #append the Type_0a bubbles to the destinationSNPS file
+        snpsFile = open(workdir+"/bcc/graph_all_log_bcc", 'r')
+        writeLine = False
+        for line in snpsFile.readlines():
+                if writeLine == True:
+                        destinationSNPS.write(line)
+                        writeLine = False
+                else:
+                        if ("Type_0a" in line):
+                                destinationSNPS.write(line)
+                                writeLine = True
+                        else:
+                                writeLine = False
+
+        destinationSNPS.close()
+
+
+def check_read_coverage_and_sort_all_bubbles(readfiles, workdir, outdir, kval, output_snps, infix_name, 
+  countsMethods, minOverlap, substitutions, substitutionsSNP, getMappingInfo, stranded, strandedAbsoluteThreshold, strandedRelativeThreshold, nbprocs, verbose = False):
+
+    # Two KisSreads executions, one for type 0 one for type 1234
+    #  Du to the k extension, anchor should be of size k+1 for SNP
+    commandLineType0=""
+    if output_snps > 0:
+            commandLineType0 = INTERNAL_BINDIR+"/ks_kissreadsSNPS "+workdir+"/all_bcc_type0_"+str(kval)+" "+readfiles+" -i 5 -S 25 -O "+str(kval+minOverlap)+" -o "+ workdir+"/coherentType0.fa -u "+workdir+"/uncoherentType0.fa  -d " + str(substitutionsSNP) + " -c 1 -n -t "+str(nbprocs)
+            if stranded:
+              commandLineType0+=" -x -a " + str(strandedAbsoluteThreshold) + " -r " + str(strandedRelativeThreshold) + " "
+            if getMappingInfo:
+              commandLineType0+=" -m " + workdir+"/mapping_info_reads_on_Type0_bubbles.sam "
+            subprocessLauncher(commandLineType0, verbose=verbose)
+            
+            #move the mapping info file
+            if getMappingInfo:
+              shutil.move(workdir+"/mapping_info_reads_on_Type0_bubbles.sam", outdir+"/mapping_info_reads_on_Type0_bubbles.sam")
+
+            #move the explanation file
+            if os.path.exists(workdir+"/uncoherentType0.fa.explanations"):
+              shutil.move(workdir+"/uncoherentType0.fa.explanations", outdir+"/uncoherentType0.fa.explanations")
+
+    print("\n" + getTimestamp() + "--> Computing read coherence and coverage...")
+    printlg("\n" + getTimestamp() + "--> Computing read coherence and coverage...")
+
+    # no n options anymore
+    commandLineType1234 = INTERNAL_BINDIR+"/ks_kissreadsSplice "+workdir+"/all_bcc_type1234_"+str(kval)+" "+readfiles+" -i 5 -k "+str(kval)+" -S 25 -O "+str(kval+minOverlap)+" -o "+workdir+"/coherentType1234.fa -u "+workdir+"/uncoherentType1234.fa  -d " + str(substitutions) + " -c 1 -j " + countsMethods +" -l " + str(minOverlap) +" -t "+str(nbprocs)
+    if stranded:
+      commandLineType1234+=" -x -a " + str(strandedAbsoluteThreshold) + " -r " + str(strandedRelativeThreshold) + " "
+    if getMappingInfo:
+      commandLineType1234+=" -m " + workdir+"/mapping_info_reads_on_Type1234_bubbles.sam"
+    subprocessLauncher(commandLineType1234, verbose=verbose)
+    if getMappingInfo:
+      shutil.move(workdir+"/mapping_info_reads_on_Type1234_bubbles.sam", outdir+"/mapping_info_reads_on_Type1234_bubbles.sam")
+
+    #move the explanation file
+    if os.path.exists(workdir+"/uncoherentType1234.fa.explanations"):
+      shutil.move(workdir+"/uncoherentType1234.fa.explanations", outdir+"/uncoherentType1234.fa.explanations")
+
+    commandLineCat = "cat " +  workdir+"/uncoherentType1234.fa "
+    if output_snps > 0:
+            commandLineCat += workdir+"/uncoherentType0.fa "
+    subprocessLauncher(commandLineCat, workdir + "/uncoherent.fa", "a", verbose=verbose )
+
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+
+    print(getTimestamp() +"--> Sorting all bubbles...")
+    printlg(getTimestamp() +"--> Sorting all bubbles...")
+
+    nb = [0]*6# counter of number of events of each type found
+    eventsName = ["type_0a", "type_0b", "type_1", "type_2", "type_3", "type_4"]
+    cofilel = []
+    for i in range(0,6):
+        cofilel.append(open(outdir+"/results_"+infix_name+"_coherents_"+eventsName[i]+".fa", 'w'))
+
+    if output_snps > 0:
+            snpsFile = open(workdir+"/coherentType0.fa", 'r')
+            l = snpsFile.readlines()
+            l.sort( reverse = True )
+            snpsFile.close()
+            for event in l:
+                    eventSplitted = event.split()[-1].replace(';','\n')
+                    try:
+                            if ("Type_0a" in eventSplitted):
+                                cofilel[0].write(eventSplitted+"\n")#Transform to Fasta type
+                                nb[0] += 1
+                            else:
+                                cofilel[1].write(eventSplitted+"\n")#Transform to Fasta type
+                                nb[1] += 1
+                    except:
+                            pass
+
+    # handling coherent "other"
+    cofile = open(workdir+"/coherentType1234.fa", 'r')
+    l = cofile.readlines()
+    l.sort(reverse=True)
+    cofile.close()
+    retype = re.compile(r"Type_\d+")
+    for event in l:
+        try:
+            type = retype.search(event).group()
+            for i in range(2,6):
+                if (type=="Type_"+str(i-1)):
+                    cofilel[i].write(event.split()[-1].replace(';','\n')+"\n")#Transform to Fasta type
+                    nb[i] += 1
+        except:
+            pass
+
+
+    for i in range(0,6):
+        cofilel[i].close()
+    uncofile = open(workdir+"/uncoherent.fa", 'r')
+    uncofileout = open(outdir+"/results_"+infix_name+"_uncoherent.fa", 'w')
+    for event in uncofile.readlines():
+        uncofileout.write(event.split()[-1].replace(';','\n')+"\n")
+    uncofile.close()
+    uncofileout.close()
+
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+
+    return nb
+
+
+def sort_all_bubbles(readfiles, workdir, outdir, kval, output_snps, infix_name, shouldDoReadCoherence, verbose = False):
+    print("\n" + getTimestamp() + "--> Starting Bubble Output Module")
+    printlg("\n" + getTimestamp() + "--> Starting Bubble Output Module")
+    if shouldDoReadCoherence:
+        outdir = outdir+"/results_without_read_coherency"
+        if not os.path.exists(outdir):
+            os.mkdir(outdir)
+        print("Before checking for read coherency, all bubbles will be written to folder " + outdir)
+        printlg("Before checking for read coherency, all bubbles will be written to folder " + outdir)
+        print("This enables you to access them even before the read coherency module finishes, which can take a long time")
+        printlg("This enables you to access them even before the read coherency module finishes, which can take a long time")
+
+    print(getTimestamp() + "--> Sampling bubbles by type...")
+    printlg(getTimestamp() + "--> Sampling bubbles by type...")
+
+    concatenate_graph_all_log_bcc_to_all_bcc_type0(workdir, kval, output_snps)
+
+    retype = re.compile(r"Type_\d+")
+    eventsName = ["type_0a", "type_0b", "type_1", "type_2", "type_3", "type_4"]
+    filel = []
+    for i in range(0,6):
+        filel.append(open(outdir+"/results_"+infix_name+"_"+eventsName[i]+".fa", 'w'))
+
+    nb = [0]*6
+
+    if output_snps > 0:
+            snpsFile = open(workdir+"/all_bcc_type0_"+str(kval), 'r')
+            for line in snpsFile.readlines():
+                if "Type_0a" in line:
+                        ofile = filel[0]
+                        nb[0] += 1
+                elif "Type_0b" in line:
+                        ofile = filel[1]
+                        nb[1] += 1
+                ofile.write(line)
+            snpsFile.close()
+
+
+    # handling the other type
+    cfile = open(workdir+"/all_bcc_type1234_"+str(kval), 'r')
+    for line in cfile.readlines():
+        try:
+            type = retype.search(line).group()
+            for i in range(1,5):
+                if (type=="Type_"+str(i)):
+                    ofile = filel[i+1]
+                    nb[i+1] += 1
+        except:
+            pass
+        ofile.write(line)
+    cfile.close()
+    for i in range(0,6):
+        nb[i] /= 2
+        filel[i].close()
+    
+
+    print(getTimestamp() + "--> Done!")
+    printlg(getTimestamp() + "--> Done!")
+    print("You can now access all bubbles without read coherency in: " + outdir)
+    printlg("You can now access all bubbles without read coherency in: " + outdir)
+
+    return nb
+
+def save_bccs_from_list(bcc_list, dir_name, workdir, outdir, verbose = False):
+    if not os.path.exists(outdir + dir_name):
+        os.mkdir(outdir + dir_name)
+    infofile = workdir+"/bcc/graph_info_bcc"
+    contents_file_edges = workdir+"/bcc/graph_contents_edges_bcc"
+    contents_file_nodes = workdir+"/bcc/graph_contents_nodes_bcc"
+    basename_edges = workdir+"/bcc/graph_all_edges_bcc"
+    basename_nodes = workdir+"/bcc/graph_all_nodes_bcc"
+    
+    for i in bcc_list:
+        command_line = INTERNAL_BINDIR+"/ks_print_bcc "+ infofile+" "+ contents_file_edges+" "+ contents_file_nodes+" "+ basename_edges+" "+ basename_nodes\
+            +" "+str(i)+" "\
+            + outdir+ dir_name + "/graph_bcc_"+str(i)+".edges "\
+            + outdir+ dir_name + "/graph_bcc_"+str(i)+".nodes"
+        subprocessLauncher(command_line, verbose=verbose)
+
+def check_read_files(readfiles):
+    if readfiles is None:
+        return True
+
+    allFilesAreOK = True
+    for file in readfiles:
+        if not os.path.isfile(file):
+            print("[ERROR] File \""+file+"\" does not exist.")
+            allFilesAreOK = False
+
+    if not allFilesAreOK:
+        dieToFatalError("One or more read files do not exist.")
+
+
+def dieToFatalError (msg):
+  print("[FATAL ERROR] " + msg)
+  print("Try `kissplice --help` for more information")
+  global logFileName
+  os.remove(logFileName)
+  sys.exit(1)
+
+# ############################################################################
+#                                   Main
+# ############################################################################
+def main():
+  # ========================================================================
+  #                        Manage command line arguments
+  # ========================================================================
+  parser = argparse.ArgumentParser(description='kisSplice - local assembly of SNPs, indels and AS events')
+
+  # ------------------------------------------------------------------------
+  #                            Define allowed options
+  # ------------------------------------------------------------------------
+  parser.add_argument("-r", action="append", dest="readfiles",
+                      help="input fasta/q read files or compressed (.gz) fasta/q files (mutiple, such as \"-r file1 -r file2...\") ")
+  parser.add_argument('-k', action="store", dest="kval", type=int, default=41,
+                      help="k-mer size (default=41)")
+  parser.add_argument('-b', action="store", dest="bval", type=int, default=5, help="maximum number of branching nodes (default 5)")
+  parser.add_argument('-l', action="store", dest="llmax", type=int, default=0,
+                      help="maximal length of the shorter path (default: 2k+1)")
+  parser.add_argument('-m', action = "store", dest = "LL_MIN", default = 0, help = "minimum length of the shorter path (default 2k-8)")
+  parser.add_argument('-M', action = "store", dest = "UL_MAX", default = 1000000, help = "maximum length of the longest path (default 1000000), skipped exons longer than UL_MAX are not reported")
+  parser.add_argument('-g', action="store", dest="graph_prefix", default="",
+                      help="path and prefix to pre-built de Bruijn graph (suffixed by .edges/.nodes)\n \
+                      if jointly used with -r, graph used to find bubbles and reads used for quantification")
+  parser.add_argument('-o', action="store", dest="out_dir", default="results",
+                      help="path to store the results and the summary log file (default = ./results)")
+  parser.add_argument('-d', action="store", dest="path_to_tmp", default=None,
+                      help="specific directory (absolute path) where to build temporary files (default temporary directory otherwise)")
+  parser.add_argument('-t', action="store", dest="nbprocs", type=int, default=1,
+                      help="number of cores (must be <= number of physical cores)")
+  parser.add_argument('-s', action="store", dest="output_snps", default = "0", help="0, 1 or 2. Changes which types of SNPs will be output. If 0 (default), will not output SNPs. If 1, will output Type0a-SNPs. If 2, will output Type0a and Type0b SNPs (warning: this option may increase a lot the running time. You might also want to try the experimental algorithm here)")
+  parser.add_argument('-v', action="store_true", dest="verbose", help="Verbose mode")
+  parser.add_argument('-u', action="store_true", dest="keep_ubccs", help="keep the nodes/edges file for unfinished bccs")
+  parser.add_argument('-c',  action = "store",  type = int, dest = "min_cov", default = 2, help="an integer, k-mers present strictly less than this number of times in the dataset will be discarded (default 2)")
+  parser.add_argument('-C',  action = "store",  type = float, dest = "min_relative_cov", default = 0.05, help="a percentage from [0,1), edges with relative coverage below this number are removed (default 0.05)")
+  parser.add_argument('-e',  action = "store", dest = "min_edit_dist", default = 3,
+                      help="edit distance threshold, if the two sequences (paths) of a bubble have edit distance smaller than this threshold, the bubble is classified as an inexact repeat (default 3)")
+  parser.add_argument('-y',  action = "store", dest = "max_cycles", default = 100000000,
+                       help="maximal number of bubbles enumeration in each bcc. If exceeded, no bubble is output for the bcc (default 100M)")
+  parser.add_argument('--mismatches',  action = "store", dest = "mism", default = 2, type = int,
+                      help="Maximal number of substitutions authorized between a read and a fragment (for quantification only), default 2. If you increase the mismatch and use --counts think of increasing min_overlap too.")
+  parser.add_argument('--mismatchesSNP',  action = "store", dest = "mismSNP", default = 0, type = int,
+                      help="Maximal number of substitutions authorized between a read and a fragment (for quantification only) for SNP, default 0.")
+  parser.add_argument('--counts',  action = "store", dest = "countsMethod", default = "2", help="0,1 or 2 . Changes how the counts will be reported. If 0 : total counts, if 1: counts on junctions, if 2 (default): all counts. see User guide for more information ")
+  parser.add_argument('--min_overlap',  action = "store", dest = "minOverlap", default = 5, type=int, help="Set how many nt must overlap a junction to be counted by --counts option. Default=5. see User guide for more information ")
+  parser.add_argument('--timeout', action='store', dest="timeout", default=TIMEOUT,
+                      help="max amount of time (in seconds) spent for enumerating bubbles in each bcc. If exceeded, no bubble is output for the bcc (default "+str(TIMEOUT)+")")
+  parser.add_argument('--version', action='version', version='%(prog)s 2.6.7')
+  parser.add_argument('--output-context', action="store_true", dest="output_context", default = False, help="Will output the maximum non-ambiguous context of a bubble")
+  parser.add_argument('--output-path', action="store_true", dest="output_path", default = False, help="Will output the id of the nodes composing the two paths of the bubbles.")
+  parser.add_argument('--output-branch-count', action="store_true", dest="output_branch_count", default = False, help="Will output the number of branching nodes in each path.")
+  parser.add_argument('--keep-bccs', action="store_true", dest="keep_all_bccs", default = False, help="Keep the node/edges files for all bccs.")
+  parser.add_argument('--not-experimental', action="store_false", dest="experimental", default = True, help="Do not use a new experimental algorithm that searches for bubbles by listing all paths.")
+  parser.add_argument('--max-memory', action="store", dest="max_memory", default="unlimited",
+                      help="If you use the experimental algorithm, you must provide the maximum size of the process's virtual memory (address space) in megabytes (default unlimited). WARNING: this option does not work on Mac operating systems.")
+  parser.add_argument('--keep-counts', action="store_true", dest="keep_counts", default = False, help="Keep the .counts file after the sequencing-errors-removal step.")
+  parser.add_argument('--get-mapping-info', action="store_true", dest="get_mapping_info", default = False, help="Creates a file with the KissReads mapping information of the reads on the bubbles.")
+  parser.add_argument('--stranded', action="store_true", dest="stranded", default = False, help="Execute kissreads in stranded mode.")
+  parser.add_argument('--strandedAbsoluteThreshold',  action = "store", dest = "strandedAbsoluteThreshold", default = 3, type=int, help="Sets the minimum number of reads mapping to a path of a bubble in a read set is needed to call a strand.")
+  parser.add_argument('--strandedRelativeThreshold',  action = "store", dest = "strandedRelativeThreshold", default = 0.75, help="If a strand is called for a path of a bubble in a read set, but the proportion of reads calling this strand is less than this threshold, then the strand of the path is set to '?' (any strand - not enough evidence to call a strand).")
+  parser.add_argument('--keep-redundancy', action="store_true", dest="keep_rd", default = False, help="Keep the Type_1 redundant cycles in the result file.")
+  parser.add_argument('--keep-low-complexity', action="store_true", dest="keep_lc", default = False, help="Keep the low-complexity Type_1 cycles in the result file.")
+  parser.add_argument('--lc-entropy-threshold',  action = "store", dest = "lc_ent", default = ENTROPYMAX, type=int, help="Cycles with a Shannon entropy value for their upper path below this value will be removed (use --keep-low-complexity to keep them).")
+  parser.add_argument('--get-redundance-info', action="store_true", dest="get_rd_info", default = False, help="Creates files with informations on compressed redundant cycles.")
+  parser.add_argument('--get-low-complexity-info', action="store_true", dest="get_lc_info", default = False, help="Creates a file with informations on removed low-complexity cycles.")
+  parser.add_argument('--type1-only', action="store_true", dest="t1o", default = False, help="Only quantify Type 1 bubbles (alternative splicing events, MAJOR SPEED UP with -b > 10 BUT all other bubbles will not appear in the result file).")
+  # ------------------------------------------------------------------------
+  #               Parse and interpret command line arguments
+  # ------------------------------------------------------------------------
+  options = parser.parse_args()
+
+  # ------------------------------------------------------------------------
+  #               Create output dir
+  # ------------------------------------------------------------------------
+  outdir = options.out_dir
+  if not os.path.exists(outdir):
+    os.mkdir(outdir)  
+
+  # ------------------------------------------------------------------------
+  #               Create the log file
+  # ------------------------------------------------------------------------
+  global logFile, logFileName
+  logFileName = outdir+"/kissplice_log_summary_"+time.strftime("%Y-%m-%d")+"_"+time.strftime("%H-%M-%S")+"_"+str(randint(0, 1000000))
+  logFile = open(logFileName, 'w')
+  
+
+ # ------------------------------------------------------------------------
+ #                 Print version and command line
+ # ------------------------------------------------------------------------
+  print("\nThis is KisSplice, version 2.6.7\n")
+  printlg("This is KisSplice, version 2.6.7\n")
+  print("The command line was:       " + ' '.join(sys.argv))
+  printlg("The command line was:       " + ' '.join(sys.argv))
+
+
+ # ------------------------------------------------------------------------
+ #                 Parse input options
+ # ------------------------------------------------------------------------
+  # check if the given read files indeed exist
+  check_read_files(options.readfiles)
+  readfiles = None
+  only_graph = False
+  if options.readfiles:
+    if options.graph_prefix: # GRAPH + READS
+      print("-r and -g options used together: ")
+      printlg("-r and -g options used together: ")
+      print("the graph will be used to find events, while reads files are used for checking read-coherency and coverage")
+      printlg("the graph will be used to find events, while reads files are used for checking read-coherency and coverage")
+    readfiles = ' '.join(map(str, options.readfiles))
+  else:
+    if not options.graph_prefix:
+      parser.print_usage()
+      dieToFatalError("kissplice requires at least a read file or a pre-built graph")
+    else: # GRAPH
+      only_graph = True
+
+  nobuild = False
+  if options.graph_prefix:
+    nobuild = True
+
+  # --------------------------------------------------------- Output options
+  output_snps = (int)(options.output_snps)
+  if output_snps<0 or output_snps>2:
+          print("-s is not 0, 1 or 2. Defaulting to 0.")
+          printlg("-s is not 0, 1 or 2. Defaulting to 0.")
+          output_snps = 0
+
+  print("Using the read files:      ", readfiles)
+  printlg("Using the read files:      ", readfiles)
+  print("Results will be stored in: ", os.path.abspath(options.out_dir))
+  printlg("Results will be stored in: ", os.path.abspath(options.out_dir))
+  print("Summary log file will be saved in: ", os.path.abspath(logFileName))
+  printlg("Summary log file will be saved in: ", os.path.abspath(logFileName))
+  print("\n")
+  printlg("\n")
+
+  # ------------------------------------------------------------- k-mer size
+  kval = options.kval
+  if kval%2 == 0:
+    dieToFatalError("please use only odd value for k") #otherwise, DBG use k-1 and output context do not work
+
+  # ------------------------------------- Maximal length of the shorter path
+  if options.llmax != 0:
+    LL_MAX = options.llmax
+  else:
+    LL_MAX = 2 * kval + 1
+  # The following are not optional but work along with llmax
+  UL_MAX = options.UL_MAX # Defines maximum upper and lower path bounds
+  if options.LL_MIN != 0:
+    LL_MIN= options.LL_MIN
+  else:
+    LL_MIN = 2 * kval - 8
+
+  min_ll_max = 2 * kval + 1
+  if LL_MAX < min_ll_max:
+    dieToFatalError("maximal length of the shorter path (" + str(LL_MAX) + ") should be >= 2k+1 =" + str(min_ll_max) + ")")
+
+  
+  #-------------------------------- fix LL_MIN, LL_MAX and UL_MAX --------------------------------------
+  LL_MIN = int(LL_MIN)-2
+  LL_MAX = int(LL_MAX)-2
+  UL_MAX = int(UL_MAX)-2
+
+  # ------------------------------------------------------- Other parameters
+  min_cov = options.min_cov
+  min_edit_dist = options.min_edit_dist
+  max_cycles = options.max_cycles
+  countsMethod = options.countsMethod
+  minOverlap = options.minOverlap
+
+  # ========================================================================
+  #            Construct intermediate and output file names
+  # ========================================================================
+  workdir = mkdirTmp(options.path_to_tmp)
+  infix_name = "" # will be the central part of the output file names
+  if options.graph_prefix:
+    graphfile = options.graph_prefix
+  if options.readfiles:
+    for file in options.readfiles:
+      justfilename =  file.split("/")[-1].split(".")[0] #remove what is before the "/" and what is after the "."
+      infix_name += justfilename+"_"
+    infix_name = infix_name[0:200] # Truncate it to contain at most 200 characteres
+    infix_name += "k" + str(kval)
+    if not options.graph_prefix:
+      graphfile = options.out_dir+"/graph_"+infix_name # Output graph file
+  else:
+    infix_name = graphfile.split("/")[-1].split(".")[0] #remove what is before the "/" and what is after the "."
+
+
+  # ========================================================================
+  #                                   RUN
+  # ========================================================================
+  # ------------------------------------------------------------------------
+  #                          Build De Bruijn Graph
+  # ------------------------------------------------------------------------
+  if not nobuild:
+    t = time.time()
+    build_graph(workdir, readfiles, kval, graphfile, min_cov, options.nbprocs, options.verbose)
+    print("Elapsed time: ", round(time.time() - t,1), " seconds")
+    printlg("Elapsed time: ", round(time.time() - t,1), " seconds")
+
+  # ------------------------------------------------------------------------
+  #                          Error removal
+  # ------------------------------------------------------------------------
+  t = time.time()
+  if float(options.min_relative_cov) > 0.0001:
+     exec_error_removal = error_removal(graphfile, nobuild, options.min_relative_cov, options.verbose)
+  else:
+     exec_error_removal = False
+  
+  print("Elapsed time: ", round(time.time() - t,1), " seconds")
+  printlg("Elapsed time: ", round(time.time() - t,1), " seconds")
+  
+
+  # ------------------------------------------------------------------------
+  #                        Decompose and simplify DBG
+  # ------------------------------------------------------------------------
+  t = time.time()
+  run_modules(workdir, graphfile, kval, options.min_relative_cov, options.verbose, options.output_context, exec_error_removal)
+  print("Elapsed time: ", round(time.time() - t,1), " seconds")
+  printlg("Elapsed time: ", round(time.time() - t,1), " seconds")
+
+
+  # ------------------------------------------------------------------------
+  #                             Enumerate Bubbles
+  # ------------------------------------------------------------------------
+  t = time.time()
+  enumerate_all_bubbles(workdir, outdir, kval, options.bval, output_snps, min_edit_dist, max_cycles, \
+                        UL_MAX, LL_MAX, LL_MIN, float(options.timeout), options.nbprocs, options.verbose, \
+                        options.output_context, options.output_path, options.output_branch_count, options.experimental, options.max_memory)
+  print("Elapsed time: ", round(time.time() - t,1), " seconds")
+  printlg("Elapsed time: ", round(time.time() - t,1), " seconds")
+
+
+  # ------------------------------------------------------------------------
+  #            Sort and remove redundancy/low-complexity bubbles (optionnal), only keep type_1 events (optionnal)
+  # ------------------------------------------------------------------------
+  t = time.time()
+  nb = sort_all_bubbles(readfiles, workdir, outdir, kval, output_snps, infix_name, not only_graph, options.verbose)
+  filesToMove=redundancyAndLowComplexityRemoval(workdir, "all_bcc_type1234_"+str(kval), options.keep_rd, options.keep_lc, options.lc_ent, options.get_rd_info, options.get_lc_info, options.t1o, kval)
+  for fToMove in filesToMove:
+    shutil.move(os.path.join(workdir,fToMove), os.path.join(outdir,fToMove))
+  print("Elapsed time: "+str(round(time.time() - t,1))+" seconds")
+  printlg("Elapsed time: "+str(round(time.time() - t,1))+" seconds")
+
+  # ------------------------------------------------------------------------
+  #            Check read coverage (optionnal)
+  # ------------------------------------------------------------------------
+  t = time.time()
+  if not only_graph:
+    nb = check_read_coverage_and_sort_all_bubbles(readfiles, workdir, outdir, kval, output_snps, infix_name, countsMethod, minOverlap, options.mism, options.mismSNP, options.get_mapping_info, options.stranded, options.strandedAbsoluteThreshold, options.strandedRelativeThreshold, options.nbprocs, options.verbose)
+
+  print("Elapsed time: ", round(time.time() - t,1), " seconds\n")
+  printlg("Elapsed time: ", round(time.time() - t,1), " seconds\n")
+
+  if only_graph:
+    print("\n\n \t\t ******** We are done, final results are in files "+outdir+"/results_"+infix_name+"_type_*.fa **********")
+    printlg("\n\n \t\t ******** We are done, final results are in files "+outdir+"/results_"+infix_name+"_type_*.fa **********")
+  else:
+    print("\n\n \t\t ******** We are done, final coherent results are in files "+outdir+"/results_"+infix_name+"_coherents_type_*.fa ********** ")
+    printlg("\n\n \t\t ******** We are done, final coherent results are in files "+outdir+"/results_"+infix_name+"_coherents_type_*.fa ********** ")
+    print(" \t\t ******** All non read coherent results are in files "+outdir+"/results_"+infix_name+"_uncoherent.fa ****** \n\n")
+    printlg(" \t\t ******** All non read coherent results are in files "+outdir+"/results_"+infix_name+"_uncoherent.fa ****** \n\n")
+
+
+  # ------------------------------------------------------------------------
+  #                           Manage BCCs
+  # ------------------------------------------------------------------------
+  if len(unfinished_bccs) != 0:
+      print("\t\t ******** There were " + str(len(unfinished_bccs)) + " BCCs with unfinished enumeration ********")
+      printlg("\t\t ******** There were " + str(len(unfinished_bccs)) + " BCCs with unfinished enumeration ********")
+      if not options.keep_ubccs and not options.keep_all_bccs: 
+          print("\t\t ******** Re-run with `-u` to retrieve the unfinished components ********\n")
+          printlg("\t\t ******** Re-run with `-u` to retrieve the unfinished components ********\n")
+
+  if options.keep_ubccs:
+    bcc_dir = "/unfinished_bcc"  
+    print("\t\t Backup files for the unfinished BCCs are in " + outdir + bcc_dir + "\n")
+    printlg("\t\t Backup files for the unfinished BCCs are in " + outdir + bcc_dir + "\n")
+    save_bccs_from_list(unfinished_bccs, bcc_dir, workdir, outdir, options.verbose)
+          
+  if options.keep_all_bccs:
+    bcc_dir = "/bcc"  
+    print("\t\t Edge and node files of all BCCs are in " + outdir + bcc_dir + "\n")  
+    printlg("\t\t Edge and node files of all BCCs are in " + outdir + bcc_dir + "\n")
+    all_bccs = find_bcc_ids_ordered_by_size(workdir)[1]
+    save_bccs_from_list(all_bccs, bcc_dir, workdir, outdir, options.verbose)
+
+  
+  if options.output_path: # move paths file to outdir
+    shutil.move(f"{workdir}/all_paths_k{kval}", f"{outdir}/all_paths_k{kval}")
+
+  # ------------------------------------------------------------------------
+  #                 Output number of events of each type
+  # ------------------------------------------------------------------------
+  print("\t\t TYPES:")
+  printlg("\t\t TYPES:")
+  if output_snps!=0:
+    print("\t\t\t 0a: Single SNPs, Inexact Repeats or sequencing substitution errors, "+str(int(nb[0]))+" found")
+    printlg("\t\t\t 0a: Single SNPs, Inexact Repeats or sequencing substitution errors, "+str(int(nb[0]))+" found")
+    if output_snps==2:
+            print("\t\t\t 0b: Multiple SNPs, Inexact Repeats or sequencing substitution errors, "+str(int(nb[1]))+" found")
+            printlg("\t\t\t 0b: Multiple SNPs, Inexact Repeats or sequencing substitution errors, "+str(int(nb[1]))+" found")
+    else:
+            print("\t\t\t 0b: Run with -s 2 to also search for Multiple SNPs (warning: this option may increase a lot the running time)")
+            printlg("\t\t\t 0b: Run with -s 2 to also search for Multiple SNPs (warning: this option may increase a lot the running time)")
+  else:
+    print("\t\t\t 0: Run with -s option set to 1 or 2 to also search for SNPs")
+    printlg("\t\t\t 0: Run with -s option set to 1 or 2 to also search for SNPs")
+  print("\t\t\t 1: Alternative Splicing Events, "+str(int(nb[2]))+" found")
+  printlg("\t\t\t 1: Alternative Splicing Events, "+str(int(nb[2]))+" found")
+  print("\t\t\t 2: Inexact Tandem Repeats, "+str(int(nb[3]))+" found")
+  printlg("\t\t\t 2: Inexact Tandem Repeats, "+str(int(nb[3]))+" found")
+  print("\t\t\t 3: Short Indels (<3nt), "+str(int(nb[4]))+" found")
+  printlg("\t\t\t 3: Short Indels (<3nt), "+str(int(nb[4]))+" found")
+  print("\t\t\t 4: All others, composed by a shorter path of length > 2k not being a SNP, "+str(int(nb[5]))+" found")
+  printlg("\t\t\t 4: All others, composed by a shorter path of length > 2k not being a SNP, "+str(int(nb[5]))+" found")
+
+
+  print("\n\n \t\t ******** A summary of the execution can be found in the log file: " + os.path.abspath(logFileName) + "**********")
+  printlg("\n\n \t\t ******** A summary of the execution can be found in the log file: " + os.path.abspath(logFileName) + "**********")
+
+  # ------------------------------------------------------------------------
+  #                           Clean tmp directory
+  # ------------------------------------------------------------------------
+  logFile.close()
+  shutil.rmtree(workdir)
+
+if __name__ == '__main__':
+    main()

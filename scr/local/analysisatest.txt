@@ -1,0 +1,24 @@
+Average number of poly(A) : 0.27350427350427353
+Entropy of the 6-mers : 11.147830340452867
+Ratio of CG : 0.40397075926233594
+Ratio of microsatellites : 0.23029455323350337
+Most frequent microsatellite : TA with 183.0 copies, covering 3.040372154842997% of the sequences
+17 Genes intersecting with the sequences : {'"FBgn0014010";', '"FBgn0004403";', '"FBgn0266214";', '"FBgn0031030";', '"FBgn0014141";', '"FBgn0267704";', '"FBgn0024804";', '"FBgn0267428";', '"FBgn0284411";', '"FBgn0011206";', '"FBgn0032988";', '"FBgn0003942";', '"FBgn0264562";', '"FBgn0039972";', '"FBgn0000384";', '"FBgn0259101";', '"FBgn0025366";'}
+
+4 Genes intersecting with the sequences that match a protein : {'"FBgn0003942";', '"FBgn0004403";', '"FBgn0000384";', '"FBgn0025366";'}
+
+6 Genes intersecting with the sequences that are in UTR : {'"FBgn0014010";', '"FBgn0004403";', '"FBgn0031030";', '"FBgn0003942";', '"FBgn0039972";', '"FBgn0025366";'}
+
+6 Genes intersecting with the sequences that are in CDS : {'"FBgn0004403";', '"FBgn0031030";', '"FBgn0032988";', '"FBgn0003942";', '"FBgn0039972";', '"FBgn0000384";'}
+
+9 Genes intersecting with the sequences that are in intron : {'"FBgn0266214";', '"FBgn0014141";', '"FBgn0267704";', '"FBgn0024804";', '"FBgn0267428";', '"FBgn0284411";', '"FBgn0011206";', '"FBgn0264562";', '"FBgn0259101";'}
+
+5 Transposable elements intersecting with the sequences : {'"NINJA";', '"G6_DM";', '"Gypsy2-DM";', '"HMSBEAGLE";', '"DNAREP1_DM";'}
+
+Chr :
+2L_RaGOO
+2R_RaGOO
+3L_RaGOO
+3R_RaGOO
+X_RaGOO
+Y_mapped_Scaffold_5_D1748_D1610_RaGOO

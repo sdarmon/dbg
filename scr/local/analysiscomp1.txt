@@ -1,0 +1,19 @@
+Average number of poly(A) : 1.905
+Entropy of the 6-mers : 6.70399476157809
+Ratio of CG : 0.41396478445658774
+Ratio of microsatellites : 0.12852738913919848
+Most frequent microsatellite : AC with 400.0 copies, covering 9.714632665452337% of the sequences
+9 Genes intersecting with the sequences : {'"FBgn0030040";', '"FBgn0015519";', '"FBgn0000360";', '"FBgn0261793";', '"FBgn0021767";', '"FBgn0053223";', '"FBgn0004656";', '"FBgn0030027";', '"FBgn0261873";'}
+
+2 Genes intersecting with the sequences that match a protein : {'"FBgn0053223";', '"FBgn0030040";'}
+
+4 Genes intersecting with the sequences that are in UTR : {'"FBgn0015519";', '"FBgn0021767";', '"FBgn0000360";', '"FBgn0004656";'}
+
+0 Genes intersecting with the sequences that are in CDS : set()
+
+5 Genes intersecting with the sequences that are in intron : {'"FBgn0261793";', '"FBgn0053223";', '"FBgn0030040";', '"FBgn0030027";', '"FBgn0261873";'}
+
+3 Transposable elements intersecting with the sequences : {'"XDMR";', '"FB4_DM";', '"ROO";'}
+
+Chr :
+X_RaGOO

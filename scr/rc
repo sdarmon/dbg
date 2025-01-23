@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Vérifier que l'argument est passé
+if [ -z "$1" ]; then
+  echo "Usage: $0 <sequence_ADN>"
+  exit 1
+fi
+
+# Récupérer la séquence ADN en argument
+sequence=$1
+
+# Convertir la séquence en reverse complement
+reverse_complement=$(echo "$sequence" | tr 'ATCGatcg' 'TAGCtagc' | rev)
+
+# Afficher le résultat
+echo "$reverse_complement"
+

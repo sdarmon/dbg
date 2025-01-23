@@ -1,0 +1,7 @@
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/mus/processing/../ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/mus/hc_1.fq /beegfs/data/sdarmon/mus/hc_2.fq --outFileNamePrefix /beegfs/data/sdarmon/results/mus/processing/STAR_alignment_reads/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedMultimapNmax 10000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Nov 18 20:31:19 ..... started STAR run
+Nov 18 20:31:19 ..... loading genome
+Nov 18 20:32:02 ..... started mapping
+Job finished
+Time taken: 47

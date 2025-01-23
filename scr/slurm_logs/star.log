@@ -1,0 +1,10 @@
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/mus/processing/../ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/mus/ERR2680378_1.fastq.fastp /beegfs/data/sdarmon/mus/ERR2680378_2.fastq.fastp --outFileNamePrefix /beegfs/data/sdarmon/results/mus/processing/STAR_alignment_reads/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Nov 19 10:39:59 ..... started STAR run
+Nov 19 10:40:00 ..... loading genome
+Nov 19 10:41:02 ..... started mapping
+Nov 19 11:18:57 ..... finished mapping
+Nov 19 11:18:58 ..... started sorting BAM
+Nov 19 11:21:59 ..... finished successfully
+Job finished
+Time taken: 2555

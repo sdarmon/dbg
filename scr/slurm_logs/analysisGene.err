@@ -1,0 +1,9 @@
+
+EXITING because of FATAL ERROR in reads input: quality string length is not equal to sequence length
+@ERR2680378.43562
+CACGGAGTTGGGGGAAAAATCACTTGATTAGACCTTAAAAATATTTTCACTGCATAACATGACAAGAAAGCACAGAGGCGCGTTCTGAGAACGTCCGCGCGTTCTCCTGCACTGCGATAGTTATAGTTTCACCATGACAAACACCAGA
+A<AFFAFFFFFJJJJJJJJJJJJJJJJJJF<FJJJJJJJJAJJJJJJJJJJJAJJJJJJJFJJJJJJJJJJJJFJJJJJJJJJJJJJJJJJFJFJJJJFFJJJJJJFFJJJJJJFJFJJFFJJJJJJJFFJJJJJJFFJJFFJJJJJA<FA
+SOLUTION: fix your fastq file
+
+Nov 18 20:32:06 ...... FATAL ERROR, exiting
+/var/spool/slurmd/job1350704/slurm_script : ligne 29 : 141705 Erreur de segmentation  ${STAR_BIN_L} --genomeDir ${BASE_DIR}/../ref --runMode alignReads --runThreadN 8 --readFilesIn ${DATA_DIR}/mus/hc_1.fq ${DATA_DIR}/mus/hc_2.fq --outFileNamePrefix ${BASE_DIR}/STAR_alignment_reads/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedMultimapNmax 10000000 --outReadsUnmapped Fastx

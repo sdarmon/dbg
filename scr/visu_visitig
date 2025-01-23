@@ -1,0 +1,77 @@
+#!/bin/bash
+#
+
+# Fonction pour afficher l'aide
+afficher_aide() {
+    echo "Usage: $0 [-h] file_in file_out k t "
+    echo
+    echo "This function converts a file of nodes into a De Bruijn file usable by vizitig"
+    echo
+    echo "Options:"
+    echo "  -h    Show this command"
+    echo
+    echo "Arguments:"
+    echo "  file_in    Input file"
+    echo "  file_out   Output file prefix"
+    echo "  k          k-mer size"
+    echo "  t          weighting threshold"
+    echo "Exemple:"
+    echo "  $0 comp_TE.txt comp 41 10 ref_cons.fasta"
+    exit 0
+}
+
+# Vérification des arguments
+if [ "$#" -lt 1 ]; then
+    afficher_aide
+fi
+
+# Analyse des options
+while getopts ":h" option; do
+    case $option in
+        h)
+            afficher_aide
+            ;;
+        \?)
+            echo "Option invalide : -$OPTARG" >&4
+            afficher_aide
+            ;;
+    esac
+done
+
+# Supprimer les options traitées des arguments
+shift $((OPTIND - 1))
+
+# Vérification des arguments restants
+if  [ "$#" -lt 4 ]; then
+    echo "Erreur : Nombre insuffisant d'arguments."
+    afficher_aide
+fi
+
+# Variables
+in=$1
+out=$2
+k=$3
+t=$4
+base=$(basename "$out")
+cons=$(echo ${in}"_n_TE_cons.fasta")
+# Collecting the unitigs and the colors 
+awk 'BEGIN {FS="\t"} $5 != "*"{print $2}' ${in}_n_annoted.nodes | awk '{print ">unitig_" NR "\n" $0}' > ${out}_TE.fa
+awk 'BEGIN {FS="\t"} $6 != "*"{print $2}' ${in}_n_annoted.nodes | awk '{print ">unitig_" NR "\n" $0}' > ${out}_gene.fa
+awk 'BEGIN {FS="\t"} $8 != "*"{print $2}' ${in}_n_annoted.nodes | awk '{print ">unitig_" NR "\n" $0}' > ${out}_cons.fa
+awk -v t="$t" '$4 >= t {print $2}' ${in}_n_annoted.nodes | awk '{print ">unitig_" NR "\n" $0}' > ${out}_comp.fa
+cp ${in}.unitigs.fa ${out}.unitigs.fa
+
+#Testing if the ref sequences are generated
+if [ ! -f "${cons}" ]; then
+  touch "${cons}"
+fi
+
+#Building the vizitig graph
+vizitig build ${out}.unitigs.fa ${k}
+vizitig update -m TeRefSeq -d Sequences_of_TEs ${base}.unitigs.fa -k ${cons}
+vizitig update -m TEs -d TEs_unitigs ${base}.unitigs.fa -k ${out}_TE.fa
+vizitig update -m genes -d genes_unitigs ${base}.unitigs.fa -k ${out}_gene.fa
+vizitig update -m Cons -d TEs_Consensus_unitigs ${base}.unitigs.fa -k ${out}_cons.fa
+vizitig update -m Comp -d in_comp ${base}.unitigs.fa -k ${out}_comp.fa
+
+
