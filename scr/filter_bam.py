@@ -17,7 +17,7 @@ def filter_bam(input_bam, output_bam):
     #iterate through the alignments in the input bam file
     for alignment in input_bam_file:
         #get the alignment score
-        score = alignment.mapping_quality
+        score = alignment.get_tag("AS")
         #get the read name
         read_name = alignment.query_name
         #if the read name is not in the dictionary, add it

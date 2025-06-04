@@ -7,10 +7,14 @@ import sys
 
 Arg = sys.argv[:]
 
-if len(Arg) not in [7]:
-    print("Use : " + Arg[0] + " comp%i.txt seq_intersectionRef%i.txt seq_intersectionConsensusDfam%i.txt seq_intersectionConsensusRb%i.txt seq_intergenes$i.txt file.abundance")
+if len(Arg) not in [7,8]:
+    print("Use : " + Arg[0] + " comp%i.txt seq_intersectionRef%i.txt seq_intersectionConsensusDfam%i.txt seq_intersectionConsensusRb%i.txt seq_intergenes$i.txt file.abundance [threshold]")
     exit()
 
+if len(Arg) == 8:
+    threshold = int(Arg[7])
+else:
+    threshold = 0
 #Reading intersectionRef%i.txt into a list to get the gene intersection with the comps
 dic_index2gene = {}
 exon_non_codant = {}
@@ -29,11 +33,11 @@ typed = "lncRNA"
 with open(Arg[2], 'r') as f:
     for line in f:
         L = line.split('\t')
-        gene = L[14].split('"')[1]
+        gene = L[20].split('"')[1] + L[5]#Old L[14] ; L[5] is "+" or "-"
         index = int(L[3].split('_')[1])
-        position = L[8]
-        overlap = int(L[15])
-        AS = int(L[16])
+        position = L[14] #Old L[8]
+        overlap = int(L[21]) #Old L[15]
+        AS = int(L[22]) #Old L[16]
         if position in ["CDS","start_codon","stop_codon"]:
             typed="CDS"
         elif position in ["five_prime_utr","three_prime_utr"]:
@@ -83,7 +87,9 @@ with open(Arg[3], 'r') as f:
     for line in f:
         L = line.split('\t')
         gene = L[2]
-        index = int(L[0].split('_')[1])
+        if gene == "*":
+            continue
+        index = int(L[0].split('_')[1]) #Here the index is the line of comp%i.txt file
         AS = int(L[13].split(':')[2])
         if index not in dic_index2consDfam:
             dic_index2consDfam[index] = [(gene,AS)]
@@ -100,6 +106,8 @@ with open(Arg[4], 'r') as f:
         if len(L) < 2 :
             continue
         gene = L[2]
+        if gene == "*":
+            continue
         index = int(L[0].split('_')[1])
         if index not in dic_index2consRb:
             dic_index2consRb[index] = [gene]
@@ -116,10 +124,13 @@ with open(Arg[5], 'r') as f:
             continue
         index = int(L[0].split('_')[1])
         chromosome = L[2]
+        deb = L[3]
+        if chromosome == "*" :
+            continue
         if index not in dic_index2intergene:
-            dic_index2intergene[index] = [chromosome]
-        elif chromosome not in dic_index2intergene[index]:
-            dic_index2intergene[index].append(chromosome)
+            dic_index2intergene[index] = [(chromosome,deb)]
+        elif (chromosome,deb) not in dic_index2intergene[index]:
+            dic_index2intergene[index].append((chromosome,deb))
 
 #Reading the abundance file
 abundance = []
@@ -130,42 +141,48 @@ with open(Arg[6], 'r') as f:
 
 #Reading every line of comp%i.txt and adding the TE reference if the index of the line is in dic_index2TE
 #Writing the new line in a new file comp%i.txt
-i = 0
+#Here there is a point to be careful, the index of the line in comp%i.txt (a subset from the total number of nodes)
+# is not the same as the index in seq_intersectionTE%i.txt (from 0 to the number of nodes of the comp)
+
 with open(Arg[1], 'r') as f:
     with open(Arg[1].split('.')[0] + "_annotated.nodes", 'w') as f_out:
+        i = 0 #Here is the index of the line in comp%i.txt
         for line in f:
-            L = line.split('\t')
-            node = int(L[0])
+            L = line[:-1].split('\t')
+            ind=L[0]
+            seq=L[1]
+            node = int(L[0]) #Here is the actual index of the unitig of whole graph
             AS=0
             AS_dfam=0
+            d=0
+            str_gene = "*"
+            str_consDfam = "*"
+            str_consRb = "*"
+            str_intergene = "*"
+
             if i in dic_index2gene:
                 str_gene = "; ".join([el[0] + "@" + el[1] + "%" + str(el[3]) for el in dic_index2gene[i]])
                 AS = max(el[2] for el in dic_index2gene[i])
-            else:
-                str_gene = "*"
+                d+=4
 
-            if i  in dic_index2consDfam:
+            if i in dic_index2consDfam:
+                d+=2
                 str_consDfam = "; ".join([el[0] for el in dic_index2consDfam[i]])
                 AS_dfam = max(el[1] for el in dic_index2consDfam[i])
-            else:
-                str_consDfam = "*"
+
             if i  in dic_index2consRb:
                 str_consRb = "; ".join(dic_index2consRb[i])
-            else:
-                str_consRb = "*"
+
             if i in dic_index2intergene:
-                str_intergene = "; ".join(dic_index2intergene[i])
-            else:
-                str_intergene = "*"
-            L=line[:-1].split("\t")
-            ind=L[0]
-            seq=L[1]
+                temp = [el[0] + ":" + el[1] for el in dic_index2intergene[i]]
+                str_intergene = "; ".join(temp)
+
             if len(L) == 3:
                 weight= L[2]
-                d = "0"
             else:
-                d = L[2]
                 weight = L[3]
-            f_out.write(ind +"\t" + seq + "\t" + d + "\t" + weight + "\t" + str_gene + "\t" + str_consDfam  + "\t" + str_consRb  + "\t" + str_intergene  + "\t" +  abundance[int(L[0])] + "\t" + str(AS) + "\t" + str(AS_dfam) + "\n")
+            if int(weight) >= threshold:
+                d+=1
+            f_out.write(ind +"\t" + seq + "\t" + str(d) + "\t" + weight + "\t" + str_gene + "\t" + str_consDfam  + "\t" + str_consRb  + "\t" + str_intergene  + "\t" +  abundance[int(L[0])] + "\t" + str(AS) + "\t" + str(AS_dfam) + "\n")
 
             i += 1

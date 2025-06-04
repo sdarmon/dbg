@@ -1,0 +1,24 @@
+Sample of the reads ...
+FastP of the reads ...
+HC of the reads ...
+DGB with kissplice ...
+
+This is KisSplice, version 2.6.7
+
+The command line was:       /beegfs/home/sdarmon/Documents/dbg/scr/kissplice-binary-ubuntu-2.6.7/bin/kissplice -r /beegfs/data/sdarmon/mus100/hc_1.fq -r /beegfs/data/sdarmon/mus100/hc_2.fq -k 41 -o /beegfs/data/sdarmon/results/mus100/graph
+[ERROR] File "/beegfs/data/sdarmon/mus100/hc_1.fq" does not exist.
+[ERROR] File "/beegfs/data/sdarmon/mus100/hc_2.fq" does not exist.
+[FATAL ERROR] One or more read files do not exist.
+Try `kissplice --help` for more information
+Weighting of the nodes...
+ok here?
+Threshold of the nodes...
+T=2
+Agglomeration of connexe components...
+Number of comps : 0
+Filter the reads to only keep the best mapped ones
+Intersect the reads with the reference genes
+Annotate the components nodes with the TE and ref genes informations
+Number of comps : 0
+Job finished
+Time taken: 413

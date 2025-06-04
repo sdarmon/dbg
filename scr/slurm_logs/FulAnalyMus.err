@@ -1,0 +1,84 @@
+rm: impossible de supprimer '/beegfs/data/sdarmon/results/mus100/processing/*': Aucun fichier ou dossier de ce type
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+CATGATTTATCACAATTATCTCATCAATAATTACCCTATTTATCTTATTTCAACTAAAAG
+
+Read1 before filtering:
+total reads: 50000
+total bases: 7272219
+Q20 bases: 7188713(98.8517%)
+Q30 bases: 7029166(96.6578%)
+
+Read2 before filtering:
+total reads: 50000
+total bases: 7229358
+Q20 bases: 7016769(97.0594%)
+Q30 bases: 6702220(92.7084%)
+
+Read1 after filtering:
+total reads: 49332
+total bases: 7163899
+Q20 bases: 7093702(99.0201%)
+Q30 bases: 6948787(96.9973%)
+
+Read2 after filtering:
+total reads: 49332
+total bases: 7117556
+Q20 bases: 6945181(97.5782%)
+Q30 bases: 6651645(93.4541%)
+
+Filtering result:
+reads passed filter: 98664
+reads failed due to low quality: 1106
+reads failed due to too many N: 0
+reads failed due to too short: 230
+reads with adapter trimmed: 3141
+bases trimmed due to adapters: 27861
+reads with polyX in 3' end: 2887
+bases trimmed in polyX tail: 14059
+
+Duplication rate: 0.194%
+
+Insert size peak (evaluated by paired-end reads): 141
+
+JSON report: fastp.json
+HTML report: /beegfs/data/sdarmon/results/mus100/fastp_log.html
+
+/beegfs/home/sdarmon/Documents/fastp --detect_adapter_for_pe --trim_poly_g --trim_poly_x --thread 8 --poly_x_min_len 5 --html /beegfs/data/sdarmon/results/mus100/fastp_log.html --in1 /beegfs/data/sdarmon/mus/ERR2680378_1.fastq.sampled --in2 /beegfs/data/sdarmon/mus/ERR2680378_2.fastq.sampled --out1 /beegfs/data/sdarmon/mus/ERR2680378_1.fastq.sampled.fastp --out2 /beegfs/data/sdarmon/mus/ERR2680378_2.fastq.sampled.fastp 
+fastp v0.23.4, time used: 9 seconds
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/homomorphic_compression.py", line 24, in <module>
+    with open(Arg[2], 'w') as f_out:    
+         ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/beegfs/data/sdarmon/mus100/hc_1.fq'
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/homomorphic_compression.py", line 24, in <module>
+    with open(Arg[2], 'w') as f_out:    
+         ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/beegfs/data/sdarmon/mus100/hc_2.fq'
+ini_mus.sh : ligne 153 : 1493958 Erreur de segmentation  ${WORK_DIR}/agglo.exe ${RESULTS_DIR}/graph/outputNodes.txt ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges -c ${T} -d ${D_NT} ${RESULTS_DIR} -clean ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}.abundance > ${RESULTS_DIR}/rapportAgglo.txt
+ls: impossible d'accéder à '/beegfs/data/sdarmon/results/mus100/processing/comp*.txt': Aucun fichier ou dossier de ce type
+
+EXITING because of fatal input ERROR: could not open readFilesIn=/beegfs/data/sdarmon/results/mus100/processing/all_unitigs.fa
+
+May 14 18:20:38 ...... FATAL ERROR, exiting
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 98, in <module>
+    main()
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 95, in main
+    filter_txt(args.input_bam, args.output_txt)
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 45, in filter_txt
+    input_bam_file = pysam.AlignmentFile(input_bam, "rb")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pysam/libcalignmentfile.pyx", line 751, in pysam.libcalignmentfile.AlignmentFile.__cinit__
+  File "pysam/libcalignmentfile.pyx", line 956, in pysam.libcalignmentfile.AlignmentFile._open
+ValueError: file does not contain alignment data
+awk: fatal : impossible d'ouvrir le fichier « /beegfs/data/sdarmon/results/mus100/processing/aligned_Dfam_all.txt » en lecture : Aucun fichier ou dossier de ce type
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/add_ref_TE.py", line 33, in <module>
+    with open(Arg[2], 'r') as f:
+         ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/beegfs/data/sdarmon/results/mus100/processing/aligned_ref_AS_all.txt'
+ls: impossible d'accéder à '/beegfs/data/sdarmon/results/mus100/processing/comp*.txt': Aucun fichier ou dossier de ce type

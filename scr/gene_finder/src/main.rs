@@ -97,11 +97,11 @@ fn main() {
     //Let's loop over comp_id and add the first element to the stack
     for idc in comp_id.clone() {
         if !visited.contains(&idc) {
-            stack.push((idc, true,0));
+            stack.push((idc, true,0,None));
             //While the stack is not empty we do some bfs
             while !stack.is_empty() {
                 //Pop the last element of the stack and its way
-                let  (id, way,mut depth) = stack.pop().unwrap();
+                let  (id, way,mut depth,_) = stack.pop().unwrap();
                 //If the unitig is not visited
                 if !visited.contains(&id) {
                     //Add the unitig to the visited set
@@ -149,11 +149,18 @@ fn main() {
                     //Before looking for neighbors, check if the node is an expressed gene
                     //Such a node is a node such that there is only one gene in the genes field
                     //such that its Alignment Score is maximal and strictly greater than the other genes
-                    let (_, _, _, _, _, genes_str, _, _, AS, _) = nodes.get(&id).unwrap();
+                    let (seq, _, _, dfam_str, _, genes_str, inter_str, ab, _, _) = nodes.get(&id).unwrap();
                     //Test if genes_str is equal to "*"
+                    if dfam_str != "*" {
+                        for el in dfam_str.split("; ") {
+                            //Add the TE of the unitig to the te set with
+                            //the distance of the unitig from the center of the component
+                            te.insert(format!("{}\t{}", el, depth));
+                        }
+                    }
                     if genes_str != "*" {
 
-                        let mut max_AS = 0;
+                        //let mut max_AS = 0;
                         let mut max_gene = "";
                         let mut max_gene_AS = 0;
                         for gene in genes_str.split("; ") {
@@ -183,7 +190,38 @@ fn main() {
                         }
                         //Case there is only one gene with the maximal AS
                         if max_gene_AS == 1 {
-                            exp_genes.insert((genes_str,depth));
+                            //Depending on the way (true or false) and the last character of the gene name
+                            // (+ or -), we add either the first gene (true and + or false and -) or
+                            //the last gene (false and + or true and -) to the set of expressed genes
+                            let gene;
+                            if way {
+                                if max_gene.ends_with('+') {
+                                    //Insert the first element of genes_str.split("; ")
+                                    gene = genes_str.split("; ").next().unwrap();
+                                } else {
+                                    //Insert the last element of genes_str.split("; ")
+                                    let l = genes_str.split("; ").collect::<Vec<&str>>();
+                                    gene = l[l.len()-1];
+                                }
+                            } else {
+                                if max_gene.ends_with('-') {
+                                    //Insert the first element of genes_str.split("; ")
+                                    gene = genes_str.split("; ").next().unwrap();
+                                } else {
+                                    //Insert the last element of genes_str.split("; ")
+                                    let  l = genes_str.split("; ").collect::<Vec<&str>>();
+                                    gene = l[l.len()-1];
+                                }
+                            }
+                            exp_genes.insert((id,gene,depth,ab));
+                            continue;
+                        }
+                    }
+
+                    if inter_str != "*" {
+                        let l = inter_str.split("; ").collect::<Vec<&str>>();
+                        if l.len() == 1 {
+                            exp_genes.insert((id,inter_str,depth,ab));
                             continue;
                         }
                     }
@@ -192,8 +230,8 @@ fn main() {
                     //Add the neighbors of the unitig to the stack
                     for (nb, new_way) in neighbors {
                         //length of nb
-                        let mut d = nodes.get(&nb).unwrap().0.len() - K + 1;
-                        stack.push((nb, new_way,depth+d));
+                        let d = seq.len() - K + 1;
+                        stack.push((nb, new_way,depth+d,Some(ab)));
                     }
                 }
                 else {
@@ -218,33 +256,18 @@ fn main() {
 
     let mut number_genes = 0;
     let mut distances_genes_total = 0;
-    let mut number_intron_genes = 0;
+    //let mut number_intron_genes = 0;
     let mut number_exon_genes = 0;
 
     file = std::fs::File::create(format!("{}/expressed_genes.txt", output_dir)).unwrap();
     for gene in exp_genes {
-        let (gene_str,depth) = gene;
-        //If it is a list (separator "; ") of genes, we split it and add each gene to the file
-        //without duplication
-        if gene_str.contains("; ") {
-            for gene_el in gene_str.split("; ") {
-                writeln!(file, "{}", gene_el).unwrap();
-                number_genes += 1;
-                distances_genes_total += depth;
-                if gene_el.contains("intron") {
-                    number_intron_genes += 1;
-                }
-                else {
-                    number_exon_genes += 1;
-                }
-            }
-        }
-
-        writeln!(file, "{}", gene_str).unwrap();
+        let (seq_id,gene_str,depth,ab) = gene;
+        //Write seq_id and gene_str in the file, separated by a tab
+        writeln!(file, "{}\t{}\t{}\t{}", seq_id, gene_str,depth,ab).unwrap();
         number_genes += 1;
         distances_genes_total += depth;
         if gene_str.contains("intron") {
-            number_intron_genes += 1;
+            //number_intron_genes += 1; //never used
         }
         else {
             number_exon_genes += 1;
@@ -263,8 +286,10 @@ fn main() {
     drop(file);
 
     file = std::fs::File::create(format!("{}/leaves.txt", output_dir)).unwrap();
-    for leaf in leaves {
-        writeln!(file, "{}", leaf).unwrap();
+    for leaf in &leaves {
+        //write the nodes[leaf] in the file
+        let (seq, dist, weight, dfam_str, repbase_str, genes_str, inter_str, abundance, ASgen, ASdfam) = nodes.get(&leaf).unwrap();
+        writeln!(file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}", leaf, seq, dist, weight, dfam_str, repbase_str, genes_str, inter_str, abundance, ASgen).unwrap();
     }
     //close the file
     drop(file);
@@ -277,15 +302,50 @@ fn main() {
     drop(file);
 
      */
-
+    
     //Let compute the number of distinct TE as the size of te hash set
     let mut number_te = 0;
-    for _ in &te {
-        number_te += 1;
+    for el in &te {
+        //Check if there is a /t in the string
+        //and if so ignore it
+        if el.contains("\t") {
+            continue;
+        }
+        else {
+            number_te += 1;
+        }
     }
 
     //Let compute the proportion of exon genes
     let proportion_exon_genes = (number_exon_genes as f64 / number_genes as f64) * 100.0;
+
+
+    //Let loop over the comp_id and store the abundance of the unitigs in a sorted vector
+    let mut abundances = Vec::new();
+    for idc in &comp_id {
+        let (_, _, _, _, _, _, _, ab, _, _) = nodes.get(&idc).unwrap();
+        abundances.push(*ab);
+    }
+    //Sort the vector
+    abundances.sort();
+
+    //Now, let loop over the abundances and find the ratios of consecutive abundances (a_{n+1}/a_n)
+    //that are greater than 2 and store then in vector ratios
+
+    let mut ratios = Vec::new();
+    let  mut max_ratio : f64 = 1.0;
+
+    for i in 0..abundances.len()-1 {
+        let ratio = abundances[i+1] as f64 / abundances[i] as f64;
+        if ratio >= 2.0 {
+            ratios.push(ratio);
+            if ratio > max_ratio {
+                max_ratio = ratio;
+            }
+        }
+    }
+
+
 
     //Print the percentage of unitigs covering TE
     println!("Percentage of unitigs covering TE: {:.2}%", percent);
@@ -302,6 +362,10 @@ fn main() {
     writeln!(file, "{} \t (Number of distinct TE)", number_te).unwrap();
     writeln!(file, "{:.2} \t (Mean distance of the genes)", average_distance_genes).unwrap();
     writeln!(file, "{:.2} \t % (Percentage of exon genes)", proportion_exon_genes).unwrap();
+    //print the number of leaves
+    writeln!(file, "{} \t (Number of leaves)", leaves.len()).unwrap();
+    //print the max ratio and the ratios vector
+    writeln!(file, "{:.2} \t (Max ratio of abundances greater than 2) \t {:?} \t (Ratios of abundances greater than 2)", max_ratio, ratios).unwrap();
     //close the file
     drop(file);
 

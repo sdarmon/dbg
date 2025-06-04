@@ -1,0 +1,362 @@
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+ATCCTGCCAGTAGCATATGCTTGTCTCAAAGATTAAGCCATGCATGTCTAAGTACGCACG
+
+Read1 before filtering:
+total reads: 5000000
+total bases: 378944604
+Q20 bases: 371960681(98.157%)
+Q30 bases: 355712337(93.8692%)
+
+Read2 before filtering:
+total reads: 5000000
+total bases: 378988241
+Q20 bases: 370869905(97.8579%)
+Q30 bases: 352689893(93.0609%)
+
+Read1 after filtering:
+total reads: 4995927
+total bases: 378608395
+Q20 bases: 371634958(98.1581%)
+Q30 bases: 355403346(93.871%)
+
+Read2 after filtering:
+total reads: 4995927
+total bases: 378554691
+Q20 bases: 370451738(97.8595%)
+Q30 bases: 352290861(93.0621%)
+
+Filtering result:
+reads passed filter: 9991854
+reads failed due to low quality: 0
+reads failed due to too many N: 0
+reads failed due to too short: 8146
+reads with adapter trimmed: 17819
+bases trimmed due to adapters: 327528
+reads with polyX in 3' end: 8938
+bases trimmed in polyX tail: 51025
+
+Duplication rate: 6.85156%
+
+Insert size peak (evaluated by paired-end reads): 92
+
+JSON report: fastp.json
+HTML report: /beegfs/data/sdarmon/results/dog/fastp_log.html
+
+/beegfs/home/sdarmon/Documents/fastp --detect_adapter_for_pe --trim_poly_g --trim_poly_x --thread 8 --poly_x_min_len 5 --html /beegfs/data/sdarmon/results/dog/fastp_log.html --in1 /beegfs/data/sdarmon/dog/dog_1_1.fq.sampled --in2 /beegfs/data/sdarmon/dog/dog_1_2.fq.sampled --out1 /beegfs/data/sdarmon/dog/dog_1_1.fq.sampled.fastp --out2 /beegfs/data/sdarmon/dog/dog_1_2.fq.sampled.fastp 
+fastp v0.23.4, time used: 31 seconds
+ini_mus.sh: ligne 70: /beegfs/data/sdarmon/RepeatMasker/venv/bin/activate: Aucun fichier ou dossier de ce type
+ini_mus.sh: ligne 71: /beegfs/data/sdarmon/RepeatMasker/famdb.py: Aucun fichier ou dossier de ce type
+ini_mus.sh: ligne 84: /beegfs/data/sdarmon/RepeatMasker/famdb.py: Aucun fichier ou dossier de ce type
+awk: fatal : impossible d'ouvrir le fichier « /beegfs/data/sdarmon/RepeatMasker/repBase2508.fasta » en lecture : Aucun fichier ou dossier de ce type
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/plot.py", line 10, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+!!!!! WARNING: Could not move Log.out file from ./Log.out into /beegfs/data/sdarmon/results/dog/ref/Log.out. Will keep ./Log.out
+
+!!!!! WARNING: Could not move Log.out file from ./Log.out into /beegfs/data/sdarmon/results/dog/dfam_ref/Log.out. Will keep ./Log.out
+
+
+EXITING because of INPUT ERROR: could not read from genomeFastaFile: /beegfs/data/sdarmon/dog/TE_Dfam.fa
+
+Jan 24 17:13:26 ...... FATAL ERROR, exiting
+!!!!! WARNING: Could not move Log.out file from ./Log.out into /beegfs/data/sdarmon/results/dog/rb_ref/Log.out. Will keep ./Log.out
+
+
+EXITING because of INPUT ERROR: could not read from genomeFastaFile: /beegfs/data/sdarmon/dog/TE_Rb.fa
+
+Jan 24 17:13:26 ...... FATAL ERROR, exiting
+warning: unused variable: `gene`
+  --> src/main.rs:96:9
+   |
+96 |     for gene in &genes {
+   |         ^^^^ help: if this is intentional, prefix it with an underscore: `_gene`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: function `get_gene_unitigs` is never used
+   --> src/main.rs:104:4
+    |
+104 | fn get_gene_unitigs(
+    |    ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: variable `_ASgen` should have a snake case name
+  --> src/main.rs:30:79
+   |
+30 | ...am, repbase, _intergenes, abundance, _ASgen, _ASdfam): (u32, String, i32, i32, String, String, String,String, i32, i32, i32) = result....
+   |                                         ^^^^^^ help: convert the identifier to snake case: `_asgen`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `_ASdfam` should have a snake case name
+  --> src/main.rs:30:87
+   |
+30 | ...se, _intergenes, abundance, _ASgen, _ASdfam): (u32, String, i32, i32, String, String, String,String, i32, i32, i32) = result.unwrap();
+   |                                        ^^^^^^^ help: convert the identifier to snake case: `_asdfam`
+
+warning: variable `genes_NCE` should have a snake case name
+   --> src/main.rs:386:13
+    |
+386 |     let mut genes_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^ help: convert the identifier to snake case: `genes_nce`
+
+warning: variable `repeats_dfam_NCE` should have a snake case name
+   --> src/main.rs:390:13
+    |
+390 |     let mut repeats_dfam_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_dfam_nce`
+
+warning: variable `repeats_rb_NCE` should have a snake case name
+   --> src/main.rs:394:13
+    |
+394 |     let mut repeats_rb_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_rb_nce`
+
+warning: variable `genes_paths_NCE` should have a snake case name
+   --> src/main.rs:398:13
+    |
+398 |     let mut genes_paths_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `genes_paths_nce`
+
+warning: variable `repeats_dfam_paths_NCE` should have a snake case name
+   --> src/main.rs:402:13
+    |
+402 |     let mut repeats_dfam_paths_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_dfam_paths_nce`
+
+warning: variable `repeats_rb_paths_NCE` should have a snake case name
+   --> src/main.rs:406:13
+    |
+406 |     let mut repeats_rb_paths_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_rb_paths_nce`
+
+warning: variable `repeats_gene_NCE` should have a snake case name
+   --> src/main.rs:826:13
+    |
+826 |     let mut repeats_gene_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_gene_nce`
+
+warning: variable `repeats_gene_paths_NCE` should have a snake case name
+   --> src/main.rs:831:13
+    |
+831 |     let mut repeats_gene_paths_NCE = std::collections::HashSet::new();
+    |             ^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_gene_paths_nce`
+
+warning: variable `repeats_gene_NCE` should have a snake case name
+    --> src/main.rs:1181:13
+     |
+1181 |     let mut repeats_gene_NCE = std::collections::HashSet::new();
+     |             ^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_gene_nce`
+
+warning: variable `repeats_gene_paths_NCE` should have a snake case name
+    --> src/main.rs:1186:13
+     |
+1186 |     let mut repeats_gene_paths_NCE = std::collections::HashSet::new();
+     |             ^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to snake case: `repeats_gene_paths_nce`
+
+warning: `graph` (bin "graph") generated 14 warnings (run `cargo fix --bin "graph"` to apply 1 suggestion)
+    Finished release [optimized] target(s) in 1.90s
+warning: unused variable: `AS`
+   --> src/main.rs:152:58
+    |
+152 |                     let (_, _, _, _, _, genes_str, _, _, AS, _) = nodes.get(&id).unwrap();
+    |                                                          ^^ help: if this is intentional, prefix it with an underscore: `_AS`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `max_AS`
+   --> src/main.rs:156:33
+    |
+156 |                         let mut max_AS = 0;
+    |                                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_max_AS`
+
+warning: variable `number_intron_genes` is assigned to, but never used
+   --> src/main.rs:221:13
+    |
+221 |     let mut number_intron_genes = 0;
+    |             ^^^^^^^^^^^^^^^^^^^
+    |
+    = note: consider using `_number_intron_genes` instead
+
+warning: variable does not need to be mutable
+   --> src/main.rs:156:29
+    |
+156 |                         let mut max_AS = 0;
+    |                             ----^^^^^^
+    |                             |
+    |                             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:195:29
+    |
+195 |                         let mut d = nodes.get(&nb).unwrap().0.len() - K + 1;
+    |                             ----^
+    |                             |
+    |                             help: remove this `mut`
+
+warning: `gene_finder` (bin "gene_finder") generated 5 warnings (run `cargo fix --bin "gene_finder"` to apply 4 suggestions)
+    Finished release [optimized] target(s) in 1.00s
+ls: impossible d'accéder à '/beegfs/data/sdarmon/results/dog/processing/comp*.txt': Aucun fichier ou dossier de ce type
+
+EXITING because of FATAL ERROR: could not open genome file /beegfs/data/sdarmon/results/dog/processing/../dfam_ref//genomeParameters.txt
+SOLUTION: check that the path to genome files, specified in --genomeDir is correct and the files are present, and have user read permsissions
+
+Jan 24 18:26:10 ...... FATAL ERROR, exiting
+
+EXITING because of FATAL ERROR: could not open genome file /beegfs/data/sdarmon/results/dog/processing/../rb_ref//genomeParameters.txt
+SOLUTION: check that the path to genome files, specified in --genomeDir is correct and the files are present, and have user read permsissions
+
+Jan 24 18:26:10 ...... FATAL ERROR, exiting
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 98, in <module>
+    main()
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 95, in main
+    filter_txt(args.input_bam, args.output_txt)
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 45, in filter_txt
+    input_bam_file = pysam.AlignmentFile(input_bam, "rb")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pysam/libcalignmentfile.pyx", line 751, in pysam.libcalignmentfile.AlignmentFile.__cinit__
+  File "pysam/libcalignmentfile.pyx", line 956, in pysam.libcalignmentfile.AlignmentFile._open
+ValueError: file does not contain alignment data
+awk: fatal : impossible d'ouvrir le fichier « /beegfs/data/sdarmon/results/dog/processing/aligned_Dfam_all.txt » en lecture : Aucun fichier ou dossier de ce type
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 98, in <module>
+    main()
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 95, in main
+    filter_txt(args.input_bam, args.output_txt)
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/filter_bam.py", line 45, in filter_txt
+    input_bam_file = pysam.AlignmentFile(input_bam, "rb")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pysam/libcalignmentfile.pyx", line 751, in pysam.libcalignmentfile.AlignmentFile.__cinit__
+  File "pysam/libcalignmentfile.pyx", line 956, in pysam.libcalignmentfile.AlignmentFile._open
+ValueError: file does not contain alignment data
+awk: fatal : impossible d'ouvrir le fichier « /beegfs/data/sdarmon/results/dog/processing/aligned_Rb_all.txt » en lecture : Aucun fichier ou dossier de ce type
+
+Tool:    bedtools intersect (aka intersectBed)
+Version: v2.31.1
+Summary: Report overlaps between two feature files.
+
+Usage:   bedtools intersect [OPTIONS] -a <bed/gff/vcf/bam> -b <bed/gff/vcf/bam>
+
+	Note: -b may be followed with multiple databases and/or 
+	wildcard (*) character(s). 
+Options: 
+	-wa	Write the original entry in A for each overlap.
+
+	-wb	Write the original entry in B for each overlap.
+		- Useful for knowing _what_ A overlaps. Restricted by -f and -r.
+
+	-loj	Perform a "left outer join". That is, for each feature in A
+		report each overlap with B.  If no overlaps are found, 
+		report a NULL feature for B.
+
+	-wo	Write the original A and B entries plus the number of base
+		pairs of overlap between the two features.
+		- Overlaps restricted by -f and -r.
+		  Only A features with overlap are reported.
+
+	-wao	Write the original A and B entries plus the number of base
+		pairs of overlap between the two features.
+		- Overlapping features restricted by -f and -r.
+		  However, A features w/o overlap are also reported
+		  with a NULL B feature and overlap = 0.
+
+	-u	Write the original A entry _once_ if _any_ overlaps found in B.
+		- In other words, just report the fact >=1 hit was found.
+		- Overlaps restricted by -f and -r.
+
+	-c	For each entry in A, report the number of overlaps with B.
+		- Reports 0 for A entries that have no overlap with B.
+		- Overlaps restricted by -f, -F, -r, and -s.
+
+	-C	For each entry in A, separately report the number of
+		- overlaps with each B file on a distinct line.
+		- Reports 0 for A entries that have no overlap with B.
+		- Overlaps restricted by -f, -F, -r, and -s.
+
+	-v	Only report those entries in A that have _no overlaps_ with B.
+		- Similar to "grep -v" (an homage).
+
+	-ubam	Write uncompressed BAM output. Default writes compressed BAM.
+
+	-s	Require same strandedness.  That is, only report hits in B
+		that overlap A on the _same_ strand.
+		- By default, overlaps are reported without respect to strand.
+
+	-S	Require different strandedness.  That is, only report hits in B
+		that overlap A on the _opposite_ strand.
+		- By default, overlaps are reported without respect to strand.
+
+	-f	Minimum overlap required as a fraction of A.
+		- Default is 1E-9 (i.e., 1bp).
+		- FLOAT (e.g. 0.50)
+
+	-F	Minimum overlap required as a fraction of B.
+		- Default is 1E-9 (i.e., 1bp).
+		- FLOAT (e.g. 0.50)
+
+	-r	Require that the fraction overlap be reciprocal for A AND B.
+		- In other words, if -f is 0.90 and -r is used, this requires
+		  that B overlap 90% of A and A _also_ overlaps 90% of B.
+
+	-e	Require that the minimum fraction be satisfied for A OR B.
+		- In other words, if -e is used with -f 0.90 and -F 0.10 this requires
+		  that either 90% of A is covered OR 10% of  B is covered.
+		  Without -e, both fractions would have to be satisfied.
+
+	-split	Treat "split" BAM or BED12 entries as distinct BED intervals.
+
+	-g	Provide a genome file to enforce consistent chromosome sort order
+		across input files. Only applies when used with -sorted option.
+
+	-nonamecheck	For sorted data, don't throw an error if the file has different naming conventions
+			for the same chromosome. ex. "chr1" vs "chr01".
+
+	-sorted	Use the "chromsweep" algorithm for sorted (-k1,1 -k2,2n) input.
+
+	-names	When using multiple databases, provide an alias for each that
+		will appear instead of a fileId when also printing the DB record.
+
+	-filenames	When using multiple databases, show each complete filename
+			instead of a fileId when also printing the DB record.
+
+	-sortout	When using multiple databases, sort the output DB hits
+			for each record.
+
+	-bed	If using BAM input, write output as BED.
+
+	-header	Print the header from the A file prior to results.
+
+	-nobuf	Disable buffered output. Using this option will cause each line
+		of output to be printed as it is generated, rather than saved
+		in a buffer. This will make printing large output files 
+		noticeably slower, but can be useful in conjunction with
+		other software tools and scripts that need to process one
+		line of bedtools output at a time.
+
+	-iobuf	Specify amount of memory to use for input buffer.
+		Takes an integer argument. Optional suffixes K/M/G supported.
+		Note: currently has no effect with compressed files.
+
+Notes: 
+	(1) When a BAM file is used for the A file, the alignment is retained if overlaps exist,
+	and excluded if an overlap cannot be found.  If multiple overlaps exist, they are not
+	reported, as we are only testing for one or more overlaps.
+
+
+
+
+***** ERROR: writeAllOverlap option is not valid with BAM query input, unless bed output is specified with -bed option. *****
+Traceback (most recent call last):
+  File "/beegfs/home/sdarmon/Documents/dbg/scr/add_ref_TE.py", line 82, in <module>
+    with open(Arg[3], 'r') as f:
+         ^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/beegfs/data/sdarmon/results/dog/processing/aligned_Dfam_all.txt'
+ls: impossible d'accéder à '/beegfs/data/sdarmon/results/dog/processing/comp*.txt': Aucun fichier ou dossier de ce type

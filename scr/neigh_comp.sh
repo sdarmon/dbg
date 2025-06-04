@@ -74,20 +74,21 @@ t=${12}
 d=${13}
 base=$(basename "$out")
 source environment.sh
-source venv/bin/activate
+source ${VENV_FAMDB}
 #Computing the neighborhood
+
 ./neigh.exe ${nodes} ${edges} ${in} -o ${out}_n -c 0 -d $d
 
 #Alignment of the unitigs
 python3 reads_to_align.py ${out}_n.nodes ${out}_n.unitigs 0
-mkdir -p STAR_alignment_${base}
-mkdir -p STAR_alignment_cons_${base}
+mkdir -p results/STAR_alignment_${base}
+mkdir -p results/STAR_alignment_cons_${base}
 
 ${STAR_BIN_L} --genomeDir ${ref_ge} \
          --runMode alignReads \
          --runThreadN 8 \
          --readFilesIn ${out}_n.unitigs \
-         --outFileNamePrefix STAR_alignment_${base}/ \
+         --outFileNamePrefix results/STAR_alignment_${base}/ \
          --outSAMtype BAM SortedByCoordinate \
          --outSAMunmapped Within \
          --outSAMattributes Standard \
@@ -99,30 +100,40 @@ ${STAR_BIN_L} --genomeDir ${ref_te} \
          --runMode alignReads \
          --runThreadN 8 \
          --readFilesIn ${out}_n.unitigs \
-         --outFileNamePrefix STAR_alignment_cons_${base}/ \
+         --outFileNamePrefix results/STAR_alignment_cons_${base}/ \
          --outSAMtype BAM SortedByCoordinate \
          --outSAMunmapped Within \
          --outSAMattributes Standard \
          --outFilterMultimapNmax 10000 \
          --outReadsUnmapped Fastx
+echo ${base}
+python3 filter_bam.py \
+ results/STAR_alignment_${base}/Aligned.sortedByCoord.out.bam \
+ ${out}output_filtered.bam
 
-python3 filter_bam.py STAR_alignment_${base}/Aligned.sortedByCoord.out.bam STAR_alignment_${base}/output_filtered.bam
-
-python3 filter_bam.py STAR_alignment_cons_${base}/Aligned.sortedByCoord.out.bam  ${out}seq_intersectionCons.txt
+python3 filter_bam.py \
+ results/STAR_alignment_cons_${base}/Aligned.sortedByCoord.out.bam  \
+ ${out}seq_intersectionCons.txt
 
 #bedtools intersect -wb -a ${te} -b STAR_alignment_${base}/output_filtered.bam  -split >  ${out}seq_intersectionTE.txt
 echo "" >   ${out}seq_intersectionConsRb.txt
 
-${BEDTOOLS_BIN} intersect -wb -a ${ref} -b STAR_alignment_${base}/output_filtered.bam  -split > ${out}seq_intersectionRef.txt
+echo "" >   ${out}seq_intersectionConsinter.txt
+${BEDTOOLS_BIN} intersect \
+        -wo  \
+        -bed \
+        -a ${out}output_filtered.bam \
+        -b ${GEN_GTF} \
+        -split > ${out}seq_intersectionRef.txt
 
 #Adding the informations to the file
-python3 add_ref_TE.py \
+python3 ${WORK_DIR}/add_ref_TE.py \
 	      ${out}_n.nodes \
-              ${out}seq_intersectionRef.txt \
+        ${out}seq_intersectionRef.txt \
 	      ${out}seq_intersectionCons.txt \
 	      ${out}seq_intersectionConsRb.txt \
-	      ${out}seq_intersectionConsRb.txt \
-      	      ${ab}
+	      ${out}seq_intersectionConsinter.txt \
+      	${ab}
 
 #Collecting the TEs found in the consensus
 awk 'BEGIN {FS="\t"} {print $8}' ${out}_n_annoted.nodes | sed 's/; /\n/g' | sort -u  > ${out}_n_list_TE.txt

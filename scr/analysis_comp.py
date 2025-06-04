@@ -109,13 +109,16 @@ intron = set()
 if len(Arg) >= 7 :
     sep = Arg[6]
 else:
-    sep = "split('\t')[14].split(' ')[1]"
+    sep = "split('\t')[20]"
 func = eval(f"lambda x: x.{sep}")
 
 
 #Reading the gene.gtf file
 with open(Arg[2], 'r') as f:
     for line in f:
+        n = len(line.split('\t'))
+        if n < 21:
+            continue
         target = func(line)
         if "matches_ref_protein \"True\";" in line:
             match_prot.add(target)
@@ -130,7 +133,8 @@ transpo = set()
 with open(Arg[3], 'r') as f:
     for line in f:
         target = line.split('\t')[2]
-        transpo.add(target)
+        if target != "*":
+            transpo.add(target)
 
 #Function that computes the entropy of the n-mers in the sequences
 def entropy(seqs,n):

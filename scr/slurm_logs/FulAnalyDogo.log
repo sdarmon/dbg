@@ -1,0 +1,123 @@
+Sample of the reads ...
+FastP of the reads ...
+HC of the reads ...
+Extraction of the TEs from Dfam ...
+Extraction of the TEs from Repbase ...
+DGB with kissplice ...
+
+This is KisSplice, version 2.6.7
+
+The command line was:       /beegfs/home/sdarmon/Documents/dbg/scr/kissplice-binary-ubuntu-2.6.7/bin/kissplice -r /beegfs/data/sdarmon/hc_1.fq -r /beegfs/data/sdarmon/hc_2.fq -k 41 -o /beegfs/data/sdarmon/results/dog/graph
+Using the read files:       /beegfs/data/sdarmon/hc_1.fq /beegfs/data/sdarmon/hc_2.fq
+Results will be stored in:  /beegfs/data/sdarmon/results/dog/graph
+Summary log file will be saved in:  /beegfs/data/sdarmon/results/dog/graph/kissplice_log_summary_2025-01-24_16-57-43_531116
+
+
+[16:57:43 24/01/2025] --> Building de Bruijn graph...
+Graph will be written in /beegfs/data/sdarmon/results/dog/graph/graph_hc_1_hc_2_k41.[edges/nodes]
+[17:01:04 24/01/2025] --> Done!
+Elapsed time:  200.9  seconds
+
+[17:01:04 24/01/2025] --> Removing sequencing errors...
+[17:01:05 24/01/2025] --> Done!
+Elapsed time:  1.0  seconds
+
+[17:01:05 24/01/2025] --> Finding the BCCs...
+[17:01:06 24/01/2025] --> Done!
+Elapsed time:  1.3  seconds
+
+[17:01:06 24/01/2025] --> Enumerating all bubbles...
+Total number of bubbles found:  656.0
+[17:02:29 24/01/2025] --> Done!
+Elapsed time:  82.8  seconds
+
+[17:02:29 24/01/2025] --> Starting Bubble Output Module
+Before checking for read coherency, all bubbles will be written to folder /beegfs/data/sdarmon/results/dog/graph/results_without_read_coherency
+This enables you to access them even before the read coherency module finishes, which can take a long time
+[17:02:29 24/01/2025] --> Sampling bubbles by type...
+[17:02:29 24/01/2025] --> Done!
+You can now access all bubbles without read coherency in: /beegfs/data/sdarmon/results/dog/graph/results_without_read_coherency
+
+[17:02:29 24/01/2025] --> Removing low-complexity/redundant bubbles...
+[17:02:29 24/01/2025] --> Done!
+Elapsed time: 0.3 seconds
+
+[17:02:29 24/01/2025] --> Computing read coherence and coverage...
+[17:03:41 24/01/2025] --> Done!
+[17:03:41 24/01/2025] --> Sorting all bubbles...
+[17:03:41 24/01/2025] --> Done!
+Elapsed time:  71.8  seconds
+
+
+
+ 		 ******** We are done, final coherent results are in files /beegfs/data/sdarmon/results/dog/graph/results_hc_1_hc_2_k41_coherents_type_*.fa ********** 
+ 		 ******** All non read coherent results are in files /beegfs/data/sdarmon/results/dog/graph/results_hc_1_hc_2_k41_uncoherent.fa ****** 
+
+
+		 TYPES:
+			 0: Run with -s option set to 1 or 2 to also search for SNPs
+			 1: Alternative Splicing Events, 345 found
+			 2: Inexact Tandem Repeats, 7 found
+			 3: Short Indels (<3nt), 236 found
+			 4: All others, composed by a shorter path of length > 2k not being a SNP, 22 found
+
+
+ 		 ******** A summary of the execution can be found in the log file: /beegfs/data/sdarmon/results/dog/graph/kissplice_log_summary_2025-01-24_16-57-43_531116**********
+Weighting of the nodes...
+Expected use of this program: 
+
+	/beegfs/home/sdarmon/Documents/dbg/scr/graph.exe file.nodes file.edges radius -k kmer -o output.txt
+
+Threshold of the nodes...
+D_NT=
+Agglomeration of connexe components...
+Generating genome STAR ref...
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /beegfs/data/sdarmon/results/dog/ref --genomeFastaFiles /beegfs/data/sdarmon/dog/ref.fa --sjdbGTFfile /beegfs/data/sdarmon/dog/ref.gtf --genomeSAindexNbases 13 --genomeSAsparseD 4 --genomeChrBinNbits 16
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:12:02-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Jan 24 17:03:49 ..... started STAR run
+Jan 24 17:03:49 ... starting to generate Genome files
+Jan 24 17:04:51 ..... processing annotations GTF
+Jan 24 17:05:04 ... starting to sort Suffix Array. This may take a long time...
+Jan 24 17:05:10 ... sorting Suffix Array chunks and saving them to disk...
+Jan 24 17:09:32 ... loading chunks from disk, packing SA...
+Jan 24 17:09:59 ... finished generating suffix array
+Jan 24 17:09:59 ... generating Suffix Array index
+Jan 24 17:10:56 ... completed Suffix Array index
+Jan 24 17:10:57 ..... inserting junctions into the genome indices
+Jan 24 17:13:06 ... writing Genome to disk ...
+Jan 24 17:13:13 ... writing Suffix Array to disk ...
+Jan 24 17:13:24 ... writing SAindex to disk
+Jan 24 17:13:26 ..... finished successfully
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /beegfs/data/sdarmon/results/dog/dfam_ref --genomeFastaFiles /beegfs/data/sdarmon/dog/TE_Dfam.fa --genomeSAindexNbases 9 --genomeSAsparseD 4 --genomeChrBinNbits 16
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:12:02-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Jan 24 17:13:26 ..... started STAR run
+Jan 24 17:13:26 ... starting to generate Genome files
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STAR --runThreadN 8 --runMode genomeGenerate --genomeDir /beegfs/data/sdarmon/results/dog/rb_ref --genomeFastaFiles /beegfs/data/sdarmon/dog/TE_Rb.fa --genomeSAindexNbases 9 --genomeSAsparseD 4 --genomeChrBinNbits 16
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:12:02-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Jan 24 17:13:26 ..... started STAR run
+Jan 24 17:13:26 ... starting to generate Genome files
+Number of comps : 0
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/dog/processing/../ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/results/dog/processing/all_unitigs.fa --outFileNamePrefix /beegfs/data/sdarmon/results/dog/processing/STAR_alignment_all/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedMultimapNmax 10000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Jan 24 17:13:50 ..... started STAR run
+Jan 24 17:13:50 ..... loading genome
+Jan 24 17:14:02 ..... started mapping
+Jan 24 18:25:45 ..... finished mapping
+Jan 24 18:25:46 ..... started sorting BAM
+Jan 24 18:26:07 ..... finished successfully
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/dog/processing/../dfam_ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/results/dog/processing/all_unitigs.fa --outFileNamePrefix /beegfs/data/sdarmon/results/dog/processing/STAR_alignment_cons_dfam_all/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedMultimapNmax 10000000 --seedPerReadNmax 1000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Jan 24 18:26:10 ..... started STAR run
+Jan 24 18:26:10 ..... loading genome
+	/beegfs/home/sdarmon/Documents/STAR-2.7.11b/bin/Linux_x86_64/STARlong --genomeDir /beegfs/data/sdarmon/results/dog/processing/../rb_ref --runMode alignReads --runThreadN 8 --readFilesIn /beegfs/data/sdarmon/results/dog/processing/all_unitigs.fa --outFileNamePrefix /beegfs/data/sdarmon/results/dog/processing/STAR_alignment_cons_rb_all/ --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes Standard --outFilterMultimapNmax 10000 --seedMultimapNmax 10000000 --seedPerReadNmax 1000000 --outReadsUnmapped Fastx
+	STAR version: 2.7.11b   compiled: 2024-01-25T16:14:50-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Jan 24 18:26:10 ..... started STAR run
+Jan 24 18:26:10 ..... loading genome
+Filter the reads to only keep the best mapped ones
+Intersect the reads with the reference genes
+Compute the intergenics unitigs as the difference between the unitigs and the genes
+Adding the AS information to the nodes
+Annotate the components nodes with the TE and ref genes informations
+Number of comps : 0
+Job finished
+Time taken: 6144

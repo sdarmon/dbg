@@ -108,7 +108,7 @@ elif Arg[2] == "top1":
     x = np.arange(1, m + 1, 1)
     Y = [0 for i in range(m+1)]
     for el in y:
-        Y[elq] += 100 / len(y)
+        Y[el] += 100 / len(y)
     M = 0
     for el in Y:
         M += el

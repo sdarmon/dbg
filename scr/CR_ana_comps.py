@@ -14,8 +14,10 @@ total = int(Arg[2])
 # Initialize counts
 polA = 0
 microsat = 0
+both = 0
 UTR_CDS = 0
 TE = 0
+Nothing = 0
 
 # Process the input files
 for i in range(total):
@@ -26,9 +28,13 @@ for i in range(total):
             microsat += (1 if float(L[1]) >= 0.2 else 0)
             UTR_CDS += (1 if int(L[2]) > 2 else 0)
             TE += (1 if int(L[3]) > 0 else 0)
-
-# Sum total for the pie chart
-sum_tot = polA + microsat + TE # UTR_CDS is not included in the pie chart
+            #Case otherwise
+            if float(L[0]) >= 1 and float(L[1]) >= 0.2 and int(L[3]) == 0:
+                both += 1
+            if float(L[0]) < 1 and float(L[1]) < 0.2 and int(L[3]) == 0:
+                Nothing+=1
+        # Sum total for the pie chart
+sum_tot = polA + microsat + TE + Nothing - both # UTR_CDS is not included in the pie chart
 
 
 # Custom function to format the percentages
@@ -38,9 +44,9 @@ def func(pct, allvals):
 
 
 # Data for the pie chart
-labels = ['A/T stretch', 'Micro-Sat',  'TE']
-sizes = [polA, microsat, TE]
-colors = ['#007E81','#084D4F','#95C11F']
+labels = ['Microsatellite','A/T and microsat', 'A/T stretch',   'TE', 'Unknown']
+sizes = [microsat-both, both, polA-both, TE, Nothing]
+colors = ['#084D4F','#046668','#007E81','#95C11F','#C11F44']
 
 # Plotting the pie chart
 plt.figure(figsize=(8, 8))
@@ -58,5 +64,5 @@ for text in autotexts:
 
 plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-plt.title('Distribution of the Components', fontsize=20)
+#plt.title('Distribution of the Components', fontsize=20)
 plt.show()

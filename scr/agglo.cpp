@@ -248,6 +248,14 @@ int main(int argc, char** argv) {
     }
 
     cout << "Fin de la recherche de composantes." << endl;
+    // ////////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \\\\\\\\\\\\\\\ \\
+    //On s'arrête là si on ne veut pas construire le graphe aggloméré
+    //On s'arrête là si on ne veut pas construire le graphe aggloméré
+    return 0; //On s'arrête là si on ne veut pas construire le graphe aggloméré
+    //On s'arrête là si on ne veut pas construire le graphe aggloméré
+    //On s'arrête là si on ne veut pas construire le graphe aggloméré
+    // ////////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \\\\\\\\\\\\\\\ \\
+
     if (argc < 9 ) {
     //Maintenant on construit nouveau graphe contracté
     vector <Edge> E2;
