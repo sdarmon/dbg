@@ -171,6 +171,20 @@ do
             ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}.abundance
 
 
+    echo "Consensus sequence :" >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+
+    python3 seq_consensium_of_comp.py \
+        ${BASE_DIR}/comp${i}_annotated.nodes \
+        ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges \
+        ${K} >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+
+    echo "Max abundance of the component :" >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+    awk 'BEGIN {s=0} $9 > s {s=$9} END {print s}' FS="\t" ${BASE_DIR}/comp${i}_annotated.nodes >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+  
+    echo "Leaves abundance sum:" >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+    awk '{s+=$9} END {print s}' FS="\t"  ${BASE_DIR}/genes_of_comp${i}/leaves.txt >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+
+
     echo "Analysis of the genes and TE"
     ##Analysis of the genes and TE
     ${WORK_DIR}/analysis_gene_TE \

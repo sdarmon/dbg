@@ -15,7 +15,7 @@ DATA_DIR="/beegfs/data/sdarmon"
 SPE_DIR="${DATA_DIR}/${SPE}"
 GEN_GTF="${SPE_DIR}/Mus_musculus.GRCm39.112.gtf"
 GEN_FA="${SPE_DIR}/Mus_musculus.GRCm39.dna.primary_assembly.fa"
-READS_1="${SPE_DIR}/ERR2680378_1.fastq"
+READS_1="${SPE_DIR}/ERR2680378_1.fastq" #https://www.ncbi.nlm.nih.gov/sra/?term=ERR2680378
 READS_2="${SPE_DIR}/ERR2680378_2.fastq"
 
 ## Rerun skip command : "" for no skip, "1" for skip
@@ -51,4 +51,4 @@ STAR_BIN_L="${DOC_DIR}/STAR-2.7.11b/bin/Linux_x86_64/STARlong"
 SAMTOOLS_BIN="${DOC_DIR}/samtools-1.9/samtools"
 BEDTOOLS_BIN="${DOC_DIR}/bedtools2/bin/bedtools"
 FASTP_BIN="${DOC_DIR}/fastp"
-
+TECOUNT="${DOC_DIR}/TEtools/TEcount.py"

@@ -53,4 +53,5 @@ STAR_BIN_L="${DOC_DIR}/STAR-2.7.11b/bin/Linux_x86_64/STARlong"
 SAMTOOLS_BIN="${DOC_DIR}/samtools-1.9/samtools"
 BEDTOOLS_BIN="${DOC_DIR}/bedtools2/bin/bedtools"
 FASTP_BIN="${DOC_DIR}/fastp"
+TECOUNT="${DOC_DIR}/TEtools/TEcount.py"
 

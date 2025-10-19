@@ -1,24 +1,594 @@
-Sample of the reads ...
-FastP of the reads ...
-HC of the reads ...
-DGB with kissplice ...
-
-This is KisSplice, version 2.6.7
-
-The command line was:       /beegfs/home/sdarmon/Documents/dbg/scr/kissplice-binary-ubuntu-2.6.7/bin/kissplice -r /beegfs/data/sdarmon/mus100/hc_1.fq -r /beegfs/data/sdarmon/mus100/hc_2.fq -k 41 -o /beegfs/data/sdarmon/results/mus100/graph
-[ERROR] File "/beegfs/data/sdarmon/mus100/hc_1.fq" does not exist.
-[ERROR] File "/beegfs/data/sdarmon/mus100/hc_2.fq" does not exist.
-[FATAL ERROR] One or more read files do not exist.
-Try `kissplice --help` for more information
-Weighting of the nodes...
-ok here?
-Threshold of the nodes...
-T=2
-Agglomeration of connexe components...
-Number of comps : 0
-Filter the reads to only keep the best mapped ones
-Intersect the reads with the reference genes
-Annotate the components nodes with the TE and ref genes informations
-Number of comps : 0
+loading rosette file...
+loading rosette fasta file...
+counting /beegfs/data/sdarmon/mus/ERR2680378_1.fastq...
+counting /beegfs/data/sdarmon/mus/ERR2680378_2.fastq...
+./alignment/ERR2680378_1.sam
+building index
+/beegfs/home/sdarmon/Documents/TEtools/bowtie2/bowtie2-build -f /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2
+Settings:
+  Output files: "/beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2.*.bt2"
+  Line rate: 6 (line is 64 bytes)
+  Lines per side: 1 (side is 64 bytes)
+  Offset rate: 4 (one in 16)
+  FTable chars: 10
+  Strings: unpacked
+  Max bucket size: default
+  Max bucket size, sqrt multiplier: default
+  Max bucket size, len divisor: 4
+  Difference-cover sample period: 1024
+  Endianness: little
+  Actual local endianness: little
+  Sanity checking: disabled
+  Assertions: disabled
+  Random seed: 0
+  Sizeofs: void*:8, int:4, long:8, size_t:8
+Input files DNA, FASTA:
+  /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab
+Building a SMALL index
+Reading reference sizes
+  Time reading reference sizes: 00:00:00
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:00
+bmax according to bmaxDivN setting: 415876
+Using parameters --bmax 311907 --dcv 1024
+  Doing ahead-of-time memory usage test
+  Passed!  Constructing with these parameters: --bmax 311907 --dcv 1024
+Constructing suffix-array element generator
+Building DifferenceCoverSample
+  Building sPrime
+  Building sPrimeOrder
+  V-Sorting samples
+  V-Sorting samples time: 00:00:00
+  Allocating rank array
+  Ranking v-sort output
+  Ranking v-sort output time: 00:00:00
+  Invoking Larsson-Sadakane on ranks
+  Invoking Larsson-Sadakane on ranks time: 00:00:00
+  Sanity-checking and returning
+Building samples
+Reserving space for 12 sample suffixes
+Generating random suffixes
+QSorting 12 sample offsets, eliminating duplicates
+QSorting sample offsets, eliminating duplicates time: 00:00:00
+Multikey QSorting 12 samples
+  (Using difference cover)
+  Multikey QSorting samples time: 00:00:00
+Calculating bucket sizes
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Split 1, merged 5; iterating...
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Avg bucket size: 184833 (target: 311906)
+Converting suffix-array elements to index image
+Allocating ftab, absorbFtab
+Entering Ebwt loop
+Getting block 1 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 253411
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 253412
+Getting block 2 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 138625
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 138626
+Getting block 3 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 198068
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 198069
+Getting block 4 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 129998
+  (Using difference cover)
+  Sorting block time: 00:00:01
+Returning block of 129999
+Getting block 5 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 223154
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 223155
+Getting block 6 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 105955
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 105956
+Getting block 7 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 254947
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 254948
+Getting block 8 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 230935
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 230936
+Getting block 9 of 9
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 128405
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 128406
+Exited Ebwt loop
+fchr[A]: 0
+fchr[C]: 497886
+fchr[G]: 870722
+fchr[T]: 1255327
+fchr[$]: 1663506
+Exiting Ebwt::buildToDisk()
+Returning from initFromVector
+Wrote 5002872 bytes to primary EBWT file: /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2.1.bt2
+Wrote 415884 bytes to secondary EBWT file: /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2.2.bt2
+Re-opening _in1 and _in2 as input streams
+Returning from Ebwt constructor
+Headers:
+    len: 1663506
+    bwtLen: 1663507
+    sz: 415877
+    bwtSz: 415877
+    lineRate: 6
+    offRate: 4
+    offMask: 0xfffffff0
+    ftabChars: 10
+    eftabLen: 20
+    eftabSz: 80
+    ftabLen: 1048577
+    ftabSz: 4194308
+    offsLen: 103970
+    offsSz: 415880
+    lineSz: 64
+    sideSz: 64
+    sideBwtSz: 48
+    sideBwtLen: 192
+    numSides: 8665
+    numLines: 8665
+    ebwtTotLen: 554560
+    ebwtTotSz: 554560
+    color: 0
+    reverse: 0
+Total time for call to driver() for forward index: 00:00:01
+Reading reference sizes
+  Time reading reference sizes: 00:00:00
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:00
+  Time to reverse reference sequence: 00:00:00
+bmax according to bmaxDivN setting: 415876
+Using parameters --bmax 311907 --dcv 1024
+  Doing ahead-of-time memory usage test
+  Passed!  Constructing with these parameters: --bmax 311907 --dcv 1024
+Constructing suffix-array element generator
+Building DifferenceCoverSample
+  Building sPrime
+  Building sPrimeOrder
+  V-Sorting samples
+  V-Sorting samples time: 00:00:00
+  Allocating rank array
+  Ranking v-sort output
+  Ranking v-sort output time: 00:00:00
+  Invoking Larsson-Sadakane on ranks
+  Invoking Larsson-Sadakane on ranks time: 00:00:00
+  Sanity-checking and returning
+Building samples
+Reserving space for 12 sample suffixes
+Generating random suffixes
+QSorting 12 sample offsets, eliminating duplicates
+QSorting sample offsets, eliminating duplicates time: 00:00:00
+Multikey QSorting 12 samples
+  (Using difference cover)
+  Multikey QSorting samples time: 00:00:00
+Calculating bucket sizes
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Split 2, merged 7; iterating...
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Split 1, merged 2; iterating...
+  Binary sorting into buckets
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Binary sorting into buckets time: 00:00:00
+Splitting and merging
+  Splitting and merging time: 00:00:00
+Avg bucket size: 237643 (target: 311906)
+Converting suffix-array elements to index image
+Allocating ftab, absorbFtab
+Entering Ebwt loop
+Getting block 1 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 197642
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 197643
+Getting block 2 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 300843
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 300844
+Getting block 3 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 256573
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 256574
+Getting block 4 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 232074
+  (Using difference cover)
+  Sorting block time: 00:00:01
+Returning block of 232075
+Getting block 5 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 268190
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 268191
+Getting block 6 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 254506
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 254507
+Getting block 7 of 7
+  Reserving size (311907) for bucket
+  Calculating Z arrays
+  Calculating Z arrays time: 00:00:00
+  Entering block accumulator loop:
+  10%
+  20%
+  30%
+  40%
+  50%
+  60%
+  70%
+  80%
+  90%
+  100%
+  Block accumulator loop time: 00:00:00
+  Sorting block of length 153672
+  (Using difference cover)
+  Sorting block time: 00:00:00
+Returning block of 153673
+Exited Ebwt loop
+fchr[A]: 0
+fchr[C]: 497886
+fchr[G]: 870722
+fchr[T]: 1255327
+fchr[$]: 1663506
+Exiting Ebwt::buildToDisk()
+Returning from initFromVector
+Wrote 5002872 bytes to primary EBWT file: /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2.rev.1.bt2
+Wrote 415884 bytes to secondary EBWT file: /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2.rev.2.bt2
+Re-opening _in1 and _in2 as input streams
+Returning from Ebwt constructor
+Headers:
+    len: 1663506
+    bwtLen: 1663507
+    sz: 415877
+    bwtSz: 415877
+    lineRate: 6
+    offRate: 4
+    offMask: 0xfffffff0
+    ftabChars: 10
+    eftabLen: 20
+    eftabSz: 80
+    ftabLen: 1048577
+    ftabSz: 4194308
+    offsLen: 103970
+    offsSz: 415880
+    lineSz: 64
+    sideSz: 64
+    sideBwtSz: 48
+    sideBwtLen: 192
+    numSides: 8665
+    numLines: 8665
+    ebwtTotLen: 554560
+    ebwtTotSz: 554560
+    color: 0
+    reverse: 1
+Total time for backward call to driver() for mirror index: 00:00:01
+mapping reads
+/beegfs/home/sdarmon/Documents/TEtools/bowtie2/bowtie2 -p 4 --time --very-sensitive -x /beegfs/data/sdarmon/mus/TE_Dfam.fa.no_tab.index2 --dovetail -X 500 -1 /beegfs/data/sdarmon/mus/ERR2680378_1.fastq -2 /beegfs/data/sdarmon/mus/ERR2680378_2.fastq -S ./alignment/ERR2680378_1.sam
+Time loading reference: 00:00:00
+Time loading forward index: 00:00:00
+Time loading mirror index: 00:00:00
+Multiseed full-index search: 00:16:45
+53128934 reads; of these:
+  53128934 (100.00%) were paired; of these:
+    52915368 (99.60%) aligned concordantly 0 times
+    98443 (0.19%) aligned concordantly exactly 1 time
+    115123 (0.22%) aligned concordantly >1 times
+    ----
+    52915368 pairs aligned concordantly 0 times; of these:
+      868 (0.00%) aligned discordantly 1 time
+    ----
+    52914500 pairs aligned 0 times concordantly or discordantly; of these:
+      105829000 mates make up the pairs; of these:
+        105755345 (99.93%) aligned 0 times
+        38745 (0.04%) aligned exactly 1 time
+        34910 (0.03%) aligned >1 times
+0.47% overall alignment rate
+Time searching: 00:16:45
+Overall time: 00:16:47
 Job finished
-Time taken: 413
+Time taken: 1365

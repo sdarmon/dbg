@@ -30,19 +30,26 @@ for info in L[14].split(';'):
 elif gene_biotype == "lncRNA" :
 typed = "lncRNA"
 """
+
+
+prop_intron = 0.35 #if a sequence has less than 30% of its length inside a CDS
+# UTR, NCE, it is considered as an intron
+
+
 with open(Arg[2], 'r') as f:
     for line in f:
         L = line.split('\t')
+        len_seq = len(L[1])
         gene = L[20].split('"')[1] + L[5]#Old L[14] ; L[5] is "+" or "-"
         index = int(L[3].split('_')[1])
         position = L[14] #Old L[8]
         overlap = int(L[21]) #Old L[15]
         AS = int(L[22]) #Old L[16]
-        if position in ["CDS","start_codon","stop_codon"]:
+        if position in ["CDS","start_codon","stop_codon"] and overlap > prop_intron * len_seq :
             typed="CDS"
-        elif position in ["five_prime_utr","three_prime_utr"]:
+        elif position in ["five_prime_utr","three_prime_utr"] and overlap > prop_intron * len_seq:
             typed="UTR"
-        elif position in ["exon"]:
+        elif position in ["exon"] and overlap > prop_intron * len_seq:
             #Case of a potential exon that is not in the CDS
             if index not in exon_non_codant:
                 exon_non_codant[index] = [(gene,AS,overlap)]

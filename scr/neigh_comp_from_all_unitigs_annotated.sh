@@ -38,7 +38,7 @@ while getopts ":h" option; do
             afficher_aide
             ;;
         \?)
-            echo "Option invalide : -$OPTARG" >&7
+            echo "Option invalide : -$OPTARG" >&8
             afficher_aide
             ;;
     esac
@@ -48,7 +48,7 @@ done
 shift $((OPTIND - 1))
 
 # Vérification des arguments restants
-if [ "$#" -lt 7 ]; then
+if [ "$#" -lt 8 ]; then
     echo "Erreur : Nombre insuffisant d'arguments."
     afficher_aide
 fi
@@ -61,17 +61,31 @@ in=$4
 all_unitigs=$5
 out=$6
 d=$7
+ab_min=$8
 base=$(basename "$out")
 #Computing the neighborhood
 
-./neigh.exe ${nodes} ${edges} ${in} -o ${out}_n -c 0 -d "$d"
+./neigh.exe ${nodes} ${edges} ${in} -o ${out} -c 0 -d "$d"
 
-### Get the nodes IDs
-awk '{print $1}' FS="\t" ${out}_n.nodes | sort -u -n > ${out}_n_IDs.txt
+echo "" > ${out}_IDs.txt
+
+awk '{print $1}' FS="\t" ${out}.nodes >> ${out}_IDs.txt
+
 
 ### Get the lines from the in file such that the node ID is in the list of IDs
-awk 'NR==FNR {ids[$1]; next} $1 in ids {print}' FS="\t" ${out}_n_IDs.txt ${all_unitigs} > ${out}_n_annotated.nodes
+awk -v ab="${ab_min}"  'NR==FNR {ids[$1]; next} $1 in ids && $9 >= ab {print}' FS="\t" ${out}_IDs.txt ${all_unitigs} > ${out}_n.nodes
+awk 'NR==FNR {ids[$1]; next} $1 in ids {print}' FS="\t" ${out}_IDs.txt ${all_unitigs} >> ${out}_n.nodes
 
-### Sort the edges file to suppress the duplicates
-sort -u ${out}_n.edges > ${out}_n_sorted.edges
+sort -u -k1,1n ${out}_n.nodes > ${out}_annotated.nodes
+### Merge the edges files and sort to suppress the duplicates
+
+awk 'NR==FNR {ids[$1]; next} $1 in ids && $2 in ids && $1 < $2 {print}' FS="\t" ${out}_annotated.nodes ${edges} > ${out}_n.edges
+sort -u ${out}_n.edges > ${out}_sorted.edges
+
+#Remove all the temporary files
+echo "Removing temporary files"
+rm ${out}_IDs.txt
+rm ${out}_n.nodes
+rm ${out}_n.edges
+rm ${out}.nodes ${out}.edges
 

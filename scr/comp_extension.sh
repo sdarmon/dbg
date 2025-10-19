@@ -12,6 +12,8 @@ else
 fi
 
 source ${WORK_DIR}/venv/bin/activate
+pip install pandas
+pip install matplotlib
 ## STEP 1 : Alignment of all the unitigs ###
 #
 ###Directories
@@ -77,10 +79,10 @@ echo "Filter the reads to only keep the best mapped ones"
 #    ${BASE_DIR}/STAR_alignment_all/aligned_filtered.bam \
 #    | awk '{print $20}' FS="[\t:]" \
 #    > ${BASE_DIR}/STAR_alignment_all/AS.txt
-#
+#${BASE_DIR}/tot_cr_ana.txt
 #paste <(sed 's/\t/\€/g' ${BASE_DIR}/STAR_alignment_all/aligned_filtered.bed) \
 #    ${BASE_DIR}/STAR_alignment_all/AS.txt \
-#    | sort > ${BASE_DIR}/STAR_alignment_all/aligned_AS.txt
+#    | sort > ${${BASE_DIR}/tot_cr_ana.txtBASE_DIR}/STAR_alignment_all/aligned_AS.txt
 
 python3 ${WORK_DIR}/filter_bam.py \
     ${BASE_DIR}/STAR_alignment_cons_dfam_all/Aligned.sortedByCoord.out.bam \
@@ -157,27 +159,108 @@ for ((i=0; i<$MAXI; i++))
       ${BASE_DIR}/genes_of_comp$i \
       ${K}
 
-#  python3 ${WORK_DIR}/abundance_genes.py \
-#   ${BASE_DIR}/genes_of_comp${i}/expressed_genes.txt \
-#   ${BASE_DIR}/all_unitigs_annotated.nodes \
-#   ${K}
-#
-#   ###Editing the nodes and edges files
-#    awk -F'\t' -v c=${i} '{print $0 "\t" c "\t" 0}' ${BASE_DIR}/genes_of_comp${i}/expressed_genes_annotated.txt >> ${BASE_DIR}/expressed_genes.nodes
-#    awk -F'\t' -v c=${i} '{print $0 "\t 100 \t " 1}' ${BASE_DIR}/genes_of_comp${i}/TE.txt >> ${BASE_DIR}/expressed_genes.nodes
-#    echo "${i}" >> ${BASE_DIR}/expressed_genes.nodes
-#    rm ${BASE_DIR}/expressed_genes_ge.edges
-#    rm ${BASE_DIR}/expressed_genes_te.edges
-#    awk -F'\t' -v c=${i} -v t=${th} ' $2 > t {print c "\t" $0 }' ${BASE_DIR}/genes_of_comp${i}/expressed_genes_annotated.txt >> ${BASE_DIR}/expressed_genes_ge.edges
-#    awk -F'\t' -v c=${i} '$1 != "*" {print c "\t" $0  "\t TE \t none"  }' ${BASE_DIR}/genes_of_comp${i}/TE.txt >> ${BASE_DIR}/expressed_genes_te.edges
-#    join -t $'\t' ${BASE_DIR}/expressed_genes_te.edges ${BASE_DIR}/expressed_genes_ge.edges >> ${BASE_DIR}/expressed_genes.edges
+  echo "Consensus sequence :" >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
 
-    ##Sorting
-    #LC_ALL=C sort -t $'\t' -k5,5 -k2,2 -k3,3gr  ${BASE_DIR}/expressed_genes.edges | awk '{print $5 "\t" $2 "\t" $3}' > ${BASE_DIR}/expressed_genes_sorted.edges
+  python3 seq_consensium_of_comp.py \
+      ${BASE_DIR}/comp${i}_annotated.nodes \
+      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges \
+      ${K} >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+
+  echo "Max abundance of the component :" >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+  awk 'BEGIN {s=0} $9 > s {s=$9} END {print s}' FS="\t" ${BASE_DIR}/comp${i}_annotated.nodes >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+
+  echo "Leaves abundance sum:" >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+  awk '{s+=$9} END {print s}' FS="\t"  ${BASE_DIR}/genes_of_comp${i}/leaves.txt >> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+
 
   done
 
-#  ##Addding tab instead of @
-#  sed -i "s/@/\t/g" ${BASE_DIR}/expressed_genes.edges
-#  sed -i 's/%/\t/g' ${BASE_DIR}/expressed_genes.edges
+mkdir -p ${BASE_DIR}/genes_of_comp
+./gene_finder.exe \
+      ${BASE_DIR}/comp \
+      ${BASE_DIR}/all_unitigs_annotated.nodes \
+      ${BASE_DIR}/../graph/graph_hc_1_hc_2_k41_C0.05.edges \
+      ${BASE_DIR}/genes_of_comp \
+      ${K} \
+      ${MAXI}
 
+for ((i=0;i<${MAXI};i++)) do python3 analysis_comp.py ${BASE_DIR}/comp${i}.fa ${BASE_DIR}/aligned_ref_AS${i}.txt ${BASE_DIR}/aligned_Dfam${i}.txt ${BASE_DIR}/cr_ana${i}.txt --short; done
+python3 CR_ana_comps.py ${BASE_DIR}/cr_ana ${MAXI} > ${BASE_DIR}/tot_cr_ana.txt
+paste ${BASE_DIR}/genes_of_comp/transcript_summary_comps.txt ${BASE_DIR}/tot_cr_ana.txt > ${BASE_DIR}/genes_of_comp/transcript_summary_comps_annotated.txt
+
+
+
+#Checking consensus sequences matching TE
+
+: > ${BASE_DIR}/genes_of_comp/consensus_seqs.fa
+for ((i=0; i<$MAXI; i++))
+  do
+  echo ">cons_${i}" >> ${BASE_DIR}/genes_of_comp/consensus_seqs.fa
+  sed '8q;d' ${BASE_DIR}/genes_of_comp$i/gene_summary.txt >> ${BASE_DIR}/genes_of_comp/consensus_seqs.fa
+  done
+
+: > ${BASE_DIR}/genes_of_comp/consensus_seqs_ab.fa
+for ((i=0; i<$MAXI; i++))
+  do
+  echo ">cons_${i}" >> ${BASE_DIR}/genes_of_comp/consensus_seqs_ab.fa
+  awk '{print $9,$2}' FS="\t" ${BASE_DIR}/comp${i}_annotated.nodes | sort -k1,1nr | head -1 | awk '{print $2}' >> ${BASE_DIR}/genes_of_comp/consensus_seqs_ab.fa
+  done
+
+
+mkdir -p ${BASE_DIR}/STAR_alignment_seqs_consensus
+${STAR_BIN_L} \
+    --genomeDir ${BASE_DIR}/../dfam_ref \
+    --runMode alignReads \
+    --runThreadN 8 \
+    --readFilesIn ${BASE_DIR}/genes_of_comp/consensus_seqs.fa \
+    --outFileNamePrefix ${BASE_DIR}/STAR_alignment_seqs_consensus/ \
+    --outSAMtype BAM SortedByCoordinate \
+    --outSAMunmapped Within \
+    --outSAMattributes Standard \
+    --outFilterMultimapNmax 10000 \
+    --winReadCoverageRelativeMin 0.5 \
+    --seedMultimapNmax 10000000 \
+    --alignWindowsPerReadNmax 100000 \
+    --seedSearchStartLmax 1000 \
+    --winAnchorMultimapNmax 50000 \
+    --outReadsUnmapped Fastx
+
+python3 ${WORK_DIR}/filter_bam.py \
+    ${BASE_DIR}/STAR_alignment_seqs_consensus/Aligned.sortedByCoord.out.bam \
+    ${BASE_DIR}/aligned_seqs_cons.txt
+
+awk '{print $1"\t"$3"\t"$10}' FS=["\t"] \
+${BASE_DIR}/aligned_seqs_cons.txt \
+| sort -u -t '_' -k2 -n \
+| cut -c6- > ${BASE_DIR}/STAR_alignment_seqs_consensus/seqs_cons_matching_TE.txt
+
+awk '$2!="*"{print $1}' FS=["\t"] ${BASE_DIR}/STAR_alignment_seqs_consensus/seqs_cons_matching_TE.txt > ${BASE_DIR}/id_comp_matching_TE.txt
+
+
+awk 'NR==FNR {ids[$1]; next}
+{
+    idx = FNR - 1
+    if ($5=="TE" && (idx in ids))        print $0 "\tTP";
+    else if ($5=="TE" && !(idx in ids))  print $0 "\tFN";
+    else if ($5!="TE" && (idx in ids))   print $0 "\tFP";
+    else                                 print $0 "\tTN";
+}' FS=["\t"] ${BASE_DIR}/id_comp_matching_TE.txt \
+${BASE_DIR}/genes_of_comp/transcript_summary_comps_annotated.txt > ${BASE_DIR}/genes_of_comp/transcript_summary_comps_annotated_cons.txt
+
+awk '$6=="TP"{pos+=1} $6=="FN"{faux+=1} END {print pos, faux}' FS=["\t"]  \
+${BASE_DIR}/genes_of_comp/transcript_summary_comps_annotated_cons.txt > ${BASE_DIR}/genes_of_comp/seq_cons_precision.txt
+
+
+## TeTools to know the count of each TE
+awk '$1 ~ /^>/ {print $0, $2}' FS=['\t'_] ${DFAM_FA} | cut -c 2- > ${SPE_DIR}/rosette.fa
+
+
+
+${TECOUNT} -rosette ${SPE_DIR}/rosette.fa  \
+    -column 2 \
+    -TE_fasta ${DFAM_FA} \
+    -count ${SPE_DIR}/count_TE.txt \
+    -bowtie2 \
+    -RNA ${READS_1} \
+    -RNApair ${READS_2} \
+    -insert 500

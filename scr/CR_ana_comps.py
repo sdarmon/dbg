@@ -29,28 +29,53 @@ for i in range(total):
             UTR_CDS += (1 if int(L[2]) > 2 else 0)
             TE += (1 if int(L[3]) > 0 else 0)
             #Case otherwise
-            if float(L[0]) >= 1 and float(L[1]) >= 0.2 and int(L[3]) == 0:
+            if int(L[3]) > 0 :
+                print(f"TE")
+            elif float(L[0]) >= 0.80 and float(L[1]) >= 0.2:
                 both += 1
-            if float(L[0]) < 1 and float(L[1]) < 0.2 and int(L[3]) == 0:
+                print(f"Microsatellite and A/T stretch")
+            elif float(L[0]) < 0.80 and float(L[1]) < 0.2:
                 Nothing+=1
+                print(f"Nothing")
+            elif float(L[0]) >= 0.80 and float(L[1]) < 0.2:
+                print(f"A/T stretch")
+            else :
+                print(f"Microsatellite")
+
         # Sum total for the pie chart
 sum_tot = polA + microsat + TE + Nothing - both # UTR_CDS is not included in the pie chart
 
 
 # Custom function to format the percentages
 def func(pct, allvals):
-    absolute = int(pct/100.*sum(allvals))
+    index = int(round(pct/100.*len(allvals)))
+    absolute = allvals[index] if index < len(allvals) else 0
     return "{:.1f}%\n({:d})".format(pct, absolute)
-
 
 # Data for the pie chart
 labels = ['Microsatellite','A/T and microsat', 'A/T stretch',   'TE', 'Unknown']
 sizes = [microsat-both, both, polA-both, TE, Nothing]
 colors = ['#084D4F','#046668','#007E81','#95C11F','#C11F44']
 
+
+#Remove the empty sets
+for i in range(len(sizes)-1, -1, -1):
+    if sizes[i] == 0:
+        del sizes[i]
+        del labels[i]
+        del colors[i]
+
 # Plotting the pie chart
 plt.figure(figsize=(8, 8))
-wedges, texts, autotexts =  plt.pie(sizes, labels=labels, colors=colors, autopct=lambda pct: func(pct, sizes), startangle=140)
+
+def make_autopct(values):
+    def my_autopct(pct):
+        total = sum(values)
+        val = int(round(pct*total/100.0))
+        return '{:.1f}%\n({:d})'.format(pct, val)
+    return my_autopct
+
+wedges, texts, autotexts =  plt.pie(sizes, labels=labels, colors=colors, autopct=make_autopct(sizes), startangle=140)
 
 
 # Customize the font properties

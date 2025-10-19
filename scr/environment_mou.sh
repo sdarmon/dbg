@@ -15,7 +15,7 @@ DATA_DIR="/beegfs/data/sdarmon"
 SPE_DIR="${DATA_DIR}/${SPE}"
 GEN_GTF="${SPE_DIR}/GCF_035046485.1_AalbF5_genomic.gtf"
 GEN_FA="${SPE_DIR}/GCF_035046485.1_AalbF5_genomic.fna"
-READS_1="${SPE_DIR}/MO1_1.fq"
+READS_1="${SPE_DIR}/MO1_1.fq" #https://www.ncbi.nlm.nih.gov/sra/SRX4967526[accn]
 READS_2="${SPE_DIR}/MO1_2.fq"
 
 ##TE libraries that will be generated based on SPE_NAME
@@ -40,4 +40,5 @@ STAR_BIN_L="${DOC_DIR}/STAR-2.7.11b/bin/Linux_x86_64/STARlong"
 SAMTOOLS_BIN="${DOC_DIR}/samtools-1.9/samtools"
 BEDTOOLS_BIN="${DOC_DIR}/bedtools2/bin/bedtools"
 FASTP_BIN="${DOC_DIR}/fastp"
+TECOUNT="${DOC_DIR}/TEtools/TEcount.py"
 

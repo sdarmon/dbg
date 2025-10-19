@@ -14,6 +14,8 @@ else
 fi
 
 source ${VENV_FAMDB}
+pip install pandas
+pip install matplotlib
 
 
 
@@ -241,3 +243,5 @@ if [[ ${SKIP_BUILD_RUST} == "" ]]; then
   cargo build --release --manifest-path ${WORK_DIR}/gene_finder/Cargo.toml
   cp ${WORK_DIR}/gene_finder/target/release/gene_finder ${WORK_DIR}/gene_finder.exe
 fi
+
+chmod +x ${TECOUNT}
