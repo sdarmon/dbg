@@ -54,6 +54,8 @@ if [[ ${SKIP_BUILD_RUST} == "" ]]; then
   echo "Build time (in seconds): $elapsed \n"
 fi
 
+
+if [[ ${SKIP_FASTP_HC} == "" ]]; then
   ##FastP of the reads to remove the poly(A) tails
   echo "FastP of the reads ..."
 
@@ -69,7 +71,8 @@ fi
       --out1 ${READS_1}.fastp \
       --out2 ${READS_2}.fastp
 
-
+  ##Compute the HC
+  echo "HC of the reads ..."
   python3 homomorphic_compression.py  ${READS_1}.fastp ${DATA_DIR}/${SPE}/hc_1.fq 5
   python3 homomorphic_compression.py  ${READS_2}.fastp ${DATA_DIR}/${SPE}/hc_2.fq 5
 
@@ -77,8 +80,8 @@ fi
   elapsed=`expr $end - $begin`
   begin=`date +%s`
   echo "FastP time and HC (in seconds): $elapsed \n"
-  ##Compute the HC
-  echo "HC of the reads ..."
+fi
+
 
 if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
 

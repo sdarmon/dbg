@@ -92,7 +92,7 @@ MAXI=$(ls ${BASE_DIR}/comp*.txt | wc -l)
 
 ${TECOUNT} -rosette ${SPE_DIR}/rosette.fa  \
     -column 2 \
-    -TE_fasta ${DFAM_FA}.no_tab \
+    -TE_fasta ${DFAM_FA}.no_tab.fa \
     -count ${SPE_DIR}/count_TE.txt \
     -bowtie2 \
     -RNA ${READS_1} \
