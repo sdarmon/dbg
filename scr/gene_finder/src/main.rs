@@ -402,7 +402,8 @@ if args.len() != 6 && args.len() != 7 {
         writeln!(file, "{:.2} \t (Max ratio of abundances greater than 2) \t {:?} \t (Ratios of abundances greater than 2)", max_ratio, ratios).unwrap();
         //close the file
         drop(file);
-    } else if args.len() == 7 {
+    }
+    else if args.len() == 7 {
         //If there are 7 arguments, we assume that the component is the one specified by the user
         let nb_comps = args[6].parse::<u32>().unwrap();
         if nb_comps == 0 {

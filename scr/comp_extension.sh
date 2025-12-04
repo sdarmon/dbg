@@ -251,16 +251,23 @@ awk '$6=="TP"{pos+=1} $6=="FN"{faux+=1} END {print pos, faux}' FS=["\t"]  \
 ${BASE_DIR}/genes_of_comp/transcript_summary_comps_annotated_cons.txt > ${BASE_DIR}/genes_of_comp/seq_cons_precision.txt
 
 
-## TeTools to know the count of each TE
-awk '$1 ~ /^>/ {print $0, $2}' FS=['\t'_] ${DFAM_FA} | cut -c 2- > ${SPE_DIR}/rosette.fa
+## sed the \t, space and [ ] by _ in the dfam file to be able to use TeTools
+sed 's/\t/_/g; s/ /_/g; s/\[/_/g; s/\]/_/g ; s/:/_/g; s/,/_/g ; s/\//_/g' \
+${DFAM_FA} > ${DFAM_FA}.no_tab.fa
 
+## TeTools to know the count of each TE
+awk '$1 ~ /^>/ {print $0, $2}' FS=['\t'_] ${DFAM_FA}.no_tab.fa | cut -c 2- > ${SPE_DIR}/rosette.fa
 
 
 ${TECOUNT} -rosette ${SPE_DIR}/rosette.fa  \
     -column 2 \
-    -TE_fasta ${DFAM_FA} \
+    -TE_fasta ${DFAM_FA}.no_tab.fa \
     -count ${SPE_DIR}/count_TE.txt \
     -bowtie2 \
     -RNA ${READS_1} \
     -RNApair ${READS_2} \
     -insert 500
+
+${SAMTOOLS_BIN} view -H alignment/ERR2680378_1.sam -o alignment/ERR2680378_1.bam
+${SAMTOOLS_BIN} sort alignment/ERR2680378_1.bam -o alignment/ERR2680378_1.sorted.bam
+${SAMTOOLS_BIN} index alignment/ERR2680378_1.sorted.bam

@@ -95,6 +95,21 @@ if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
   #  agglo.exe ${RESULTS_DIR}/graph/outputNodes.txt  ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges -c ${T} -d ${D_NT} ${RESULTS_DIR} -clean ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}.abundance > ${RESULTS_DIR}/rapportAgglo.txt
 fi
 
+
+if [[ ${SKIP_TE_LIBRARIES} == "" ]]; then
+  # Extraction des TEs de la base de données Dfam
+  echo "Extraction of the TEs from Dfam ..."
+  ${FAMDB_BIN} -i ${LIBRARY_DIR}/famdb/ families \
+  --include-class-in-name \
+  --curated \
+  --ancestors \
+  --descendants \
+  "${SPE_NAME}" --format fasta_name \
+   | sed 's/#/\t/g' \
+   | sed 's/ @/\t/g' \
+   | sed 's/^>/>dfam_/g' > ${DFAM_FA}
+fi
+
 if [[ ${SKIP_STAR_GENOME} == "" ]]; then
   ## Compute the genome STAR ref
 
@@ -119,6 +134,7 @@ if [[ ${SKIP_BUILD_RUST} == "" ]]; then
   cargo build --release --manifest-path ${WORK_DIR}/gene_finder/Cargo.toml
   cp ${WORK_DIR}/gene_finder/target/release/gene_finder ${WORK_DIR}/gene_finder.exe
 fi
+
 
 chmod +x ${TECOUNT}
 

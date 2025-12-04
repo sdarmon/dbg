@@ -14,7 +14,7 @@ DATA_DIR="/beegfs/data/sdarmon"
 SPE_DIR="${DATA_DIR}/${SPE}"
 GEN_GTF="${SPE_DIR}/ref.gtf"
 GEN_FA="${SPE_DIR}/ref.fa"
-READS_1="${SPE_DIR}/dog_1_1.fq" #https://www.ncbi.nlm.nih.gov/sra/?term=SRR15254973
+READS_1="${SPE_DIR}/dog_1_1.fq" #https://www.ncbi.nlm.nih.gov/sra/?term=SRR15254973 female golden retriver control group to be compared with SRR15254976	(melanoma golden and unspecified sex)
 READS_2="${SPE_DIR}/dog_1_2.fq"
 
 ##TE libraries that will be generated based on SPE_NAME
