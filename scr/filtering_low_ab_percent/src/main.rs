@@ -17,8 +17,8 @@ if args.len() != 6 {
         std::process::exit(1);
     }
 
-    let percentage = args[5].parse::<u32>().unwrap();
-    if percentage == 0 {
+    let percentage = args[5].parse::<f32>().unwrap();
+    if percentage == (0.0 as f32) {
         eprintln!("Error: The percentage must be greater than 0");
         std::process::exit(1);
     }
@@ -30,10 +30,10 @@ if args.len() != 6 {
     //Read and store the graph.nodes file in dictionary with the unitig ID as key and the 2 others columns as value
     //Initialize the abundance to -1
     let mut nodes = std::collections::HashMap::new();
-    let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[2]).unwrap();
+    let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[1]).unwrap();
     for result in reader.deserialize() {
         let (id, seq): (u32, String) = result.unwrap();
-        nodes.insert(id, (seq,0));
+        nodes.insert(id, (seq,0.0 as f32));
     }
 
     //The edge file contains 3 columns separated by a tab:
@@ -58,7 +58,7 @@ if args.len() != 6 {
     //edge_type is two letters (FF, FR, RF, RR) that indicates the orientation of the edge between the two unitigs
     let mut edges = std::collections::HashMap::new();
     let mut full_edges_set = std::collections::HashSet::new();
-    let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[3]).unwrap();
+    let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[2]).unwrap();
     for result in reader.deserialize() {
         let (id1, id2, edge_type): (u32, u32, String) = result.unwrap();
         if !edges.contains_key(&id1) {
@@ -72,10 +72,10 @@ if args.len() != 6 {
     //1. Abundance of the ith unitig on the ith line (integer)
 
     //Read the abundance file and store it in the nodes dictionary
-    let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[4]).unwrap();
+    let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[3]).unwrap();
     let mut line_number = 0;
     for result in reader.deserialize() {
-        let (abundance,): (u32,) = result.unwrap();
+        let (abundance,): (f32,) = result.unwrap();
         if let Some(node) = nodes.get_mut(&(line_number as u32)) {
             node.1 = abundance;
         }
@@ -90,11 +90,11 @@ if args.len() != 6 {
     for (id, (_seq, ab)) in &nodes {
         for (neighbor_id, edge_type) in edges.get(id).unwrap_or(&Vec::new()) {
             let neighbor_ab = nodes.get(neighbor_id).unwrap().1;
-            if (neighbor_ab * 100) < (*ab  * percentage) {
+            if (neighbor_ab * (100.0 as f32)) < (*ab  * percentage) {
                 disconnected_nodes.insert(*neighbor_id);
                 //Also remove the edge between the two nodes
                 removed_edges.insert((*id,*neighbor_id,*edge_type));
-            } else if (*ab * 100) < (neighbor_ab  * percentage) { //Also check the other way around
+            } else if (*ab * (100.0 as f32)) < (neighbor_ab  * percentage) { //Also check the other way around
                 //Since the edges are bidirectional, we need to check both directions for the edges
                 //but we need to remove only one node.
                 removed_edges.insert((*id,*neighbor_id,*edge_type));
@@ -106,7 +106,7 @@ if args.len() != 6 {
 
     //Now we can output the new graph with the remaining edges and nodes
     let output_dir = &args[4];
-    let mut file = std::fs::File::create(format!("{}_C{:.2}.edges", output_dir, percentage as f32 / 100.0)).unwrap();
+    let mut file = std::fs::File::create(format!("{}_C{:.2}.edges", output_dir, percentage / (100.0 as f32))).unwrap();
     for (id1, id2, edge_type) in &remain_edges {
         writeln!(file, "{}\t{}\t{}", id1, id2, edge_type_to_str[*edge_type as usize]).unwrap();
     }

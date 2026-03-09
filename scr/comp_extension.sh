@@ -271,3 +271,6 @@ ${TECOUNT} -rosette ${SPE_DIR}/rosette.fa  \
 ${SAMTOOLS_BIN} view -bS alignment/ERR2680378_1.sam > alignment/ERR2680378_1.bam
 ${SAMTOOLS_BIN} sort alignment/ERR2680378_1.bam -o alignment/ERR2680378_1.sorted.bam
 ${SAMTOOLS_BIN} index alignment/ERR2680378_1.sorted.bam
+
+##BOWTIE2 option a
+## Filtre dfam espece

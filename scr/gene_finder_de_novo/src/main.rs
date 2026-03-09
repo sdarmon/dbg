@@ -5,6 +5,41 @@
 
 
 #![allow(non_snake_case)]
+
+use std::collections::HashMap;
+use ordered_float::NotNan;
+
+fn revcomp(seq: &str) -> String {
+    seq.chars().rev().map(|c| {
+        match c {
+            'A' => 'T',
+            'T' => 'A',
+            'C' => 'G',
+            'G' => 'C',
+            _ => c, // If the character is not A, T, C or G, we keep it as it is
+        }
+    }).collect()
+}
+
+//Define a function that concatenate two sequences with a overlap of K-1 bases but that can be F or R depending on the way of the edge between the two unitigs
+fn concatenate(seq1: &str, seq2: &str, way1 : bool, way2 : bool, K: usize) -> String {
+    if way1 && way2 {
+        //FF
+        return format!("{}{}", seq1, &seq2[K-1..]);
+    } else if way1 && !way2 {
+        //FR
+        let revcomp_seq1 = revcomp(seq1);
+        return format!("{}{}", seq2, &revcomp_seq1[K-1..]);
+    } else if !way1 && way2 {
+        //RF
+        let revcomp_seq1 = revcomp(seq1);
+        return format!("{}{}", revcomp_seq1, &seq2[K-1..]);
+    } else {
+        //RR
+        return format!("{}{}", seq2, &seq1[K-1..]);
+    }
+}
+
 fn main() {
     //First let's read the arguments
     let args: Vec<String> = std::env::args().collect();
@@ -43,8 +78,8 @@ if args.len() != 8 {
     let mut nodes = std::collections::HashMap::new();
     let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[2]).unwrap();
     for result in reader.deserialize() {
-        let (id, seq, weight): (u32, String, i32) = result.unwrap();
-        nodes.insert(id, (seq, weight,-1));
+        let (id, seq, weight): (u32, String, f64) = result.unwrap();
+        nodes.insert(id, (seq, weight,-1.0));
     }
 
     //The edge file contains 3 columns separated by a tab:
@@ -71,7 +106,7 @@ if args.len() != 8 {
     let mut reader = csv::ReaderBuilder::new().delimiter(b'\t').has_headers(false).from_path(&args[4]).unwrap();
     let mut line_number = 0;
     for result in reader.deserialize() {
-        let (abundance,): (i32,) = result.unwrap();
+        let (abundance,): (f64,) = result.unwrap();
         if let Some(node) = nodes.get_mut(&(line_number as u32)) {
             node.2 = abundance;
         }
@@ -104,7 +139,7 @@ if args.len() != 8 {
     let mut max_id = Vec::new();
     //Loop over the comp_id_vec and compute the max weight and max_id for each component
     for comp_id in &comp_id_vec {
-        let mut max_w = 0;
+        let mut max_w = 0.0;
         let mut max_i = 0;
         for idc in comp_id {
             let (_,w,_) = nodes.get(&idc).unwrap();
@@ -125,7 +160,8 @@ if args.len() != 8 {
 
     //Define a stack for the DFS using a binary heap for efficiency
     #[derive(Eq, PartialEq)]
-    struct StackElem(i32, u32, bool, i32, bool, usize); // depth, id, way, old_ab, start_way, initial_comp
+    // depth, id, way, old_ab, start_way, initial_comp, seq_of_path
+    struct StackElem(u32, u32, bool, NotNan<f64>, bool, usize, String);
 
     //Implement Ord and PartialOrd for StackElem for the binary heap
     //It orders by increasing depth, then by id (i.e. the first element to be poped is the lower depth)
@@ -148,8 +184,10 @@ if args.len() != 8 {
     //Add the heaviest unitig of each component to the stack
     for (i, comp_id) in comp_id_vec.iter().enumerate() {
         if !comp_id.is_empty() {
-            stack.push(StackElem(0, max_id[i], true, 0, true, i.try_into().unwrap()));
-            stack.push(StackElem(0, max_id[i], false, 0, false, i.try_into().unwrap()));
+            let id = max_id[i];
+            let seq = nodes.get(&id).unwrap().0.clone();
+            stack.push(StackElem(0, id, true, NotNan::new(0.0).unwrap(), true, i.try_into().unwrap(),seq.clone()));
+            stack.push(StackElem(0, id, false, NotNan::new(0.0).unwrap(), false, i.try_into().unwrap(), seq));
         }
     }
 
@@ -162,24 +200,24 @@ if args.len() != 8 {
         visited_in_comp.push(std::collections::HashSet::new());
     }
 
-    //Dictionary of the comp where the unitig have been visited : visited_loc[id] = Vec<i32>
+    //Dictionary of the comp where the unitig have been visited : visited_loc[id] = Vec<f64>
     let mut visited_loc = std::collections::HashMap::new();
 
     //Define the flux for each component
     let mut flux = Vec::new();
     let mut leaves = Vec::new();
     for _ in 0..nb_comps {
-        flux.push(0);
+        flux.push(0.0);
         leaves.push(0);
     }
 
     //Looping over the stack
     while !stack.is_empty() {
         //Pop the first element of the stack and its way
-        let StackElem(d, id, way, o_a, start_way, i) = stack.pop().unwrap();
+        let StackElem(d, id, way, o_a, start_way, i,seq) = stack.pop().unwrap();
+        let mut old_ab = o_a.into_inner(); // o_a était NotNan<f64]
         let mut depth = d;
-        let mut old_ab = o_a;
-        let actual_ab: i32 = nodes.get(&id).unwrap().2;
+        let actual_ab: f64 = nodes.get(&id).unwrap().2;
         //If the unitig is not visited
         //Check if the unitig is in the component
         let seen_id_way = visited.contains(&(id, way));
@@ -189,7 +227,7 @@ if args.len() != 8 {
         if !seen_id_way && (seen_id_in_comp || !seen_id_other_way){
             visited.insert((id, way)); //Add the unitig to the visited set
             visited_in_comp[i].insert(id); //Add the unitig to the visited_in_comp set
-            visited_loc.entry(id).or_insert_with(Vec::new).push(i); //Add the unitig to the visited_loc set
+            visited_loc.entry(id).or_insert_with(Vec::new).push((i,way,seq.clone()));//Add the unitig to the visited_loc set
 
             //If the unitig is in the component
             if comp_id_vec[i].contains(&id) {
@@ -217,20 +255,20 @@ if args.len() != 8 {
             //If the unitig is a leaf
             if neighbors.len() == 0 {
                 flux[i] += actual_ab;
-                if old_ab > 0 {
+                if old_ab > 0.0 {
                     leaves[i]+= 1;
-                    exp_transcript.insert((id, depth, old_ab, actual_ab, i));
+                    exp_transcript.insert((id, depth, old_ab.to_bits(), actual_ab.to_bits(), i));
                 } else {
-                    secondary_transcript.insert((id, depth, actual_ab,i));
+                    secondary_transcript.insert((id, depth, actual_ab.to_bits(),i));
                 }
             }
 
             //Add the neighbors of the unitig to the stack
-            let d : i32 = (nodes.get(&id).unwrap().0.len() - K + 1).try_into().unwrap(); //Number of new unitigs added by the neighbor
-            let mut max_ab = 0;
+            let d : u32 = (nodes.get(&id).unwrap().0.len() - K + 1).try_into().unwrap(); //Number of new unitigs added by the neighbor
+            let mut max_ab = 0.0;
             let mut best_el = 0;
             for (nb, _) in &neighbors {
-                let ab_n: i32 = nodes.get(&nb).unwrap().2;
+                let ab_n: f64 = nodes.get(&nb).unwrap().2;
                 if ab_n > max_ab {
                     max_ab = ab_n;
                     best_el = *nb;
@@ -238,13 +276,29 @@ if args.len() != 8 {
             }
             for (nb, new_way) in neighbors {
                 //stack.push(StackElem(depth + d, nb, new_way,  actual_ab, start_way, i.try_into().unwrap()));
-                if (old_ab > 0) && (nb == best_el) {
+                if (old_ab > 0.0) && (nb == best_el) {
                     //If the abundance of the neighbor is the greater abundance of the current node
                     //we push it to the stack with the new way, depth + d and max_ab
-                    stack.push(StackElem(depth + d, nb, new_way,  actual_ab, start_way, i.try_into().unwrap()));
+                    stack.push(StackElem(
+                        depth + d,
+                        nb,
+                        new_way,
+                        NotNan::new(actual_ab).expect("actual_ab must not be NaN"),
+                        start_way,
+                        i.try_into().unwrap(),
+                        concatenate(&seq, &nodes.get(&nb).unwrap().0, way, new_way, K)
+                    ));
                 } else {
                     //Otherwise we push it to the stack with the new way, depth + d and 0
-                    stack.push(StackElem(depth + d, nb, new_way, 0, start_way, i.try_into().unwrap()));
+                    stack.push(StackElem(
+                        depth + d,
+                        nb,
+                        new_way,
+                        NotNan::new(0.0).unwrap(),
+                        start_way,
+                        i.try_into().unwrap(),
+                        concatenate(&seq, &nodes.get(&nb).unwrap().0, way, new_way, K)
+                    ));
                 }
             }
         }
@@ -255,7 +309,7 @@ if args.len() != 8 {
             if !seen_id_in_comp {
                 //Add the node to the visited_in_comp set
                 visited_in_comp[i].insert(id);
-                visited_loc.entry(id).or_insert_with(Vec::new).push(i);
+                visited_loc.entry(id).or_insert_with(Vec::new).push((i,way,seq.clone()));
                 //Add the node to the connecting_unitigs set
                 connecting_unitigs.insert(id);
                 //flux[i] += old_ab;
@@ -267,7 +321,7 @@ if args.len() != 8 {
 
         if !seen_id_in_comp && seen_id_other_way { //Id seen in the other way and from another component
             //If the node has not been visited in the current component
-            visited_loc.entry(id).or_insert_with(Vec::new).push(i);
+            visited_loc.entry(id).or_insert_with(Vec::new).push((i,way,seq.clone()));
             //Add the node to the connecting_unitigs set
             connecting_unitigs.insert(id);
             //flux[i] += old_ab;
@@ -282,8 +336,8 @@ if args.len() != 8 {
         //Add the pairwise combinations of comps in comp_ids to the comp_connections set
         for i in 0..comp_ids.len() {
             for j in (i + 1)..comp_ids.len() {
-                let comp_i = comp_ids[i];
-                let comp_j = comp_ids[j];
+                let comp_i = comp_ids[i].0;
+                let comp_j = comp_ids[j].0;
                 if comp_i != comp_j {
                     comp_connections[comp_i as usize].insert(comp_j);
                     comp_connections[comp_j as usize].insert(comp_i);
@@ -296,7 +350,7 @@ if args.len() != 8 {
     //output the results
     //Output the expressed transcript to a file
 
-    let output_dir = &args[4];
+    let output_dir = &args[5];
     let mut file = std::fs::File::create(format!("{}/expressed_transcripts.txt", output_dir)).unwrap();
     for (id, depth, old_abundance, ac_ab, i) in exp_transcript {
         //Write the id, depth and abundance in the file, separated by a tab
@@ -321,9 +375,11 @@ if args.len() != 8 {
         //Write the id in the file
         let seq = nodes.get(&id).unwrap().0.clone();
         let comp_ids = visited_loc.get(id).unwrap();
-        let comp_ids_str = comp_ids.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(",");
-        writeln!(file, "{}\t{}\t{}", id, seq, comp_ids_str).unwrap();
+        let comp_ids_str = comp_ids.iter().map(|(comp_id,_,_)| comp_id.to_string()).collect::<Vec<String>>().join(",");
+        let comp_path_str = comp_ids.iter().map(|(_,way, seq)| format!("{}:{}", if *way { "F" } else { "R" }, seq)).collect::<Vec<String>>().join(","); //String of the form "F:ATGC,R:GCAT"
+        writeln!(file, "{}\t{}\t{}\t{}", id, seq, comp_ids_str,comp_path_str).unwrap();
     }
+
     //close the file
     drop(file);
 
@@ -331,14 +387,14 @@ if args.len() != 8 {
     file = std::fs::File::create(format!("{}/transcript_summary_comps.txt", output_dir)).unwrap();
     //Write the number of expressed transcripts for each component
     for (i, comp_id) in comp_id_vec.iter().enumerate() {
-        let mut max_ab = 0;
+        let mut max_ab = 0.0;
         for id in comp_id {
             let ab = nodes.get(&id).unwrap().2;
             if ab > max_ab {
                 max_ab = ab;
             }
         }
-        writeln!(file, "Component {}: {} flux \t {} max ab \t {} leaves \t {} connected comp", i, flux[i], max_ab, leaves[i], comp_connections[i].len()).unwrap();
+        writeln!(file, "Component {}: {:.2} flux \t {} max ab \t {} leaves \t {} connected comp", i, flux[i], max_ab, leaves[i], comp_connections[i].len()).unwrap();
     }
     //close the file
     drop(file);

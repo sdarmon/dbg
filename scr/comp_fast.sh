@@ -15,15 +15,11 @@ else
 fi
 
 source ${VENV_FAMDB}
-pip install pandas
-pip install matplotlib
-
 
 #Create the general directories of that species
 mkdir -p $DATA_DIR
 mkdir -p $RESULTS_DIR
 mkdir -p $SPE_DIR
-rm -r ${BASE_DIR}/*
 mkdir -p $BASE_DIR
 mkdir -p $RESULTS_DIR/processing
 mkdir -p $RESULTS_DIR/ref
@@ -31,7 +27,7 @@ mkdir -p $RESULTS_DIR/graph
 mkdir -p $RESULTS_DIR/dfam_ref
 mkdir -p $RESULTS_DIR/rb_ref
 
-if [[ ${SKIP_BUILD_RUST} == "" ]]; then
+if [[ -z "${SKIP_BUILD_RUST}" ]]; then
   ##Build the bin for the graph
   echo "Building the bin for the graph..."
   cargo build --release --manifest-path ${WORK_DIR}/graph/Cargo.toml
@@ -42,11 +38,18 @@ if [[ ${SKIP_BUILD_RUST} == "" ]]; then
   cargo build --release --manifest-path ${WORK_DIR}/gene_finder_de_novo/Cargo.toml
   cp ${WORK_DIR}/gene_finder_de_novo/target/release/gene_finder_de_novo ${WORK_DIR}/gene_finder_de_novo.exe
 
-
   ##Build the bin for the filtering_low_ab_percent function
   echo "Building the bin for the filtering_low_ab_percent function..."
   cargo build --release --manifest-path ${WORK_DIR}/filtering_low_ab_percent/Cargo.toml
   cp ${WORK_DIR}/filtering_low_ab_percent/target/release/filtering_low_ab_percent ${WORK_DIR}/filtering_low_ab_percent.exe
+
+
+  g++ -O3 -g graph.cpp ponderation.cpp -o graph.exe
+  g++ -O3 -g ${WORK_DIR}/graph.cpp ${WORK_DIR}/agglo.cpp -o ${WORK_DIR}/agglo.exe
+
+  pip install pandas
+  pip install matplotlib
+
 
   end=`date +%s`
   elapsed=`expr $end - $begin`
@@ -55,7 +58,7 @@ if [[ ${SKIP_BUILD_RUST} == "" ]]; then
 fi
 
 
-if [[ ${SKIP_FASTP_HC} == "" ]]; then
+if [[ -z "${SKIP_FASTP}" ]]; then
   ##FastP of the reads to remove the poly(A) tails
   echo "FastP of the reads ..."
 
@@ -70,7 +73,11 @@ if [[ ${SKIP_FASTP_HC} == "" ]]; then
       --in2 ${READS_2} \
       --out1 ${READS_1}.fastp \
       --out2 ${READS_2}.fastp
+fi
 
+
+
+if [[ -z "${SKIP_HC}" ]]; then
   ##Compute the HC
   echo "HC of the reads ..."
   python3 homomorphic_compression.py  ${READS_1}.fastp ${DATA_DIR}/${SPE}/hc_1.fq 5
@@ -80,27 +87,28 @@ if [[ ${SKIP_FASTP_HC} == "" ]]; then
   elapsed=`expr $end - $begin`
   begin=`date +%s`
   echo "FastP time and HC (in seconds): $elapsed \n"
-fi
-
-
-if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
 
   ##Compute the DGB with bcalm
   echo "DGB with bcalm ..."
+  ls -1 ${DATA_DIR}/${SPE}/hc_1.fq ${DATA_DIR}/${SPE}/hc_2.fq > ${DATA_DIR}/${SPE}/list_reads
   ${BCALM_BIN} \
-      -in ${DATA_DIR}/${SPE}/hc_1.fq \
-      -in ${DATA_DIR}/${SPE}/hc_2.fq \
+      -in ${DATA_DIR}/${SPE}/list_reads \
       -kmer-size ${K} \
       -abundance-min 2 \
       -nb-cores ${P} \
-      -out-dir ${RESULTS_DIR}/graph
+      -out ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}
+fi
 
 
+if [[ -z "${SKIP_GEN_GRAPH}" ]]; then
+
+awk -f bcalm_unitig_to_edges.awk ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.unitigs.fa > ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.edges
+awk '/^>/ {id = substr($1, 2); next } {print id "\t" $0}' ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.unitigs.fa > ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.nodes
+awk '/^>/ {ab = substr($4, 6); print ab}' ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.unitigs.fa > ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.abundance
   end=`date +%s`
   elapsed=`expr $end - $begin`
   begin=`date +%s`
   echo "DGB time (in seconds): $elapsed \n"
-
 
   ##Filter the low abundance percent unitigs
   echo "Filtering the low abundance percent unitigs ..."
@@ -108,7 +116,7 @@ if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
       ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.nodes \
       ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.edges \
       ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.abundance \
-      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K} \
+      ${RESULTS_DIR}/graph/hc_1_hc_2_k${K} \
       5
 
   end=`date +%s`
@@ -119,10 +127,9 @@ if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
 
   ##Compute the weighting
   echo "Weighting of the nodes..."
-  g++ -g graph.cpp ponderation.cpp -o graph.exe
   ${WORK_DIR}/graph.exe \
-      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}.nodes \
-      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges \
+      ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.nodes \
+      ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}_C0.05.edges \
       ${D_NT} \
       -k ${K}  \
       -o ${RESULTS_DIR}/graph/outputNodes.txt
@@ -136,27 +143,35 @@ if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
 
   ##Compute the threshold
   echo "Threshold of the nodes..."
-  T=$(python3 ${WORK_DIR}/plot.py ${RESULTS_DIR}/graph/outputNodes.txt top1)
-  # Update the T variable in the environment.sh file
-  sed -i "s/^T=.*/T=${T}/" "${ENV}"
-  echo "T=${T}"
+  if [[ -z "${SKIP_AGGLO}" ]]; then
+      T=$(python3 ${WORK_DIR}/plot.py ${RESULTS_DIR}/graph/outputNodes.txt top1)
+      # Update the T variable in the environment.sh file
+      sed -i "s/^T=.*/T=${T}/" "${ENV}"
+      echo "T=${T}"
+  fi
 
   end=`date +%s`
   elapsed=`expr $end - $begin`
   begin=`date +%s`
   echo "Threshold time (in seconds): $elapsed \n"
+fi
 
+if [[ -z "${SKIP_AGGLO}" ]]; then
   ## Compute the connexe components
   echo "Agglomeration of connexe components..."
-  g++ -g ${WORK_DIR}/graph.cpp ${WORK_DIR}/agglo.cpp -o ${WORK_DIR}/agglo.exe
+  #rm -r ${BASE_DIR}/*
+   for file in ${BASE_DIR}/*; do
+        rm ${file}
+      done
 
   ${WORK_DIR}/agglo.exe \
       ${RESULTS_DIR}/graph/outputNodes.txt \
-      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges \
+      ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}_C0.05.edges \
       -c ${T} \
       -d ${D_NT} \
       ${RESULTS_DIR} \
-      -clean ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}.abundance > ${RESULTS_DIR}/rapportAgglo.txt
+      -clean ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.abundance > ${RESULTS_DIR}/rapportAgglo.txt
+
 
   end=`date +%s`
   elapsed=`expr $end - $begin`
@@ -165,43 +180,53 @@ if [[ ${SKIP_GEN_GRAPH} == "" ]]; then
 
 fi
 
+if [[ -z "${SKIP_CONSENSUS}" ]]; then
+    ##The number of components to compute
+     MAXI=0 #$(ls ${BASE_DIR}/comp*.txt | wc -l)
+        for file in ${BASE_DIR}/comp*.txt; do
+          MAXI=$(( $MAXI + 1 ))
+        done
+        echo "Number of comps : ${MAXI}"
 
-##The number of components to compute
-MAXI=$(ls ${BASE_DIR}/comp*.txt | wc -l)
-echo "Number of comps : ${MAXI}"
+    ##Activation the virtual environment for python
+    source ${WORK_DIR}/venv/bin/activate
 
-##Activation the virtual environment for python
-source ${WORK_DIR}/venv/bin/activate
+    ##Compute the analysis over every component
+    echo "Consensus sequence :" #>> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
+    python3 seq_consensium_of_comps.py \
+        ${BASE_DIR}/comp \
+        ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}_C0.05.edges \
+        ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.abundance \
+        ${BASE_DIR}/seq_consensium.txt \
+        ${K} \
+        ${MAXI}
 
-##Compute the analysis over every component
-echo "Consensus sequence :" #>> ${BASE_DIR}/genes_of_comp${i}/gene_summary.txt
-python3 seq_consensium_of_comps.py \
-    ${BASE_DIR}/comp \
-    ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges \
-    ${BASE_DIR}/seq_consensium.txt \
-    ${K} \
-    ${MAXI}
+      end=`date +%s`
+      elapsed=`expr $end - $begin`
+      begin=`date +%s`
+      echo "Consensus sequences time (in seconds): $elapsed \n"
 
-  end=`date +%s`
-  elapsed=`expr $end - $begin`
-  begin=`date +%s`
-  echo "Consensus sequences time (in seconds): $elapsed \n"
+    ${WORK_DIR}/gene_finder_de_novo.exe \
+          ${BASE_DIR}/comp \
+          ${RESULTS_DIR}/graph/outputNodes.txt \
+          ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}_C0.05.edges \
+          ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.abundance \
+          ${BASE_DIR}/genes_of_comp \
+          ${K} \
+          ${MAXI}
 
-${WORK_DIR}/gene_finder_de_novo.exe \
-      ${BASE_DIR}/comp \
-      ${RESULTS_DIR}/graph/outputNodes.txt \
-      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}_C0.05.edges \
-      ${RESULTS_DIR}/graph/graph_hc_1_hc_2_k${K}.abundance \
-      ${BASE_DIR}/genes_of_comp \
-      ${K} \
-      ${MAXI}
+     awk '{print $3}' FS='\t' ${BASE_DIR}/genes_of_comp/connecting_unitigs.txt | sed 's/,/\t/g' > ${BASE_DIR}/genes_of_comp/connecting_edges.txt
+    python3 ${WORK_DIR}/connecting_to_edges.py ${BASE_DIR}/genes_of_comp/connecting_edges.txt | sort -u > ${RESULTS_DIR}/graph/connected.edges
 
-python3 analysis_comp_de_novo.py \
-    ${BASE_DIR}/comp \
-    ${BASE_DIR}/seq_consensium.txt \
-    ${BASE_DIR}/analysis_comp
 
-  end=`date +%s`
-  elapsed=`expr $end - $begin`
-  begin=`date +%s`
-  echo "Gene finding time (in seconds): $elapsed \n"
+    python3 analysis_comp_de_novo.py \
+        ${BASE_DIR}/comp \
+        ${RESULTS_DIR}/graph/hc_1_hc_2_k${K}.abundance \
+        ${BASE_DIR}/seq_consensium.txt \
+        ${BASE_DIR}/analysis_comp
+
+      end=`date +%s`
+      elapsed=`expr $end - $begin`
+      begin=`date +%s`
+      echo "Gene finding and analysis time (in seconds): $elapsed \n"
+fi

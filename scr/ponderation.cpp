@@ -47,7 +47,6 @@ int main(int argc, char** argv)
         printGraphVertices(G,output);
         output.close();
     } else if(argc == 8 and argv[6][1]=='o'){
-        cout << "ok here?" << endl;
         ofstream output;
         output.open(argv[7]);
         printGraphVertices(G,output);

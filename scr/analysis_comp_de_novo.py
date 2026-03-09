@@ -8,17 +8,26 @@ import bisect
 
 Arg = sys.argv[:]
 
-if len(Arg) not in [4]:
-    print("Use : " + Arg[0] + " comp_prefix seq_consensus output_prefix")
+if len(Arg) not in [5]:
+    print("Use : " + Arg[0] + " comp_prefix abundance_graph seq_consensus output_prefix")
     exit()
+
+
+#Read the abundance graph file to get the number of components
+abundance=[]
+with open(Arg[2], 'r') as f:
+    for line in f:
+        abundance.append(float(line[:-1]))
 
 #Read the seq_consensium file
 nb_comps=0
 seq_consensium=[]
-with open(Arg[2], 'r') as f:
+with open(Arg[3], 'r') as f:
     for line in f:
         nb_comps+=1
         seq_consensium.append(line[:-1])
+
+
 
 #Function that count how many poly(A) a sequence has
 def count_poly(seq):
@@ -128,7 +137,7 @@ for i in range(nb_comps):
             joined_seqs+= ' ' + L[1]
             total_poly += count_poly(L[1])
             total_length += len(L[1])
-            ab_max= max(ab_max, int(L[2]))
+            ab_max= max(ab_max, abundance[int(L[0])])
     m, seq_m, r = count_microsat(joined_seqs)
 
     if total_poly / len(seqs) >= 1:
@@ -139,17 +148,17 @@ for i in range(nb_comps):
         bisect.insort(potential_TE_comps, ( -ab_max, i))
 
 #Writing the output files
-with open(Arg[3] + "_microsat.txt", 'w') as f:
+with open(Arg[4] + "_microsat.txt", 'w') as f:
     f.write("Comp_ID\tSeq_consensus\tMax abundance\n")
     for el in microsat_comps:
         f.write(f"{el[1]}\t{seq_consensium[el[1]]}\t{-el[0]}\n")
 
-with open(Arg[3] + "_stretchA.txt", 'w') as f:
+with open(Arg[4] + "_stretchA.txt", 'w') as f:
     f.write("Comp_ID\tSeq_consensus\tMax abundance\n")
     for el in polyA_comps:
         f.write(f"{el[1]}\t{seq_consensium[el[1]]}\t{-el[0]}\n")
 
-with open(Arg[3] + "_potential_TE.txt", 'w') as f:
+with open(Arg[4] + "_potential_TE.txt", 'w') as f:
     f.write("Comp_ID\tSeq_consensus\tMax abundance\n")
     for el in potential_TE_comps:
         f.write(f"{el[1]}\t{seq_consensium[el[1]]}\t{-el[0]}\n")

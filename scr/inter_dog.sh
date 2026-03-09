@@ -1,8 +1,6 @@
 #!/bin/bash
 
-        M=$(ls ../../results/dog/processing/comp*.txt | wc -l)
-	N=$(ls ../../results/dog/processing/comp*_TE.txt | wc -l)
-	MAXI=$((${M}-${N}))
+MAXI=$(ls ../../results/dog/processing/comp*.txt | wc -l)
 	echo "Number of comps : ${MAXI}"
         for ((i=0; i<$MAXI; i++))
         do
